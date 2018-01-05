@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Akka.DI.AutoFac" Version="1.3.0" />
+    <PackageReference Include="Akka" Version="1.3.0" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.0" />
+    <PackageReference Include="FluentValidation" Version="7.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="1.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Core.Akka\Core.Akka.csproj" />
+    <ProjectReference Include="..\Core.Application.Api\Core.Application.Api.csproj" />
+    <ProjectReference Include="..\Core.Domain\Core.Domain.csproj" />
+    <ProjectReference Include="..\Core.Infrastructure\Core.Infrastructure.csproj" />
+    <ProjectReference Include="..\Core.Presentation\Core.Presentation.csproj" />
+    <ProjectReference Include="..\JobFinder.Infrastructure\JobFinder.Infrastructure.csproj" />
+    <ProjectReference Include="..\JobFinder.Application\JobFinder.Application.csproj" />
+    <ProjectReference Include="..\JobFinder.Application.Api\JobFinder.Application.Api.csproj" />
+    <ProjectReference Include="..\JobFinder.Presentation\JobFinder.Presentation.csproj" />
+  </ItemGroup>
+
+</Project>

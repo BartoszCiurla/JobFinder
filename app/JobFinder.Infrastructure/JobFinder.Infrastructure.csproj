@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core.Infrastructure\Core.Infrastructure.csproj" />
+    <ProjectReference Include="..\JobFinder.Domain\JobFinder.Domain.csproj" />
+    <ProjectReference Include="..\JobFinder.Application\JobFinder.Application.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="2.0.0" />
+    <PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.0" />
+    <PackageReference Include="Serilog.Sinks.Trace" Version="2.1.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="3.1.0" />
+  </ItemGroup>
+</Project>
