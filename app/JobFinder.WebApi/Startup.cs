@@ -2,22 +2,25 @@
 using System.Text;
 using Akka.DI.AutoFac;
 using Autofac;
+using Core.Akka.ActorAutostart;
+using Core.Akka.ActorSystem;
 using JobFinder.Domain.Users;
 using JobFinder.Infrastructure.Authorization;
 using JobFinder.Infrastructure.Ef;
 using JobFinder.Infrastructure.Ef.Extensions;
 using JobFinder.WebApi.Authorization;
-using Core.Akka.ActorAutostart;
-using Core.Akka.ActorSystem;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Converters;
 using Swashbuckle.AspNetCore.Swagger;
 namespace JobFinder.WebApi
 {
@@ -70,8 +73,20 @@ namespace JobFinder.WebApi
           ValidateIssuerSigningKey = true
         };
       });
-      services.AddCors ();
-      services.AddMvc ();
+      services.AddCors(o => o.AddPolicy("AllowAll", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
+
+      services.AddMvc().AddJsonOptions(options =>
+      {
+        options.SerializerSettings.Converters.Add(new StringEnumConverter {
+            CamelCaseText = true
+        });
+      });
+
       services.AddSwaggerGen (c =>
       {
         c.SwaggerDoc ("v1", new Info { Title = "JobFinder api", Version = "v1" });
@@ -83,11 +98,7 @@ namespace JobFinder.WebApi
       DbContext dbContext,
       IPasswordCryptoService passwordCryptoService)
     {
-      app.UseCors (x => x
-        .AllowAnyOrigin ()
-        .AllowAnyMethod ()
-        .AllowAnyHeader ()
-        .AllowCredentials ());
+      app.UseCors("AllowAll");
       app.UseMiddleware<JwtTokenMiddleware> ();
       app.UseAuthentication ();
       app.UseMvc ();

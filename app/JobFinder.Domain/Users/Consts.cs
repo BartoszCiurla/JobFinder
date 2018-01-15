@@ -2,7 +2,8 @@ namespace JobFinder.Domain.Users
 {
   public enum UserType
   {
-    Client,
+    Employee,
+    Employer,
     Admin
   }
 }

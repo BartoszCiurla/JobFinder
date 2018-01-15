@@ -5,6 +5,8 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
+using JobFinder.Application.Api.Users.Queries;
+using JobFinder.Domain.Users.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Primitives;
@@ -28,7 +30,13 @@ namespace JobFinder.WebApi.Authorization
 
     public async Task GenerateToken(HttpContext context, string userEmail, string password, bool rememberMe = false)
     {
-      var identity = await GetIdentity(userEmail, password);
+      var user = await _userAuthorizationService.FindByEmailAsync(userEmail);
+      if (user == null)
+      {
+        return;
+      }
+
+      var identity = await GetIdentity(user, userEmail, password);
 
       if (identity == null)
       {
@@ -57,7 +65,12 @@ namespace JobFinder.WebApi.Authorization
       {
         cookieOptions.Expires = _options.Expiration;
       }
-      await context.Response.WriteAsync(text: encodedJwt);//todo change it !
+
+      await context.Response.WriteAsync(JsonConvert.SerializeObject(new GetActiveUserResult(
+        encodedJwt,
+        user.Email,
+        user.UserType.ToString())
+      ));
       //context.Response.Cookies.Append(_options.TokenName, encodedJwt, cookieOptions);
     }
 
@@ -72,13 +85,8 @@ namespace JobFinder.WebApi.Authorization
       await context.Response.WriteAsync(JsonConvert.SerializeObject(response, new JsonSerializerSettings { Formatting = Formatting.Indented }));
     }
 
-    private async Task<ClaimsIdentity> GetIdentity(StringValues userEmail, StringValues password)
+    private async Task<ClaimsIdentity> GetIdentity(JobFinderUser user, StringValues userEmail, StringValues password)
     {
-      var user = await _userAuthorizationService.FindByEmailAsync(userEmail);
-      if (user == null)
-      {
-        return null;
-      }
       var userValidatedPassword = await _userAuthorizationService.CheckPasswordAsync(user, password);
 
       if (userValidatedPassword)

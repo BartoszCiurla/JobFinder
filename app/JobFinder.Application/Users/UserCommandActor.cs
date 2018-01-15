@@ -25,7 +25,7 @@ namespace JobFinder.Application.Users
         var userRepository = uow.GetRepository<JobFinderUser> ();
         var salt = _passwordCryptoService.GenerateSalt ();
         var passwordHash = _passwordCryptoService.HashPassword (command.Password, salt);
-        var user = JobFinderUser.Create (Guid.NewGuid (), command.Name, command.Surname, command.Email, passwordHash, salt, UserType.Client);
+        var user = JobFinderUser.Create (Guid.NewGuid (), command.Name, command.Surname, command.Email, passwordHash, salt, (UserType)Enum.Parse(typeof(UserType), command.UserType));
         userRepository.Add (user);
         await userRepository.SaveChangesAsync ();
       });
