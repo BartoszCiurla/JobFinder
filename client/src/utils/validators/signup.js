@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import { validEmail, validPassword } from '../validations';
+import Resources from './resource';
 
 const isValid = (value) => _.isEmpty(_.trim(value));
 
@@ -11,25 +12,25 @@ export const validate = ({ surname, name, email, userType, password, passwordCon
   };
 
   isValid(surname) &&
-    result.update('surname', 'please provide a surname');
+    result.update('surname', Resources.surname);
 
   isValid(name) &&
-    result.update('name', 'please provide a name');
+    result.update('name', Resources.name);
 
   !validEmail(email) &&
-    result.update('email', 'please provide a valid email address');
+    result.update('email', Resources.email);
 
   isValid(userType) &&
-    result.update('userType', 'please provide a user type');
+    result.update('userType', Resources.userType);
 
   isValid(password) &&
-    result.update('password', 'please provide a password');
+    result.update('password', Resources.password);
 
   !validPassword(password)
-    && result.update('password', 'password must be at least 8 characters');
+    && result.update('password', Resources.passwordLength);
 
   _.trim(password) !== _.trim(passwordConfirmation)
-    && result.update('passwordConfirmation', 'password confirmation must match password');
+    && result.update('passwordConfirmation', Resources.passwordConfirmation);
 
   return result;
 };

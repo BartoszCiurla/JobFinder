@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 import { withCookies, Cookies } from 'react-cookie';
 import _ from 'lodash';
 
-import RegularField from '../shared/RegularField';
+import RegularField from '../../common/RegularField';
 
 import { validate } from '../../utils/validators/login';
 

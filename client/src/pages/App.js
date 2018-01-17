@@ -3,10 +3,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
 
-import HomePage from './HomePage';
-import Signup from './account/Signup';
-import Login from './account/Login';
-import GlobalHeader from './shared/GlobalHeader';
+import HomePage from './home';
+import Signup from './signup';
+import Login from './login';
+import JobOffer from './jobOffer';
+import GlobalHeader from '../common/GlobalHeader';
 
 // This is a class-based component because the current
 // version of hot reloading won't hot reload a stateless
@@ -19,7 +20,8 @@ class App extends Component {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/signup" component={Signup} />
-          <Route path="/login" component={Login} />>
+          <Route path="/login" component={Login} />
+          <Route path="/jobOffer" component={JobOffer}/>
         </Switch>
       </div>
     );

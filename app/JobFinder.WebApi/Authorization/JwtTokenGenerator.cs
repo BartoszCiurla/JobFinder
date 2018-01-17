@@ -67,6 +67,7 @@ namespace JobFinder.WebApi.Authorization
       }
 
       await context.Response.WriteAsync(JsonConvert.SerializeObject(new GetActiveUserResult(
+        user.Id,
         encodedJwt,
         user.Email,
         user.UserType.ToString())

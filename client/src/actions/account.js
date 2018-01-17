@@ -1,18 +1,13 @@
 import * as types from '../constants/account';
-import Config from '../settings/api';
 
-const defaultErrorMessage = () => console.log("Occured some errors");
+import Api, {getConfig} from '../utils/api';
+
+const defaultErrorMessage = (error) => console.log(`Occured some errors, do something with that! ${error}`);
 
 export const getUserTypes = () => dispatch => (
-  fetch(`${Config.apiUrl}api/Account/GetUserTypes`, {
-    method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
-  })
-    .then(response => response.json())
+  Api.get('api/Account/GetUserTypes')
     .then(data => dispatch(setUserTypes(data.userTypes)))
-    .catch(() => {
-      defaultErrorMessage();
-    })
+    .catch(defaultErrorMessage)
 );
 
 export const setUserTypes = userTypes => (
@@ -28,16 +23,9 @@ export const removeActiveUser = () => (
 );
 
 export const createAccount = (user) => () => (
-  fetch(`${Config.apiUrl}api/Account/RegisterUser`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(user)
-  }).then(() => {
-    return true;
-  }).catch(() => {
-    defaultErrorMessage();
-    return false;
-  })
+  Api.post('api/Account/RegisterUser', user)
+    .then(true)
+    .catch(defaultErrorMessage)
 );
 
 export const login = (user) => dispatch => {
@@ -45,7 +33,8 @@ export const login = (user) => dispatch => {
   formData.append('email', user.email);
   formData.append('password', user.password);
   formData.append('rememberMe', user.rememberMe);
-  return fetch(`${Config.apiUrl}auth`, {
+
+  return fetch(`${getConfig().apiUrl}auth`, {
     method: 'POST',
     body: formData
   }).then(response => {

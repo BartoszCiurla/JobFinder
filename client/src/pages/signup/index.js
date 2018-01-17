@@ -5,8 +5,8 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import _ from 'lodash';
 
-import RegularField from '../shared/RegularField';
-import ValidatedInput from '../shared/ValidatedInput';
+import RegularField from '../../common/RegularField';
+import ValidatedInput from '../../common/ValidatedInput';
 
 import { validate } from '../../utils/validators/signup';
 import { createAccount, getUserTypes } from '../../actions/account';

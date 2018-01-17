@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { NavLink, withRouter } from 'react-router-dom';
 import { withCookies, Cookies } from 'react-cookie';
 
-import { setActiveUser, removeActiveUser} from '../../actions/account';
+import { setActiveUser, removeActiveUser} from '../actions/account';
 
 export class GlobalHeader extends Component {
   componentWillMount() {
@@ -35,6 +35,22 @@ export class GlobalHeader extends Component {
     ];
   }
 
+  renderUserOptionsLinks = () => {
+    const {activeUser} = this.props;
+
+    if(!activeUser){
+      return null;
+    }
+
+    if(activeUser.userType === 'Employer'){
+      return [
+        this.renderNavLink("/jobOffer","Create job offer")
+      ];
+    }
+
+    return null;
+  }
+
   render() {
     const activeStyle = { color: 'blue' };
 
@@ -42,6 +58,7 @@ export class GlobalHeader extends Component {
       <div>
          <NavLink exact to="/" activeStyle={activeStyle}>Home</NavLink>
          {this.renderAccountLinks()}
+         {this.renderUserOptionsLinks()}
       </div>
     );
   }

@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import { validEmail, validPassword } from '../validations';
+import Resources from './resource';
 
 const isValid = (value) => _.isEmpty(_.trim(value));
 
@@ -11,13 +12,13 @@ export const validate = ({ email, password}) => {
   };
 
   !validEmail(email) &&
-    result.update('email', 'please provide a valid email address');
+    result.update('email', Resources.email);
 
   isValid(password) &&
-    result.update('password', 'please provide a password');
+    result.update('password', Resources.password);
 
   !validPassword(password)
-    && result.update('password', 'password must be at least 8 characters');
+    && result.update('password', Resources.passwordLength);
 
   return result;
 };
