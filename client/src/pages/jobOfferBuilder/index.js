@@ -12,7 +12,7 @@ import { createJobOffer } from '../../actions/jobOffer';
 import Resources from './resources';
 import { validate } from '../../utils/validators/jobOffer';
 
-class JobOffer extends Component {
+class JobOfferBuilder extends Component {
   state = {
     title: '',
     errors: []
@@ -68,7 +68,7 @@ class JobOffer extends Component {
             name="title"
             value={title}
             placeholder={Resources.titleExample}
-            onChange={this._onChange}
+            onChange={this.onChange}
           />
         </ValidatedInput>
         <button onClick={this.createJobOffer} className="btn btn-primary full-width">Create</button>
@@ -81,8 +81,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   createJobOffer
 }, dispatch);
 
-JobOffer.propTypes = {
+JobOfferBuilder.propTypes = {
   createJobOffer: PropTypes.func.isRequired,
 };
 
-export default connect(null, mapDispatchToProps)(JobOffer);
+export default connect(null, mapDispatchToProps)(JobOfferBuilder);

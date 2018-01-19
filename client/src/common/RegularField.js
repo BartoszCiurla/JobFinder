@@ -10,7 +10,7 @@ const RegularField = (props) => (
       placeholder={props.placeholder}
       className={props.className}
       onChange={props.onChange}
-      onKeyPress={props.onKeyPress}
+      onKeyPress={props.onKeyPress || null}
       type={props.type}
     />
   </ValidatedInput>
@@ -23,7 +23,7 @@ RegularField.propTypes = {
     PropTypes.bool,
   ]),
   onChange: PropTypes.func.isRequired,
-  onKeyPress: PropTypes.func.isRequired,
+  onKeyPress: PropTypes.func,
   placeholder: PropTypes.string,
   type: PropTypes.string,
   className: PropTypes.string,

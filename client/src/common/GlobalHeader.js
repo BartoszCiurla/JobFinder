@@ -6,6 +6,8 @@ import { NavLink, withRouter } from 'react-router-dom';
 import { withCookies, Cookies } from 'react-cookie';
 
 import { setActiveUser, removeActiveUser} from '../actions/account';
+import Routes from '../constants/routes';
+import Resources from './resource';
 
 export class GlobalHeader extends Component {
   componentWillMount() {
@@ -26,13 +28,18 @@ export class GlobalHeader extends Component {
 
     return activeUser ?
     [
-      <button key="LogOut" onClick={() => this.props.removeActiveUser()}>Log Out</button>,
+      <button key="LogOut" onClick={this.logout}>{Resources.logout}</button>,
       <div key="UserEmail">{activeUser.email}</div>
     ]
     :[
-      this.renderNavLink("/signup", "Signup"),
-      this.renderNavLink("/login", "Login"),
+      this.renderNavLink(Routes.signup, Resources.signup),
+      this.renderNavLink(Routes.login, Resources.login),
     ];
+  }
+
+  logout = () => {
+    this.props.history.push(Routes.homePage);
+    this.props.removeActiveUser();
   }
 
   renderUserOptionsLinks = () => {
@@ -44,7 +51,13 @@ export class GlobalHeader extends Component {
 
     if(activeUser.userType === 'Employer'){
       return [
-        this.renderNavLink("/jobOffer","Create job offer")
+        this.renderNavLink(Routes.jobOfferBuilder, Resources.jobOfferBuilder)
+      ];
+    }
+
+    if(activeUser.userType === 'Employee'){
+      return [
+        this.renderNavLink(Routes.curriculumVitaeBuilder, Resources.curriculumVitaeBuilder)
       ];
     }
 
@@ -56,7 +69,7 @@ export class GlobalHeader extends Component {
 
     return (
       <div>
-         <NavLink exact to="/" activeStyle={activeStyle}>Home</NavLink>
+         <NavLink exact to={Routes.homePage} activeStyle={activeStyle}>{Resources.home}</NavLink>
          {this.renderAccountLinks()}
          {this.renderUserOptionsLinks()}
       </div>
@@ -77,7 +90,8 @@ GlobalHeader.propTypes = {
   activeUser: PropTypes.object,
   removeActiveUser: PropTypes.func.isRequired,
   setActiveUser: PropTypes.func.isRequired,
-  cookies: PropTypes.instanceOf(Cookies).isRequired
+  cookies: PropTypes.instanceOf(Cookies).isRequired,
+  history: PropTypes.object.isRequired
 };
 
 export default withCookies(withRouter(connect(mapStateToProps, mapDispatchToProps)(GlobalHeader)));

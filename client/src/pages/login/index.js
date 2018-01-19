@@ -9,8 +9,9 @@ import _ from 'lodash';
 import RegularField from '../../common/RegularField';
 
 import { validate } from '../../utils/validators/login';
-
 import { login } from '../../actions/account';
+import Resources from './resource';
+import Routes from '../../constants/routes';
 
 export class Login extends Component {
   state = {
@@ -29,7 +30,7 @@ export class Login extends Component {
       .then((data) => {
         if(data){
           this.props.cookies.set('activeUser',data);
-          this.props.history.push(`/homePage`);
+          this.props.history.push(Routes.homePage);
         }
       });
   }
@@ -61,11 +62,11 @@ export class Login extends Component {
 
     return (
       <div>
-        <h2>Login</h2>
-        {this.renderRegularField('email', email, 'Email')}
-        {this.renderRegularField('password', password, 'Password', 'password')}
-        {this.renderRegularField('rememberMe', rememberMe, '', 'checkbox')} Remember Me<br/>
-        <button onClick={this.login} className="btn btn-primary full-width">Login</button>
+        <h2>{Resources.title}</h2>
+        {this.renderRegularField('email', email, Resources.email)}
+        {this.renderRegularField('password', password, Resources.password, 'password')}
+        {this.renderRegularField('rememberMe', rememberMe, '', 'checkbox')} {Resources.rememberMe}<br/>
+        <button onClick={this.login} className="btn btn-primary full-width">{Resources.submit}</button>
       </div>
     );
   }
