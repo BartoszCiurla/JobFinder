@@ -1,0 +1,1 @@
+export const SET_SKILL_LEVELS = 'SET_SKILL_LEVELS';

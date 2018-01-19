@@ -22,7 +22,7 @@ class Contact extends Component {
     return (
       <div>
         <div>
-          <h2>{Resources.contact}</h2>
+          <h2>{Resources.contactTitle}</h2>
         </div>
         {this.renderRegularField('email', email, Resources.email)}
         {this.renderRegularField('phoneNumber', phoneNumber, Resources.phoneNumber)}

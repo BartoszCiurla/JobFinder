@@ -1,0 +1,3 @@
+export const SET_REGULAR_FIELD_CVB = 'SET_REGULAR_FIELD_CVB';
+export const ADD_SKILL = 'ADD_SKILL';
+export const REMOVE_SKILL = 'REMOVE_SKILL';

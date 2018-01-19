@@ -75,7 +75,7 @@ export class Signup extends Component {
 
   render() {
     const { surname, name, email, password, passwordConfirmation, userType } = this.state;
-    console.log(surname.name);
+
     return (
       <div>
         <h2>{Resources.title}</h2>

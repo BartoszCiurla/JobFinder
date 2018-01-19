@@ -4,5 +4,5 @@ export default {
   login: 'Logowanie',
   home: 'Home',
   jobOfferBuilder: 'Stwórz ofertę pracy',
-  curriculumVitaeBuilder: 'Stwórz cv'
+  cVBuilder: 'Stwórz cv'
 };

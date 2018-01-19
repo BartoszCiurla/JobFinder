@@ -57,7 +57,7 @@ export class GlobalHeader extends Component {
 
     if(activeUser.userType === 'Employee'){
       return [
-        this.renderNavLink(Routes.curriculumVitaeBuilder, Resources.curriculumVitaeBuilder)
+        this.renderNavLink(Routes.cVBuilder, Resources.cVBuilder)
       ];
     }
 

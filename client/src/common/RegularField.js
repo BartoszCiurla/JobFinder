@@ -6,10 +6,12 @@ const RegularField = (props) => (
   <ValidatedInput errorMessage={props.errorMessage}>
     <input
       name={props.name}
-      defaultValue={props.value}
+      value={props.value}
       placeholder={props.placeholder}
+      defaultValue={props.defaultValue}
       className={props.className}
-      onChange={props.onChange}
+      readOnly={!props.onChange}
+      onChange={props.onChange || null}
       onKeyPress={props.onKeyPress || null}
       type={props.type}
     />
@@ -22,9 +24,10 @@ RegularField.propTypes = {
     PropTypes.string,
     PropTypes.bool,
   ]),
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
   onKeyPress: PropTypes.func,
   placeholder: PropTypes.string,
+  defaultValue: PropTypes.string,
   type: PropTypes.string,
   className: PropTypes.string,
   errorMessage: PropTypes.string

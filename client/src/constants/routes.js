@@ -3,5 +3,5 @@ export default {
   signup: '/signup',
   login: '/login',
   jobOfferBuilder: '/jobOfferBuilder',
-  curriculumVitaeBuilder: '/curriculumVitaeBuilder'
+  cVBuilder: '/cVBuilder'
 };

@@ -23,7 +23,7 @@ class PersonInformation extends Component {
     return (
       <div>
         <div>
-          <h2>{Resources.basicInformation}</h2>
+          <h2>{Resources.basicInformationTitle}</h2>
         </div>
         {this.renderRegularField('name', name, Resources.name)}
         {this.renderRegularField('roleTitle', roleTitle, Resources.roleTitle)}

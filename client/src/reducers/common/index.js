@@ -1,11 +1,11 @@
 import initialState from './initialState';
-import { SET_REGULAR_FIELD_CVB } from '../../constants/curriculumVitaeBuilder';
+import { SET_SKILL_LEVELS } from '../../constants/common';
 
 const actions = {
-  [SET_REGULAR_FIELD_CVB]: (state, action) => {
+  [SET_SKILL_LEVELS]: (state, action) => {
     const data = {
       ...state,
-      [action.payload.name]: action.payload.value
+      skillLevels: action.payload
     };
     return { ...data };
   },

@@ -7,7 +7,7 @@ import HomePage from './home';
 import Signup from './signup';
 import Login from './login';
 import JobOfferBuilder from './jobOfferBuilder';
-import CurriculumVitaeBuilder from './curriculumVitaeBuilder';
+import cVBuilder from './cVBuilder/';
 import GlobalHeader from '../common/GlobalHeader';
 
 import Routes from '../constants/routes';
@@ -25,7 +25,7 @@ class App extends Component {
           <Route path={Routes.signup} component={Signup} />
           <Route path={Routes.login} component={Login} />
           <Route path={Routes.jobOfferBuilder} component={JobOfferBuilder}/>
-          <Route path={Routes.curriculumVitaeBuilder} component={CurriculumVitaeBuilder}/>
+          <Route path={Routes.cVBuilder} component={cVBuilder}/>
         </Switch>
       </div>
     );

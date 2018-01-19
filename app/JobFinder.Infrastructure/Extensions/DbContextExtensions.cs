@@ -21,6 +21,11 @@ namespace JobFinder.Infrastructure.Ef.Extensions
         SeedUser("Employer", "Employer", "Employer@gmail.com", "Employer1234", UserType.Employer, passwordCryptoService, JobFinderContext);
       }
 
+      if (!JobFinderUsers.AnyAsync(bu => bu.UserType == UserType.Employee).Result)
+      {
+        SeedUser("Employee", "Employee", "Employee@gmail.com", "Employee1234", UserType.Employee, passwordCryptoService, JobFinderContext);
+      }
+
       JobFinderContext.SaveChangesAsync();
     }
 

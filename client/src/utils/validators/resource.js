@@ -6,6 +6,8 @@ export default {
   surname: 'proszę podać nazwisko',
   name : 'proszę podać imię',
   userType: 'proszę o wprowadzenie typu użytkownika ',
-  passwordConfirmation: 'potwierdzenie hasła musi pasować do hasła'
-
+  passwordConfirmation: 'potwierdzenie hasła musi pasować do hasła',
+  skill: 'prosimy o podanie umiejętności',
+  skillLevel: 'prosimy o padnie stopnia zaawansowania',
+  repeatedSkill: 'taka umiejętność już została dodana'
 };

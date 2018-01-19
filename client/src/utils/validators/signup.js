@@ -2,28 +2,24 @@ import _ from 'lodash';
 import { validEmail, validPassword } from '../validations';
 import Resources from './resource';
 
-const isValid = (value) => _.isEmpty(_.trim(value));
+import { resultFactory, isValid } from './common';
 
 export const validate = ({ surname, name, email, userType, password, passwordConfirmation }) => {
-  const result = {
-    errors: [],
-    isValid: () => _.isEmpty(result.errors),
-    update: (a, m) => result.errors.push({ attribute: a, message: m })
-  };
+  const result = resultFactory();
 
-  isValid(surname) &&
+  !isValid(surname) &&
     result.update('surname', Resources.surname);
 
-  isValid(name) &&
+  !isValid(name) &&
     result.update('name', Resources.name);
 
   !validEmail(email) &&
     result.update('email', Resources.email);
 
-  isValid(userType) &&
+  !isValid(userType) &&
     result.update('userType', Resources.userType);
 
-  isValid(password) &&
+  !isValid(password) &&
     result.update('password', Resources.password);
 
   !validPassword(password)
