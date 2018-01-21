@@ -4,25 +4,22 @@ using System.Linq;
 using System.Threading.Tasks;
 using Core.Domain.Ddd;
 using JobFinder.Application.Api.Common;
-using JobFinder.Application.Api.Employees.Commands;
+using JobFinder.Application.Api.CVs.Commands;
 using JobFinder.WebApi.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
 namespace JobFinder.WebApi.Controllers
 {
   [Authorize(Roles = "Employee")]
   [Route("api/[controller]")]
-  public class EmployeeController : BaseController
+  public class CVController : BaseController
   {
-    public EmployeeController(ControllerBootstraper controllerBootstraper) : base(controllerBootstraper)
-    { }
-
-    [Route("CreateCV")]
+    public CVController(ControllerBootstraper controllerBootstraper) : base(controllerBootstraper) { }
+    [Route("Create")]
     [HttpPost]
-    public async Task<IActionResult> CreateCV([FromBody] CreateCVCommand command)
+    public async Task<IActionResult> Create([FromBody] CreateCVCommand command)
     {
-      return Ok(new {test = "sfsdf"});
+      return await SendCommand(DispatcherActorsNames.CVCommandActor, command);
     }
   }
 }

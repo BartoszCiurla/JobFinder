@@ -4,5 +4,6 @@ namespace JobFinder.Application.Api.Common
   {
     public const string UserCommandActor = nameof (UserCommandActor);
     public const string UserQueryActor = nameof (UserQueryActor);
+    public const string CVCommandActor = nameof(CVCommandActor);
   }
 }

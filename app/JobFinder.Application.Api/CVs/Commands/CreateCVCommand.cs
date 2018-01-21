@@ -2,11 +2,11 @@ using System;
 using System.Collections.Immutable;
 using Core.Application.Api.Messages;
 
-namespace JobFinder.Application.Api.Employees.Commands
+namespace JobFinder.Application.Api.CVs.Commands
 {
     public class CreateCVCommand: Command
     {
-        public string UserId { get; set; }
+        public Guid UserId { get; set; }
         public string Name { get; set; }
         public string RoleTitle { get; set; }
         public string AboutYou { get; set; }

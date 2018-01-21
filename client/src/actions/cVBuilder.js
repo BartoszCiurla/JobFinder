@@ -43,7 +43,7 @@ export const removeEducation = education => (
 export const createCV = (props) => (dispatch, getState) => {
   const body = {...format(props), userId : getState().account.activeUser.id};
 
-  Api.post('api/Employee/CreateCV', body)
+  Api.post('api/CV/Create', body)
   .then(true)
   .catch(defaultErrorMessage);
 };
