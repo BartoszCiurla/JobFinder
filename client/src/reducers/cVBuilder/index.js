@@ -1,6 +1,12 @@
 import _ from 'lodash';
 import initialState from './initialState';
-import { SET_REGULAR_FIELD_CVB, ADD_SKILL, REMOVE_SKILL, EDIT_SKILL } from '../../constants/cVBuilder';
+import {
+  SET_REGULAR_FIELD_CVB,
+  ADD_SKILL,
+  REMOVE_SKILL,
+  ADD_EXPERIENCE,
+  REMOVE_EXPERIENCE
+} from '../../constants/cVBuilder';
 
 const actions = {
   [SET_REGULAR_FIELD_CVB]: (state, action) => {
@@ -24,11 +30,19 @@ const actions = {
     };
     return { ...data };
   },
-  [EDIT_SKILL]: (state, action) => {
-    const { key , name, value } = action.payload;
+  [ADD_EXPERIENCE]: (state, action) => {
     const data = {
       ...state,
-      skills: _.map(state.skills, s => s.skill === key? {...s, [name]:value} : s)
+      workExperience: [...state.workExperience, action.payload]
+    };
+    return { ...data };
+  },
+  [REMOVE_EXPERIENCE]: (state, action) => {
+    const { company, role } = action.payload;
+    const data = {
+      ...state,
+      workExperience: _.reject(state.workExperience,
+        we => we.company === company && we.role === role)
     };
     return { ...data };
   }

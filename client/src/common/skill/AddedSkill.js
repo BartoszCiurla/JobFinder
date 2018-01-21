@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import RegularField from '../RegularField';
-import ValidatedInput from '../ValidatedInput';
 
 import Resources from './resources';
 
@@ -29,13 +28,11 @@ class AddedSkill extends Component {
         placeholder={Resources.skill}
         className="input"
       />
-      <ValidatedInput>
-        <div style={{ display: 'flex' }}>
-          {skillLevels.map(sl =>
-            this.renderButton('skillLevel', sl, Resources[sl], skillLevel === sl))
-          }
-        </div>
-      </ValidatedInput>
+      <div style={{ display: 'flex' }}>
+        {skillLevels.map(sl =>
+          this.renderButton('skillLevel', sl, Resources[sl], skillLevel === sl))
+        }
+      </div>
       <button onClick={() => this.props.removeSkill(skill)}>{Resources.removeSkill}</button>
     </div>
     );

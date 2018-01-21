@@ -5,13 +5,14 @@ import { bindActionCreators } from 'redux';
 import _ from 'lodash';
 
 import PersonInformation from './components/PersonInformation';
-import WorkExperience from './components/WorkExperience';
+import WorkExperience from './components/workExperience';
 import Contact from './components/Contact';
 import Skills from '../../common/skill';
-import { setRegularField, addSkill, removeSkill } from '../../actions/cVBuilder';
+import { setRegularField, addSkill, removeSkill, addExperience, removeExperience } from '../../actions/cVBuilder';
 import { getSkillLevels } from '../../actions/common';
 import Resources from './resources';
 import { validate as validateSkill } from '../../utils/validators/skill';
+import { validate as validateExperience } from '../../utils/validators/workExperience';
 
 class CVBuilder extends Component {
   state = {
@@ -38,6 +39,14 @@ class CVBuilder extends Component {
     return validationResult;
   }
 
+  tryAddExperience = (experience) => {
+    const validationResult = validateExperience(experience);
+
+    validationResult.isValid() && this.props.addExperience(experience);
+
+    return validationResult;
+  }
+
 
   render() {
     const {
@@ -47,7 +56,8 @@ class CVBuilder extends Component {
       email,
       phoneNumber,
       skills,
-      skillLevels
+      skillLevels,
+      workExperience
     } = this.props;
 
     return (
@@ -65,6 +75,12 @@ class CVBuilder extends Component {
            addSkill={this.tryAddSkill}
            removeSkill={this.props.removeSkill}
            skillLevels={skillLevels}
+        />
+        <WorkExperience
+          title={Resources.workExperienceTitle}
+          workExperience={workExperience}
+          addExperience={this.tryAddExperience}
+          removeExperience={this.props.removeExperience}
         />
         <Contact
           email={email}
@@ -86,7 +102,9 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   setRegularField,
   getSkillLevels,
   addSkill,
-  removeSkill
+  removeSkill,
+  addExperience,
+  removeExperience
 }, dispatch);
 
 CVBuilder.propTypes = {
@@ -96,9 +114,12 @@ CVBuilder.propTypes = {
   email: PropTypes.string,
   phoneNumber: PropTypes.string,
   skills: PropTypes.array.isRequired,
+  workExperience: PropTypes.array.isRequired,
   setRegularField: PropTypes.func.isRequired,
   addSkill: PropTypes.func.isRequired,
   removeSkill: PropTypes.func.isRequired,
+  addExperience: PropTypes.func.isRequired,
+  removeExperience: PropTypes.func.isRequired,
   getSkillLevels: PropTypes.func.isRequired,
   skillLevels: PropTypes.array.isRequired
 };
