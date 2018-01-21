@@ -19,3 +19,11 @@ export const addExperience = experience => (
 export const removeExperience = experiece => (
   { type: types.REMOVE_EXPERIENCE, payload: experiece }
 );
+
+export const addCertification = certification => (
+  { type: types.ADD_CERTIFICATION, payload: certification }
+);
+
+export const removeCertification = certification => (
+  { type: types.REMOVE_CERTIFICATION, payload: certification }
+);

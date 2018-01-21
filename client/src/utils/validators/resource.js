@@ -15,5 +15,8 @@ export default {
   description: 'prosimy o podanie obowiązków i osiągnięć',
   startDate: 'prosimy o podanie daty rozpoczęcia',
   finishDate: 'prosimy o podanie daty zakończenia',
-  wrongDate: 'data rozpoczęcia powinna być mniejsza niż data zakończenia'
+  wrongDate: 'data rozpoczęcia powinna być mniejsza niż data zakończenia',
+  certificateName: 'prosimy o podanie nazwy certyfikatu',
+  repeatedCertification: 'taki certifikat już został dodany',
+  wrongCertificationDate: 'nieprawidłowa data'
 };

@@ -8,11 +8,21 @@ import PersonInformation from './components/PersonInformation';
 import WorkExperience from './components/workExperience';
 import Contact from './components/Contact';
 import Skills from '../../common/skill';
-import { setRegularField, addSkill, removeSkill, addExperience, removeExperience } from '../../actions/cVBuilder';
+import Certifications from './components/certification';
+import {
+  setRegularField,
+  addSkill,
+  removeSkill,
+  addExperience,
+  removeExperience,
+  addCertification,
+  removeCertification
+} from '../../actions/cVBuilder';
 import { getSkillLevels } from '../../actions/common';
 import Resources from './resources';
 import { validate as validateSkill } from '../../utils/validators/skill';
 import { validate as validateExperience } from '../../utils/validators/workExperience';
+import { validate as validateCertification } from '../../utils/validators/certification';
 
 class CVBuilder extends Component {
   state = {
@@ -47,6 +57,13 @@ class CVBuilder extends Component {
     return validationResult;
   }
 
+  tryAddCertification = (certification) => {
+    const validationResult = validateCertification(certification, this.props.certifications);
+
+    validationResult.isValid() && this.props.addCertification(certification);
+
+    return validationResult;
+  }
 
   render() {
     const {
@@ -57,7 +74,8 @@ class CVBuilder extends Component {
       phoneNumber,
       skills,
       skillLevels,
-      workExperience
+      workExperience,
+      certifications
     } = this.props;
 
     return (
@@ -82,6 +100,11 @@ class CVBuilder extends Component {
           addExperience={this.tryAddExperience}
           removeExperience={this.props.removeExperience}
         />
+        <Certifications
+          certifications={certifications}
+          addCertification={this.tryAddCertification}
+          removeCertification={this.props.removeCertification}
+        />
         <Contact
           email={email}
           phoneNumber={phoneNumber}
@@ -104,7 +127,9 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   addSkill,
   removeSkill,
   addExperience,
-  removeExperience
+  removeExperience,
+  addCertification,
+  removeCertification
 }, dispatch);
 
 CVBuilder.propTypes = {
@@ -115,11 +140,14 @@ CVBuilder.propTypes = {
   phoneNumber: PropTypes.string,
   skills: PropTypes.array.isRequired,
   workExperience: PropTypes.array.isRequired,
+  certifications: PropTypes.array.isRequired,
   setRegularField: PropTypes.func.isRequired,
   addSkill: PropTypes.func.isRequired,
   removeSkill: PropTypes.func.isRequired,
   addExperience: PropTypes.func.isRequired,
   removeExperience: PropTypes.func.isRequired,
+  addCertification: PropTypes.func.isRequired,
+  removeCertification: PropTypes.func.isRequired,
   getSkillLevels: PropTypes.func.isRequired,
   skillLevels: PropTypes.array.isRequired
 };

@@ -5,7 +5,9 @@ import {
   ADD_SKILL,
   REMOVE_SKILL,
   ADD_EXPERIENCE,
-  REMOVE_EXPERIENCE
+  REMOVE_EXPERIENCE,
+  ADD_CERTIFICATION,
+  REMOVE_CERTIFICATION
 } from '../../constants/cVBuilder';
 
 const actions = {
@@ -43,6 +45,24 @@ const actions = {
       ...state,
       workExperience: _.reject(state.workExperience,
         we => we.company === company && we.role === role)
+    };
+    return { ...data };
+  },
+  [ADD_CERTIFICATION]: (state, action) => {
+    const data = {
+      ...state,
+      certifications: [...state.certifications, action.payload]
+    };
+    return { ...data };
+  },
+  [REMOVE_CERTIFICATION]: (state, action) => {
+    const { certificateName, finishDate} = action.payload;
+    const data ={
+      ...state,
+      certifications: _.reject(state.certifications,
+        c => c.certificateName === certificateName &&
+        c.finishDate.year === finishDate.year &&
+        c.finishDate.month === finishDate.month)
     };
     return { ...data };
   }
