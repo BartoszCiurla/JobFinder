@@ -27,3 +27,11 @@ export const addCertification = certification => (
 export const removeCertification = certification => (
   { type: types.REMOVE_CERTIFICATION, payload: certification }
 );
+
+export const addEducation = education => (
+  { type: types.ADD_EDUCATION, payload: education }
+);
+
+export const removeEducation = education => (
+  { type: types.REMOVE_EDUCATION, payload: education }
+);

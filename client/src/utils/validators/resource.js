@@ -18,5 +18,6 @@ export default {
   wrongDate: 'data rozpoczęcia powinna być mniejsza niż data zakończenia',
   certificateName: 'prosimy o podanie nazwy certyfikatu',
   repeatedCertification: 'taki certifikat już został dodany',
-  wrongCertificationDate: 'nieprawidłowa data'
+  wrongCertificationDate: 'nieprawidłowa data',
+  schoolName: 'prosimy o wypełnienie nazwy szkoły, uczelni',
 };

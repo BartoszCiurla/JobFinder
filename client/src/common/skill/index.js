@@ -20,11 +20,12 @@ class Skills extends Component {
   }
 
   render() {
-    const {skills, skillLevels, title} = this.props;
+    const {skills, skillLevels, title, tips} = this.props;
 
     return (
       <div>
-        <h2>{title}</h2>
+        <h1>{title}</h1>
+        <h2>{tips}</h2>
         {this.renderAddedSkills()}
         <Skill
           key="AddSkill"
@@ -39,6 +40,7 @@ class Skills extends Component {
 
 Skills.propTypes = {
   title: PropTypes.string.isRequired,
+  tips: PropTypes.string.isRequired,
   skills: PropTypes.array.isRequired,
   addSkill: PropTypes.func.isRequired,
   removeSkill: PropTypes.func.isRequired,

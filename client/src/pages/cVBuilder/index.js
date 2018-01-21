@@ -9,6 +9,7 @@ import WorkExperience from './components/workExperience';
 import Contact from './components/Contact';
 import Skills from '../../common/skill';
 import Certifications from './components/certification';
+import Educations from './components/education';
 import {
   setRegularField,
   addSkill,
@@ -16,13 +17,16 @@ import {
   addExperience,
   removeExperience,
   addCertification,
-  removeCertification
+  removeCertification,
+  addEducation,
+  removeEducation
 } from '../../actions/cVBuilder';
 import { getSkillLevels } from '../../actions/common';
 import Resources from './resources';
 import { validate as validateSkill } from '../../utils/validators/skill';
 import { validate as validateExperience } from '../../utils/validators/workExperience';
 import { validate as validateCertification } from '../../utils/validators/certification';
+import { validate as validateEducation} from '../../utils/validators/education';
 
 class CVBuilder extends Component {
   state = {
@@ -65,6 +69,14 @@ class CVBuilder extends Component {
     return validationResult;
   }
 
+  tryAddEducation = (education) => {
+    const validationResult = validateEducation(education, this.props.educations);
+
+    validationResult.isValid() && this.props.addEducation(education);
+
+    return validationResult;
+  }
+
   render() {
     const {
       name,
@@ -75,11 +87,12 @@ class CVBuilder extends Component {
       skills,
       skillLevels,
       workExperience,
-      certifications
+      certifications,
+      educations
     } = this.props;
 
     return (
-      <div>
+      <form>
         <PersonInformation
           name={name}
           roleTitle={roleTitle}
@@ -87,23 +100,30 @@ class CVBuilder extends Component {
           getErrorMessage={this.getErrorMessage}
           setRegularField={this.setRegularField}
         />
+        <WorkExperience
+          title={Resources.workExperienceTitle}
+          tips={Resources.workExperienceTips}
+          workExperience={workExperience}
+          addExperience={this.tryAddExperience}
+          removeExperience={this.props.removeExperience}
+        />
         <Skills
            title={Resources.skillTitle}
+           tips={Resources.skillTips}
            skills={skills}
            addSkill={this.tryAddSkill}
            removeSkill={this.props.removeSkill}
            skillLevels={skillLevels}
         />
-        <WorkExperience
-          title={Resources.workExperienceTitle}
-          workExperience={workExperience}
-          addExperience={this.tryAddExperience}
-          removeExperience={this.props.removeExperience}
-        />
         <Certifications
           certifications={certifications}
           addCertification={this.tryAddCertification}
           removeCertification={this.props.removeCertification}
+        />
+        <Educations
+          educations={educations}
+          addEducation={this.tryAddEducation}
+          removeEducation={this.props.removeEducation}
         />
         <Contact
           email={email}
@@ -111,7 +131,7 @@ class CVBuilder extends Component {
           getErrorMessage={this.getErrorMessage}
           setRegularField={this.setRegularField}
         />
-      </div>
+      </form>
     );
   }
 }
@@ -129,7 +149,9 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   addExperience,
   removeExperience,
   addCertification,
-  removeCertification
+  removeCertification,
+  addEducation,
+  removeEducation
 }, dispatch);
 
 CVBuilder.propTypes = {
@@ -141,6 +163,7 @@ CVBuilder.propTypes = {
   skills: PropTypes.array.isRequired,
   workExperience: PropTypes.array.isRequired,
   certifications: PropTypes.array.isRequired,
+  educations: PropTypes.array.isRequired,
   setRegularField: PropTypes.func.isRequired,
   addSkill: PropTypes.func.isRequired,
   removeSkill: PropTypes.func.isRequired,
@@ -148,6 +171,8 @@ CVBuilder.propTypes = {
   removeExperience: PropTypes.func.isRequired,
   addCertification: PropTypes.func.isRequired,
   removeCertification: PropTypes.func.isRequired,
+  addEducation: PropTypes.func.isRequired,
+  removeEducation: PropTypes.func.isRequired,
   getSkillLevels: PropTypes.func.isRequired,
   skillLevels: PropTypes.array.isRequired
 };

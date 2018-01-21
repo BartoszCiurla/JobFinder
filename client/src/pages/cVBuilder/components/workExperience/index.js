@@ -21,12 +21,14 @@ class WorkExperience extends Component {
 
   render() {
     const {
-      title
+      title,
+      tips
     } = this.props;
 
     return (
       <div>
-        <h2>{title}</h2>
+        <h1>{title}</h1>
+        <h2>{tips}</h2>
         {this.renderAddedExperience()}
         <Experience
           addExperience={this.props.addExperience}
@@ -38,6 +40,7 @@ class WorkExperience extends Component {
 
 WorkExperience.propTypes = {
   title: PropTypes.string.isRequired,
+  tips: PropTypes.string.isRequired,
   workExperience: PropTypes.array.isRequired,
   addExperience: PropTypes.func.isRequired,
   removeExperience: PropTypes.func.isRequired,

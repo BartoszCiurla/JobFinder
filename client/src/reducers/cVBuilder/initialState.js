@@ -4,7 +4,7 @@ export default {
   aboutYout: '',
   email: '',
   phoneNumber: '',
-  education: [],
+  educations: [],
   workExperience: [],
   skills: [],
   certifications: [],
