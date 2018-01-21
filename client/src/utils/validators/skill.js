@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { resultFactory, isValid } from './common';
 import Resources from './resource';
 
-export const validate = (skill, skillLevel, addedSkills) => {
+export const validate = ({skill, skillLevel, addedSkills}) => {
   const result = resultFactory();
 
   !isValid(skill) &&

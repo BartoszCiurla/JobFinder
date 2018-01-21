@@ -10,8 +10,9 @@ const createDate = (date) => {
   return new Date(date.year, date.month);
 };
 
-export const validate = ({ certificateName, finishDate}, certifications) => {
+export const validate = ({ certification, certifications }) => {
   const result = resultFactory();
+  const { certificateName, finishDate } = certification;
   const finish = createDate(finishDate);
 
   !isValid(certificateName) &&
@@ -32,7 +33,7 @@ export const validate = ({ certificateName, finishDate}, certifications) => {
   _.find(certifications, c => c.certificateName === certificateName
     && c.finishDate.month === finishDate.month
     && c.finishDate.year === finishDate.year) &&
-    result.update('certifacteName', Resources.repeatedCertification);
+    result.update('certificateName', Resources.repeatedCertification);
 
   return result;
 };

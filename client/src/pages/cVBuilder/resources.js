@@ -11,4 +11,5 @@ export default {
   aboutYou: 'o Tobie',
   email: 'Adres email ',
   phoneNumber: 'Numer telefonu',
+  send: 'Wyślij'
  };

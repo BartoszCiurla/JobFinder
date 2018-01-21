@@ -20,4 +20,5 @@ export default {
   repeatedCertification: 'taki certifikat już został dodany',
   wrongCertificationDate: 'nieprawidłowa data',
   schoolName: 'prosimy o wypełnienie nazwy szkoły, uczelni',
+  aboutYou: 'prosimy o wypełnienie pola'
 };

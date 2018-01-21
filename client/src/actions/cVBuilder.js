@@ -1,4 +1,8 @@
 import * as types from '../constants/cVBuilder';
+import Api from '../utils/api';
+import {format} from '../utils/formatters/cv';
+
+const defaultErrorMessage = (error) => console.log(`Occured some errors, do something with that! ${error}`);
 
 export const setRegularField = regularNameAndValue => (
   { type: types.SET_REGULAR_FIELD_CVB, payload: regularNameAndValue }
@@ -35,3 +39,11 @@ export const addEducation = education => (
 export const removeEducation = education => (
   { type: types.REMOVE_EDUCATION, payload: education }
 );
+
+export const createCV = (props) => (dispatch, getState) => {
+  const body = {...format(props), userId : getState().account.activeUser.id};
+
+  Api.post('api/Employee/CreateCV', body)
+  .then(true)
+  .catch(defaultErrorMessage);
+};

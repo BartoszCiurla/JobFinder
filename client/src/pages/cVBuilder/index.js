@@ -19,7 +19,8 @@ import {
   addCertification,
   removeCertification,
   addEducation,
-  removeEducation
+  removeEducation,
+  createCV
 } from '../../actions/cVBuilder';
 import { getSkillLevels } from '../../actions/common';
 import Resources from './resources';
@@ -27,54 +28,35 @@ import { validate as validateSkill } from '../../utils/validators/skill';
 import { validate as validateExperience } from '../../utils/validators/workExperience';
 import { validate as validateCertification } from '../../utils/validators/certification';
 import { validate as validateEducation} from '../../utils/validators/education';
+import { validate as validateCV} from '../../utils/validators/cv';
 
 class CVBuilder extends Component {
   state = {
     errors: [],
   }
 
-  componentWillMount() {
-    _.isEmpty(this.props.skillLevels) && this.props.getSkillLevels();
-  }
+  componentWillMount = () => (_.isEmpty(this.props.skillLevels) && this.props.getSkillLevels())
 
-  getErrorMessage = (name) => (
-    (_.find(this.state.errors, e => e.attribute === name) || { message: '' }).message
-  )
+  getErrorMessage = (name) => ((_.find(this.state.errors, e => e.attribute === name) || { message: '' }).message)
 
-  setRegularField = ({ target: { name, value } }) => {
-    this.props.setRegularField({ name, value });
-  }
+  setRegularField = ({ target: { name, value } }) => (this.props.setRegularField({ name, value }))
 
-  tryAddSkill = ({ skill, skillLevel }) => {
-    const validationResult = validateSkill(skill, skillLevel, this.props.skills);
+  tryAddData = (data, validateMethod, validateParameters, callBackAction) => {
+    const validationResult = validateMethod(validateParameters);
 
-    validationResult.isValid() && this.props.addSkill({skill, skillLevel});
+    validationResult.isValid() && callBackAction(data);
 
     return validationResult;
   }
 
-  tryAddExperience = (experience) => {
-    const validationResult = validateExperience(experience);
+  submitForm = () => {
+    const validationResult = validateCV(this.props);
 
-    validationResult.isValid() && this.props.addExperience(experience);
+    this.setState({ errors: validationResult.errors });
 
-    return validationResult;
-  }
+    validationResult.isValid() && this.props.createCV(this.props);
 
-  tryAddCertification = (certification) => {
-    const validationResult = validateCertification(certification, this.props.certifications);
-
-    validationResult.isValid() && this.props.addCertification(certification);
-
-    return validationResult;
-  }
-
-  tryAddEducation = (education) => {
-    const validationResult = validateEducation(education, this.props.educations);
-
-    validationResult.isValid() && this.props.addEducation(education);
-
-    return validationResult;
+    //todo reset redux if ok
   }
 
   render() {
@@ -92,7 +74,7 @@ class CVBuilder extends Component {
     } = this.props;
 
     return (
-      <form>
+      <div>
         <PersonInformation
           name={name}
           roleTitle={roleTitle}
@@ -104,25 +86,45 @@ class CVBuilder extends Component {
           title={Resources.workExperienceTitle}
           tips={Resources.workExperienceTips}
           workExperience={workExperience}
-          addExperience={this.tryAddExperience}
+          addExperience={exp => this.tryAddData(
+            exp,
+            validateExperience,
+            exp,
+            this.props.addExperience
+          )}
           removeExperience={this.props.removeExperience}
         />
         <Skills
            title={Resources.skillTitle}
            tips={Resources.skillTips}
            skills={skills}
-           addSkill={this.tryAddSkill}
+           addSkill={({skill, skillLevel}) => this.tryAddData(
+             {skill, skillLevel},
+             validateSkill,
+             {skill, skillLevel, skills},
+             this.props.addSkill
+          )}
            removeSkill={this.props.removeSkill}
            skillLevels={skillLevels}
         />
         <Certifications
           certifications={certifications}
-          addCertification={this.tryAddCertification}
+          addCertification={(certification) => this.tryAddData(
+            certification,
+            validateCertification,
+            {certification, certifications},
+            this.props.addCertification
+          )}
           removeCertification={this.props.removeCertification}
         />
         <Educations
           educations={educations}
-          addEducation={this.tryAddEducation}
+          addEducation={(education) => this.tryAddData(
+            education,
+            validateEducation,
+            education,
+            this.props.addEducation
+          )}
           removeEducation={this.props.removeEducation}
         />
         <Contact
@@ -131,7 +133,8 @@ class CVBuilder extends Component {
           getErrorMessage={this.getErrorMessage}
           setRegularField={this.setRegularField}
         />
-      </form>
+        <button onClick={this.submitForm}>{Resources.send}</button>
+      </div>
     );
   }
 }
@@ -151,7 +154,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   addCertification,
   removeCertification,
   addEducation,
-  removeEducation
+  removeEducation,
+  createCV
 }, dispatch);
 
 CVBuilder.propTypes = {
@@ -173,6 +177,7 @@ CVBuilder.propTypes = {
   removeCertification: PropTypes.func.isRequired,
   addEducation: PropTypes.func.isRequired,
   removeEducation: PropTypes.func.isRequired,
+  createCV: PropTypes.func.isRequired,
   getSkillLevels: PropTypes.func.isRequired,
   skillLevels: PropTypes.array.isRequired
 };
