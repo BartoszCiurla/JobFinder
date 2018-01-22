@@ -14,7 +14,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 namespace JobFinder.WebApi.Controllers
 {
-  [Authorize(Roles = "Admin")]
   [Route("api/[controller]")]
   public class AccountController : BaseController
   {

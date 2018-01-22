@@ -42,7 +42,8 @@ namespace JobFinder.Infrastructure
                var connectionString = configuration.GetConnectionString("JobFinderDatabase");
 
                var options = new DbContextOptionsBuilder<JobFinderContext>()
-                .UseInMemoryDatabase(databaseName: "JustTest")
+                // .UseInMemoryDatabase(databaseName: "JustTest")
+                .UseSqlServer(connectionString, b => b.MigrationsAssembly("JobFinder.DbMigration"))
                 .Options;
 
                return new JobFinderContext(options);
