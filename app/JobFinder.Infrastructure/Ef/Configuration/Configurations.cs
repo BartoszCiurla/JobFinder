@@ -10,16 +10,16 @@ namespace JobFinder.Infrastructure.Ef.Configurations
   {
     public override void Map(EntityTypeBuilder<CV> builder)
     {
-      builder.ToTable (nameof (CV), SchemaName.JobFinder);
+      builder.ToTable(nameof(CV), SchemaName.JobFinder);
     }
   }
   #endregion
   #region Users
-  public class UserConfiguratinon : EntityMappingConfiguration<JobFinderUser>
+  public class UserConfiguratinon : EntityMappingConfiguration<User>
   {
-    public override void Map (EntityTypeBuilder<JobFinderUser> builder)
+    public override void Map(EntityTypeBuilder<User> builder)
     {
-      builder.ToTable (nameof (JobFinderUser), SchemaName.JobFinder);
+      builder.ToTable(nameof(User), SchemaName.JobFinder);
     }
   }
   #endregion

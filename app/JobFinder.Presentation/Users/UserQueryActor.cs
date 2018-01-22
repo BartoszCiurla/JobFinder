@@ -19,7 +19,7 @@ namespace JobFinder.Presentation.Users
     {
       await HandleQuery(query, (uow) =>
       {
-        var userReadOnlyRepository = uow.GetRepository<JobFinderUser>();
+        var userReadOnlyRepository = uow.GetRepository<User>();
         return new GetUsersResult(userReadOnlyRepository.Query().Select(uror => new UserDetailsDto(uror.Name, uror.Email)).ToList());
       });
     }

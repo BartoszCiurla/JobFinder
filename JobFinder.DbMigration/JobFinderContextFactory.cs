@@ -1,32 +1,28 @@
-using System.Runtime.InteropServices;
+using System;
+using System.IO;
+using System.Reflection;
 using JobFinder.Infrastructure.Ef;
+using JobFinder.Infrastructure.Ef.Configuration;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
 namespace JobFinder.DbMigration
 {
     public class JobFinderContextFactory : IDesignTimeDbContextFactory<JobFinderContext>
     {
         public JobFinderContext CreateDbContext(string[] arg)
         {
-            var options = new DbContextOptionsBuilder<JobFinderContext>();
-            options.UseSqlServer(GetConnectionStringForOperatingSystem(),
-                b => b.MigrationsAssembly("JobFinder.DbMigration"));
-            return new JobFinderContext(options.Options);
-        }
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", true, true)
+                .Build();
 
-        //todo i got big problem here, because this project run only when i made migration so i don't have access to configuration ...
-        private static string GetConnectionStringForOperatingSystem()
-        {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                return "Server = localhost\\SQLEXPRESS; Database = JobFinder; Trusted_Connection = True;";
-            }
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
-                return "Data Source=localhost;Database=JobFinder;User Id=SA;Password=Pa$$word;";
-            }
-            return "";
+            var options = new DbContextOptionsBuilder<JobFinderContext>()
+                .UseSqlServer(configuration.GetConnectionString(PlatformConfiguration.GetRuntimeInformation()),
+                    b => b.MigrationsAssembly("JobFinder.DbMigration")).Options;
+
+            return new JobFinderContext(options);
         }
     }
 }

@@ -86,7 +86,7 @@ namespace JobFinder.WebApi.Authorization
       await context.Response.WriteAsync(JsonConvert.SerializeObject(response, new JsonSerializerSettings { Formatting = Formatting.Indented }));
     }
 
-    private async Task<ClaimsIdentity> GetIdentity(JobFinderUser user, StringValues userEmail, StringValues password)
+    private async Task<ClaimsIdentity> GetIdentity(User user, StringValues userEmail, StringValues password)
     {
       var userValidatedPassword = await _userAuthorizationService.CheckPasswordAsync(user, password);
 

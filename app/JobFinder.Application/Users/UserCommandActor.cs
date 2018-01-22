@@ -22,10 +22,10 @@ namespace JobFinder.Application.Users
     {
       await HandleCommand (command, async uow =>
       {
-        var userRepository = uow.GetRepository<JobFinderUser> ();
+        var userRepository = uow.GetRepository<User> ();
         var salt = _passwordCryptoService.GenerateSalt ();
         var passwordHash = _passwordCryptoService.HashPassword (command.Password, salt);
-        var user = JobFinderUser.Create (Guid.NewGuid (), command.Name, command.Surname, command.Email, passwordHash, salt, (UserType)Enum.Parse(typeof(UserType), command.UserType));
+        var user = User.Create (Guid.NewGuid (), command.Name, command.Surname, command.Email, passwordHash, salt, (UserType)Enum.Parse(typeof(UserType), command.UserType));
         userRepository.Add (user);
         await userRepository.SaveChangesAsync ();
       });

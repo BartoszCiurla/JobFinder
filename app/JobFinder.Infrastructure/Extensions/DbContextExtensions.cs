@@ -9,19 +9,19 @@ namespace JobFinder.Infrastructure.Ef.Extensions
   {
     public static void EnsureSeedData(this JobFinderContext JobFinderContext, IPasswordCryptoService passwordCryptoService)
     {
-      var JobFinderUsers = JobFinderContext.Set<JobFinderUser>();
+      var users = JobFinderContext.Set<User>();
 
-      if (!JobFinderUsers.AnyAsync(bu => bu.UserType == UserType.Admin).Result)
+      if (!users.AnyAsync(bu => bu.UserType == UserType.Admin).Result)
       {
         SeedUser("Admin", "Admin", "admin@gmail.com", "admin1234", UserType.Admin, passwordCryptoService, JobFinderContext);
       }
 
-      if (!JobFinderUsers.AnyAsync(bu => bu.UserType == UserType.Employer).Result)
+      if (!users.AnyAsync(bu => bu.UserType == UserType.Employer).Result)
       {
         SeedUser("Employer", "Employer", "Employer@gmail.com", "Employer1234", UserType.Employer, passwordCryptoService, JobFinderContext);
       }
 
-      if (!JobFinderUsers.AnyAsync(bu => bu.UserType == UserType.Employee).Result)
+      if (!users.AnyAsync(bu => bu.UserType == UserType.Employee).Result)
       {
         SeedUser("Employee", "Employee", "Employee@gmail.com", "Employee1234", UserType.Employee, passwordCryptoService, JobFinderContext);
       }
@@ -39,8 +39,8 @@ namespace JobFinder.Infrastructure.Ef.Extensions
     {
       var salt = passwordCryptoService.GenerateSalt();
       var passwordHash = passwordCryptoService.HashPassword(password, salt);
-      var user = JobFinderUser.Create(Guid.NewGuid(), name, surname, email, passwordHash, salt, userType);
-      await JobFinderContext.Set<JobFinderUser>().AddAsync(user);
+      var user = User.Create(Guid.NewGuid(), name, surname, email, passwordHash, salt, userType);
+      await JobFinderContext.Set<User>().AddAsync(user);
     }
   }
 }

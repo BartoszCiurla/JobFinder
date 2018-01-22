@@ -13,7 +13,7 @@ using System;
 namespace JobFinder.DbMigration.Migrations
 {
     [DbContext(typeof(JobFinderContext))]
-    [Migration("20180122110414_Init")]
+    [Migration("20180122204543_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -127,7 +127,7 @@ namespace JobFinder.DbMigration.Migrations
                     b.ToTable("CVSkill");
                 });
 
-            modelBuilder.Entity("JobFinder.Domain.Users.Entities.JobFinderUser", b =>
+            modelBuilder.Entity("JobFinder.Domain.Users.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -150,7 +150,7 @@ namespace JobFinder.DbMigration.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("JobFinderUser","JobFinder");
+                    b.ToTable("User","JobFinder");
                 });
 
             modelBuilder.Entity("JobFinder.Domain.CVs.Entities.CVCertificate", b =>

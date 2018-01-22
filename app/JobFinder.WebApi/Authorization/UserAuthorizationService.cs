@@ -17,8 +17,8 @@ namespace JobFinder.WebApi.Authorization
 {
   public interface IUserAuthorizationService
   {
-    Task<JobFinderUser> FindByEmailAsync(StringValues userEmail);
-    Task<bool> CheckPasswordAsync(JobFinderUser user, StringValues password);
+    Task<User> FindByEmailAsync(StringValues userEmail);
+    Task<bool> CheckPasswordAsync(User user, StringValues password);
   }
 
   public class UserAuthorizationService : IUserAuthorizationService
@@ -38,16 +38,16 @@ namespace JobFinder.WebApi.Authorization
       _unitOfWork = unitOfWork;
     }
 
-    public async Task<JobFinderUser> FindByEmailAsync(StringValues userEmail)
+    public async Task<User> FindByEmailAsync(StringValues userEmail)
     {
-      JobFinderUser result = null;
+      User result = null;
       if (userEmail.Count >= 1)
       {
-        result = await _readOnlyUnitOfWork.GetRepository<JobFinderUser>().Query().FirstOrDefaultAsync(x => x.Email.ToLower() == userEmail[0].ToLower());
+        result = await _readOnlyUnitOfWork.GetRepository<User>().Query().FirstOrDefaultAsync(x => x.Email.ToLower() == userEmail[0].ToLower());
       }
       return result;
     }
-    public async Task<bool> CheckPasswordAsync(JobFinderUser user, StringValues password)
+    public async Task<bool> CheckPasswordAsync(User user, StringValues password)
     {
       var result = false;
       if (password.Count >= 1)
@@ -58,7 +58,7 @@ namespace JobFinder.WebApi.Authorization
       if (result)
       {
         user.UpdateLastLoginDate();
-        await _unitOfWork.GetRepository<JobFinderUser>().SaveChangesAsync();
+        await _unitOfWork.GetRepository<User>().SaveChangesAsync();
       }
       return result;
     }

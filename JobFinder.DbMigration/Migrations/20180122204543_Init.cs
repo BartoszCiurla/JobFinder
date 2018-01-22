@@ -30,7 +30,7 @@ namespace JobFinder.DbMigration.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "JobFinderUser",
+                name: "User",
                 schema: "JobFinder",
                 columns: table => new
                 {
@@ -46,7 +46,7 @@ namespace JobFinder.DbMigration.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_JobFinderUser", x => x.Id);
+                    table.PrimaryKey("PK_User", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -174,7 +174,7 @@ namespace JobFinder.DbMigration.Migrations
                 name: "CVSkill");
 
             migrationBuilder.DropTable(
-                name: "JobFinderUser",
+                name: "User",
                 schema: "JobFinder");
 
             migrationBuilder.DropTable(
