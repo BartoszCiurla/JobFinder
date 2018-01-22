@@ -6,6 +6,7 @@ using JobFinder.Infrastructure.Ef;
 using Serilog;
 using System.IO;
 using Microsoft.Extensions.Configuration;
+using System.Runtime.InteropServices;
 
 namespace JobFinder.Infrastructure
 {
@@ -39,10 +40,10 @@ namespace JobFinder.Infrastructure
       builder.Register(ctx =>
              {
                var configuration = ctx.Resolve<IConfiguration>();
-               var connectionString = configuration.GetConnectionString("JobFinderDatabase");
+               var connectionString = configuration.GetConnectionString(GetForOperatingSystem());
 
                var options = new DbContextOptionsBuilder<JobFinderContext>()
-                // .UseInMemoryDatabase(databaseName: "JustTest")
+                // .UseInMemoryDatabase(databaseName: "JustTest") //for fast tests without db
                 .UseSqlServer(connectionString, b => b.MigrationsAssembly("JobFinder.DbMigration"))
                 .Options;
 
@@ -50,6 +51,19 @@ namespace JobFinder.Infrastructure
              })
              .As<DbContext>()
              .InstancePerDependency();
+    }
+
+    private static string GetForOperatingSystem()
+    {
+      if(RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+      {
+        return "JobFinderDbWindows";
+      }
+
+      if(RuntimeInformation.IsOSPlatform(OSPlatform.Linux)){
+        return "JobFinderDbLinux";
+      }
+      return "";
     }
   }
 }
