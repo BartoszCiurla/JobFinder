@@ -8,7 +8,7 @@ import Signup from './signup';
 import Login from './login';
 import JobOfferBuilder from './jobOfferBuilder';
 import cVBuilder from './cVBuilder/';
-import GlobalHeader from '../common/GlobalHeader';
+import GlobalHeader from '../common/globalHeader';
 
 import Routes from '../constants/routes';
 

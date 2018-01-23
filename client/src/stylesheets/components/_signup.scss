@@ -1,0 +1,19 @@
+.signup-container {
+  animation: fadeIn 1s forwards;
+  padding-top: 15vh;
+  padding-bottom: 15vh;
+  display: flex;
+  justify-content: center;
+  align-items:center;
+
+  .form {
+    width: 480px;
+    align-items: center;
+    margin-left: 2vw;
+    margin-right: 2vw;
+    .title {
+      text-align: center;
+      font-size: $type-h3
+    }
+  }
+}

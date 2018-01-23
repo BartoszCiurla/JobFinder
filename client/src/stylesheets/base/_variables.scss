@@ -1,0 +1,43 @@
+// Colors
+$color-dark: #2d3237;
+$color-secondary: #0092ff;
+$color-accent: #85919a;
+$color-action: #f2442e;
+$color-shade: #57626b;
+$background-shade: #475360;
+
+// Font Families
+$font-primary: "jaf-bernino-sans-condensed", "Franklin Gothic", "ITC Franklin Gothic", "Arial Narrow", sans-serif;
+$font-secondary: "jaf-bernino-sans", Helvetica, Arial, "Lucida Grande", sans-serif;
+$font-heading: "industry", sans-serif;
+
+// Font Sizes
+$type-micro: 13px;
+$type-small: 14px;
+$type-base: 16px;
+$type-medium: 22px;
+$type-h6: 18px;
+$type-h5: 22px;
+$type-h4: 24px;
+$type-h3: 28px;
+$type-h2: 36px;
+$type-h1: 48px;
+
+// Font Weights
+$font-weight-regular: 400;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+$font-weight-extrabold: 800;
+
+// Padding/Margin Blocking
+$spacing-micro: 5px;
+$spacing-m-s: 7px;
+$spacing-small: 13px;
+$spacing-medium: 17px;
+$spacing-large: 24px;
+$spacing-xlarge: 30px;
+$spacing-xxlarge: 42px;
+$spacing-xxxxlarge:250px;
+
+// Transition
+$bezier: cubic-bezier(.33, 0, .2, 1);

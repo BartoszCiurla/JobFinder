@@ -1,0 +1,24 @@
+a {
+  color: $color-secondary;
+  text-decoration: none;
+  text-transform: none;
+  transition: all .15s $bezier;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: $color-shade;
+  line-height: 1;
+  margin-bottom: $spacing-small;
+  text-transform: uppercase;
+}
+
+h1, h2, h3, h4 {
+  font-weight: $font-weight-semibold;
+  font-family: $font-primary;
+}
+
+h5, h6 {
+  font-family: $font-secondary;
+  font-weight: $font-weight-regular;
+  text-transform: none;
+}

@@ -1,0 +1,28 @@
+input,
+select,
+textarea {
+  appearance: none; //remove default dropdown icon
+  outline: none;
+}
+
+.input,
+.textarea
+.select {
+  background: white;
+  border: 1px solid $background-shade;
+  border-radius: 5px;
+  color: $color-shade;
+  font-family: $font-primary;
+  font-size: $type-base;
+  margin: 0 0 $spacing-medium;
+  outline: none;
+  padding: $spacing-small $spacing-small;
+  transition: border-color .15s $bezier;
+  width: 100%;
+  @include input-placeholder {
+    color: rgba($color-accent, .6);
+  }
+  &:focus {
+    border-color: $color-secondary;
+  }
+}

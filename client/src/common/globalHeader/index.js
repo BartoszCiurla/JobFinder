@@ -5,9 +5,9 @@ import { bindActionCreators } from 'redux';
 import { NavLink, withRouter } from 'react-router-dom';
 import { withCookies, Cookies } from 'react-cookie';
 
-import { setActiveUser, removeActiveUser} from '../actions/account';
-import Routes from '../constants/routes';
-import Resources from './resource';
+import { setActiveUser, removeActiveUser } from '../../actions/account';
+import Routes from '../../constants/routes';
+import Resources from './resources';
 
 export class GlobalHeader extends Component {
   componentWillMount() {
@@ -17,24 +17,18 @@ export class GlobalHeader extends Component {
     activeUser && this.props.setActiveUser(activeUser);
   }
 
-  renderNavLink = (path, description) => {
-    const activeStyle = { color: 'blue' };
+  renderNavLink = (path, description) => (<NavLink className="btn ghost transparent" key={description} to={path}>{description}</NavLink>)
 
-    return <NavLink key={description} to={path} activeStyle={activeStyle}>{description}</NavLink>;
-  }
 
   renderAccountLinks = () => {
-    const {activeUser} = this.props;
+    const { activeUser } = this.props;
 
     return activeUser ?
-    [
-      <button key="LogOut" onClick={this.logout}>{Resources.logout}</button>,
-      <div key="UserEmail">{activeUser.email}</div>
-    ]
-    :[
-      this.renderNavLink(Routes.signup, Resources.signup),
-      this.renderNavLink(Routes.login, Resources.login),
-    ];
+      <a className="btn ghost transparent" key="LogOut" onClick={this.logout} >{Resources.logout}</a>
+      : [
+        this.renderNavLink(Routes.signup, Resources.signup),
+        this.renderNavLink(Routes.login, Resources.login),
+      ];
   }
 
   logout = () => {
@@ -43,19 +37,19 @@ export class GlobalHeader extends Component {
   }
 
   renderUserOptionsLinks = () => {
-    const {activeUser} = this.props;
+    const { activeUser } = this.props;
 
-    if(!activeUser){
+    if (!activeUser) {
       return null;
     }
 
-    if(activeUser.userType === 'Employer'){
+    if (activeUser.userType === 'Employer') {
       return [
         this.renderNavLink(Routes.jobOfferBuilder, Resources.jobOfferBuilder)
       ];
     }
 
-    if(activeUser.userType === 'Employee'){
+    if (activeUser.userType === 'Employee') {
       return [
         this.renderNavLink(Routes.cVBuilder, Resources.cVBuilder)
       ];
@@ -65,13 +59,12 @@ export class GlobalHeader extends Component {
   }
 
   render() {
-    const activeStyle = { color: 'blue' };
-
     return (
-      <div>
-         <NavLink exact to={Routes.homePage} activeStyle={activeStyle}>{Resources.home}</NavLink>
-         {this.renderAccountLinks()}
-         {this.renderUserOptionsLinks()}
+      <div className="header">
+        <div className="header-right">
+          {this.renderAccountLinks()}
+          {this.renderUserOptionsLinks()}
+        </div>
       </div>
     );
   }

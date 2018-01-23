@@ -1,0 +1,44 @@
+.btn {
+  background: transparent;
+  background-clip: padding-box;
+  border: none;
+  border-radius: 5px;
+  display: inline-block;
+  font: {
+    family: $font-primary;
+    size: $type-h6;
+    weight: $font-weight-semibold;
+  }
+  outline: none;
+  overflow: hidden;
+  padding: 13px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+
+  &.ghost {
+    background: transparent;
+    border: 1px solid $color-dark;
+    color: $color-dark;
+
+    &:hover {
+      background: transparent;
+    }
+    &.transparent {
+      border-color: transparent;
+    }
+  }
+
+  &-primary {
+    background: $color-action;
+    color: white;
+
+    &:hover {
+      background: darken($color-action, 8%);
+    }
+  }
+
+  &.full-width {
+    width: 100%;
+  }
+}

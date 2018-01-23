@@ -28,8 +28,8 @@ export class Login extends Component {
 
     validateResult.isValid() && this.props.login(this.state)
       .then((data) => {
-        if(data){
-          this.props.cookies.set('activeUser',data);
+        if (data) {
+          this.props.cookies.set('activeUser', data);
           this.props.history.push(Routes.homePage);
         }
       });
@@ -58,15 +58,16 @@ export class Login extends Component {
   )
 
   render() {
-    const { email, password, rememberMe } = this.state;
+    const { email, password } = this.state;
 
     return (
-      <div>
-        <h2>{Resources.title}</h2>
-        {this.renderRegularField('email', email, Resources.email)}
-        {this.renderRegularField('password', password, Resources.password, 'password')}
-        {this.renderRegularField('rememberMe', rememberMe, '', 'checkbox')} {Resources.rememberMe}<br/>
-        <button onClick={this.login} className="btn btn-primary full-width">{Resources.submit}</button>
+      <div className="login-container">
+        <div className="form">
+          <h2 className="title">{Resources.title}</h2>
+          {this.renderRegularField('email', email, Resources.email)}
+          {this.renderRegularField('password', password, Resources.password, 'password')}
+          <button onClick={this.login} className="btn btn-primary full-width">{Resources.submit}</button>
+        </div>
       </div>
     );
   }

@@ -24,7 +24,7 @@ export class Signup extends Component {
     errors: []
   }
 
-  componentWillMount(){
+  componentWillMount() {
     _.isEmpty(this.props.userTypes) && this.props.getUserTypes();
   }
 
@@ -61,15 +61,14 @@ export class Signup extends Component {
   renderUserTypeSelector = (userType) => (
     <ValidatedInput errorMessage={this.getErrorMessage('userType')}>
       <select
-          name="userType"
-          className="input"
-          defaultValue={userType}
-          onChange={this.onChange}
-          onKeyPress={this.onKeyPress}
-      >
+        name="userType"
+        className="input"
+        defaultValue={userType}
+        onChange={this.onChange}
+        onKeyPress={this.onKeyPress}>
         <option disabled="disabled" value="">{Resources.userType}</option>
-          {this.props.userTypes.map(ut => <option key={ut} value={ut}>{Resources[ut]}</option>)}
-        </select>
+        {this.props.userTypes.map(ut => <option key={ut} value={ut}>{Resources[ut]}</option>)}
+      </select>
     </ValidatedInput>
   )
 
@@ -77,15 +76,17 @@ export class Signup extends Component {
     const { surname, name, email, password, passwordConfirmation, userType } = this.state;
 
     return (
-      <div>
-        <h2>{Resources.title}</h2>
-        {this.renderRegularField('surname', surname, Resources.surname)}
-        {this.renderRegularField('name', name, Resources.name)}
-        {this.renderRegularField('email', email, Resources.email)}
-        {this.renderUserTypeSelector(userType)}
-        {this.renderRegularField('password', password, Resources.password, 'password')}
-        {this.renderRegularField('passwordConfirmation', passwordConfirmation, Resources.passwordConfirmation, 'password')}
-        <button onClick={this.createAccount} className="btn btn-primary full-width">{Resources.submit}</button>
+      <div className="signup-container">
+        <div className="form">
+          <h2 className="title">{Resources.title}</h2>
+          {this.renderRegularField('surname', surname, Resources.surname)}
+          {this.renderRegularField('name', name, Resources.name)}
+          {this.renderRegularField('email', email, Resources.email)}
+          {this.renderUserTypeSelector(userType)}
+          {this.renderRegularField('password', password, Resources.password, 'password')}
+          {this.renderRegularField('passwordConfirmation', passwordConfirmation, Resources.passwordConfirmation, 'password')}
+          <button onClick={this.createAccount} className="btn btn-primary full-width">{Resources.submit}</button>
+        </div>
       </div>
     );
   }

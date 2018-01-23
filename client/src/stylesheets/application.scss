@@ -1,2 +1,16 @@
+// Base
+@import './base/_reset.scss';
+@import './base/_variables.scss';
+@import './base/_mixins';
 
+// Layout
+@import './layout/_base.scss';
 
+// Components
+@import './components/_buttons.scss';
+@import './components/_globalHeader.scss';
+@import './components/_login.scss';
+@import './components/_signup.scss';
+@import './components/_type.scss';
+@import './components/_forms.scss';
+@import './components/_animations.scss';
