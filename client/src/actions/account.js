@@ -28,7 +28,7 @@ export const createAccount = (user) => () => (
     .catch(defaultErrorMessage)
 );
 
-export const login = (user) => dispatch => {
+export const login = (user) => () => {
   let formData = new FormData();
   formData.append('email', user.email);
   formData.append('password', user.password);
@@ -41,7 +41,6 @@ export const login = (user) => dispatch => {
     return response.json();
   })
     .then(data => {
-      dispatch(setActiveUser(data));
       return data;
     })
     .catch(() => {

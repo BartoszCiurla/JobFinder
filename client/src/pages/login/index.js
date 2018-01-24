@@ -30,7 +30,8 @@ export class Login extends Component {
       .then((data) => {
         if (data) {
           this.props.cookies.set('activeUser', data);
-          this.props.history.push(Routes.homePage);
+          const userType = data.userType.toLowerCase();
+          this.props.history.push(Routes[userType]);
         }
       });
   }
@@ -73,12 +74,8 @@ export class Login extends Component {
   }
 }
 
-const mapStateToProps = ({ account }) => ({
-  activeUser: account.activeUser
-});
-
 const mapDispatchToProps = dispatch => bindActionCreators({
-  login
+  login,
 }, dispatch);
 
 Login.propTypes = {
@@ -87,4 +84,4 @@ Login.propTypes = {
   cookies: PropTypes.instanceOf(Cookies).isRequired
 };
 
-export default withCookies(withRouter(connect(mapStateToProps, mapDispatchToProps)(Login)));
+export default withCookies(withRouter(connect(null, mapDispatchToProps)(Login)));

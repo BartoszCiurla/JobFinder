@@ -1,31 +1,38 @@
 /* eslint-disable import/no-named-as-default */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { withCookies, Cookies } from 'react-cookie';
+import PrivateRoute from 'react-router-private-route';
 
 import HomePage from './home';
 import Signup from './signup';
 import Login from './login';
-import JobOfferBuilder from './jobOfferBuilder';
-import cVBuilder from './cVBuilder/';
+import Employer from './employer';
+import Employee from './employee';
 import GlobalHeader from '../common/globalHeader';
 
 import Routes from '../constants/routes';
+import { getUserType } from '../utils/auth';
 
-// This is a class-based component because the current
-// version of hot reloading won't hot reload a stateless
-// component at the top-level.
 class App extends Component {
+
   render() {
+    const {
+      isEmployee,
+      isEmployer
+    } = getUserType(this.props.cookies);
+
     return (
       <div>
-        <GlobalHeader/>
+        <GlobalHeader />
         <Switch>
           <Route exact path={Routes.homePage} component={HomePage} />
           <Route path={Routes.signup} component={Signup} />
           <Route path={Routes.login} component={Login} />
-          <Route path={Routes.jobOfferBuilder} component={JobOfferBuilder}/>
-          <Route path={Routes.cVBuilder} component={cVBuilder}/>
+          <PrivateRoute path={Routes.employee} redirect={Routes.login} component={Employee} auth={isEmployee} />
+          <PrivateRoute path={Routes.employer} redirect={Routes.login} component={Employer} auth={isEmployer} />
         </Switch>
       </div>
     );
@@ -34,6 +41,11 @@ class App extends Component {
 
 App.propTypes = {
   children: PropTypes.element,
+  cookies: PropTypes.instanceOf(Cookies).isRequired
 };
 
-export default App;
+const mapStateToProps = ({ routing }) => ({
+  location: routing.location,
+});
+
+export default withCookies(withRouter(connect(mapStateToProps)(App)));
