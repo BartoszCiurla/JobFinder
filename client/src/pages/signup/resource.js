@@ -7,6 +7,7 @@ export default {
   surname: 'Nazwisko',
   name: 'Imie',
   submit: 'Zatwierdź',
+  alreadyHaveAnAccount: '(posiadasz już konto?)',
   Employee: 'Pracownik',
   Employer: 'Pracodawca'
 };

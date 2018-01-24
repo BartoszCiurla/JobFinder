@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, NavLink } from 'react-router-dom';
 import { withCookies, Cookies } from 'react-cookie';
 import _ from 'lodash';
 
@@ -65,6 +65,7 @@ export class Login extends Component {
       <div className="login-container">
         <div className="form">
           <h2 className="title">{Resources.title}</h2>
+          <NavLink className="link" to={Routes.signup}>{Resources.needToCreateAnAccount}</NavLink>
           {this.renderRegularField('email', email, Resources.email)}
           {this.renderRegularField('password', password, Resources.password, 'password')}
           <button onClick={this.login} className="btn btn-primary full-width">{Resources.submit}</button>

@@ -9,12 +9,11 @@ import PrivateRoute from 'react-router-private-route';
 import HomePage from './home';
 import Signup from './signup';
 import Login from './login';
-import Employer from './employer';
-import Employee from './employee';
-import GlobalHeader from '../common/globalHeader';
+import Employer from './dashboard/employer';
+import Employee from './dashboard/employee';
 
 import Routes from '../constants/routes';
-import { getUserType } from '../utils/auth';
+import { getUserTypes } from '../utils/auth';
 
 class App extends Component {
 
@@ -22,11 +21,10 @@ class App extends Component {
     const {
       isEmployee,
       isEmployer
-    } = getUserType(this.props.cookies);
+    } = getUserTypes(this.props.cookies);
 
     return (
       <div>
-        <GlobalHeader />
         <Switch>
           <Route exact path={Routes.homePage} component={HomePage} />
           <Route path={Routes.signup} component={Signup} />

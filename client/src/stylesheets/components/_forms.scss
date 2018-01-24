@@ -26,3 +26,25 @@ textarea {
     border-color: $color-secondary;
   }
 }
+
+.error-message {
+  padding: 10px;
+  font-size: $type-base;
+  font-weight: $font-weight-regular;
+  text-align: left;
+  color: $color-dark;
+  word-wrap: break-word;
+  margin: -12px 0 17px 0;
+  background: $background-dark;
+  border-radius: $border-radius;
+
+  &:after {
+    border: solid transparent;
+    border-bottom-color: $background-dark;
+    border-width: 5px;
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 20px;
+  }
+}

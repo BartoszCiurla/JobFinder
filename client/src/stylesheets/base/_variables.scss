@@ -4,7 +4,10 @@ $color-secondary: #0092ff;
 $color-accent: #85919a;
 $color-action: #f2442e;
 $color-shade: #57626b;
+$color-accent-tint: #d8dee3;
 $background-shade: #475360;
+$background-dark: #DBE0E4;
+$background-tint: #E8ECEF;
 
 // Font Families
 $font-primary: "jaf-bernino-sans-condensed", "Franklin Gothic", "ITC Franklin Gothic", "Arial Narrow", sans-serif;
@@ -41,3 +44,6 @@ $spacing-xxxxlarge:250px;
 
 // Transition
 $bezier: cubic-bezier(.33, 0, .2, 1);
+
+// Borders
+$border-radius: 5px;

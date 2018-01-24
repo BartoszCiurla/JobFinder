@@ -1,6 +1,6 @@
 const authCookie = 'activeUser';
 
-export const getUserType = (cookies) => {
+export const getUserTypes = (cookies) => {
   const user = cookies.get(authCookie);
   let userType = {
     isEmployee: false,
@@ -17,6 +17,11 @@ export const getUserType = (cookies) => {
   return userType;
 };
 
+export const getUserType = (cookies) => {
+  const user = cookies.get(authCookie);
+  return user && user.userType;
+};
+
 export const isAuthenticated = (cookies) => {
   return !!cookies.get(authCookie);
 };
@@ -28,4 +33,9 @@ export const getUserId = (cookies) => {
 
 export const removeCookie = (cookies) => {
   cookies.remove(authCookie);
+};
+
+export const getAccountRoute = (cookies) => {
+  const user = cookies.get(authCookie);
+  return user ? `/${user.userType.toLowerCase()}` : '';
 };

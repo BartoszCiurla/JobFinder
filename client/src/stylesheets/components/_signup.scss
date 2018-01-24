@@ -11,9 +11,16 @@
     align-items: center;
     margin-left: 2vw;
     margin-right: 2vw;
+
     .title {
       text-align: center;
       font-size: $type-h3
+    }
+
+    .link {
+      text-align: center;
+      display: block;
+      margin-bottom: 10px;
     }
   }
 }

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, NavLink } from 'react-router-dom';
 import _ from 'lodash';
 
 import RegularField from '../../common/RegularField';
@@ -79,6 +79,7 @@ export class Signup extends Component {
       <div className="signup-container">
         <div className="form">
           <h2 className="title">{Resources.title}</h2>
+          <NavLink className="link" to={Routes.login}>{Resources.alreadyHaveAnAccount}</NavLink>
           {this.renderRegularField('surname', surname, Resources.surname)}
           {this.renderRegularField('name', name, Resources.name)}
           {this.renderRegularField('email', email, Resources.email)}

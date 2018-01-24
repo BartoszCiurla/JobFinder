@@ -5,17 +5,24 @@ import { withCookies, Cookies } from 'react-cookie';
 
 import Routes from '../../constants/routes';
 import Resources from './resources';
-import { isAuthenticated, removeCookie } from '../../utils/auth';
+import { removeCookie, getUserType } from '../../utils/auth';
 
 class GlobalHeader extends Component {
-  renderNavLink = (path, description) => (<NavLink className="btn ghost transparent" key={description} to={path}>{description}</NavLink>)
+  renderNavLink = (path, description) => (
+    <NavLink className="btn ghost transparent" to={path} key={description}>{description}</NavLink>
+  )
 
   renderAccountLinks = () => {
-    return isAuthenticated(this.props.cookies) ?
-      <a className="btn ghost transparent" key="LogOut" onClick={this.logout} >{Resources.logout}</a>
+    const userType = getUserType(this.props.cookies);
+
+    return userType ?
+      [
+        this.renderNavLink(Routes[userType.toLowerCase()], Resources.dashboard),
+        <a className="btn ghost transparent" key="LogOut" onClick={this.logout} >{Resources.logout}</a>,
+      ]
       : [
         this.renderNavLink(Routes.signup, Resources.signup),
-        this.renderNavLink(Routes.login, Resources.login),
+        this.renderNavLink(Routes.login, Resources.login)
       ];
   }
 
@@ -27,9 +34,11 @@ class GlobalHeader extends Component {
   render() {
     return (
       <div className="header">
-        <div className="header-right">
-          {this.renderAccountLinks()}
+        <NavLink className="btn ghost transparent" to={Routes.homePage}>{Resources.home}</NavLink>
+        <div className="header-center">
+          In develop
         </div>
+        {this.renderAccountLinks()}
       </div>
     );
   }

@@ -1,0 +1,24 @@
+.dashboard-bar {
+  background: $background-tint;
+  min-height: 100px;
+  border-top: 1px solid $color-accent-tint;
+  display: flex;
+
+  .title {
+    color: $color-dark;
+    font-family: $font-heading;
+    font-size: $type-h1;
+    font-weight: $font-weight-regular;
+  }
+
+  .btn-green {
+    background-color: #28bd00;
+    border-radius: 0;
+    color: #fff;
+
+    &:hover {
+      background-color: rgba(40, 189, 0, .7);
+    }
+
+  }
+}

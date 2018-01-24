@@ -3,7 +3,7 @@ export default {
   signup: '/signup',
   login: '/login',
   jobOfferBuilder: '/jobOfferBuilder',
-  cVBuilder: '/cVBuilder',
+  curriculumVitaeBuilder: '/curriculumVitaeBuilder',
   employer: '/employer',
   employee: '/employee'
 };
