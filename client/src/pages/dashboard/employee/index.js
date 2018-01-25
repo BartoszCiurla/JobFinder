@@ -11,16 +11,12 @@ class Employee extends Component {
   render() {
     return (
       <div>
-        <div className="dashboard-header-wrapper">
-          <GlobalHeader />
-          <DashboardBar
-            title={Resources.employeeDashboard}
-            leftNavigateTo={Routes.employee}
-            leftLinkTitle={Resources.refreshTheView}
-            rightNavigateTo={Routes.curriculumVitaeBuilder}
-            rightLinkTitle={Resources.addCV}
-          />
-        </div>
+        <GlobalHeader />
+        <DashboardBar
+          title={Resources.employeeDashboard}
+          navigateTo={Routes.curriculumVitaeBuilder}
+          linkTitle={Resources.addCV}
+        />
         <h1 key>Wybierz swoje cv</h1>
       </div>
     );

@@ -4,22 +4,22 @@ import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 
 const DashboardBar = (props) => {
-  return ([
-    <div key="left" className="aside btn dashboard-bar-left">
-      <NavLink  to={props.leftNavigateTo}>{props.leftLinkTitle}</NavLink>
-    </div>,
-    <div key="center" className="dashboard-bar-center">
-      <h2 key="center" className="">{props.title}</h2>
-    </div>,
-    <NavLink key="right" className="aside btn dashboard-bar-right" to={props.rightNavigateTo}>{props.rightLinkTitle}</NavLink>
-  ]);
+  return (
+    <div className="dashboard-bar">
+      <h2 className="title" >{props.title}</h2>
+      <div className="btn-green">
+        <span>
+          <NavLink to={props.navigateTo}>{props.linkTitle}</NavLink>
+        </span>
+      </div>
+
+    </div>
+  );
 };
 
 DashboardBar.propTypes = {
-  leftNavigateTo: PropTypes.string.isRequired,
-  leftLinkTitle: PropTypes.string.isRequired,
-  rightNavigateTo: PropTypes.string.isRequired,
-  rightLinkTitle: PropTypes.string.isRequired,
+  navigateTo: PropTypes.string.isRequired,
+  linkTitle: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired
 };
 

@@ -5,16 +5,31 @@
   display: flex;
 
   .title {
-    color: $color-dark;
-    font-family: $font-heading;
-    font-size: $type-h1;
-    font-weight: $font-weight-regular;
+    color: #2d3237;
+    font-weight: 700;
+    margin: auto;
+    font-size: 24px;
   }
 
   .btn-green {
+    cursor: pointer;
     background-color: #28bd00;
     border-radius: 0;
-    color: #fff;
+    display: flex;
+    flex: 0.1;
+    text-align: center;
+    padding: 0 25px 0 25px;
+
+    span {
+      a {
+        color: #fff;
+        font-size: $type-h6;
+        text-transform: uppercase;
+      }
+
+      margin: auto;
+      align-self: center;
+    }
 
     &:hover {
       background-color: rgba(40, 189, 0, .7);
@@ -22,3 +37,5 @@
 
   }
 }
+
+

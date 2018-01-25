@@ -14,11 +14,9 @@ h1, h2, h3, h4, h5, h6 {
 
 h1, h2, h3, h4 {
   font-weight: $font-weight-semibold;
-  font-family: $font-primary;
 }
 
 h5, h6 {
-  font-family: $font-secondary;
   font-weight: $font-weight-regular;
   text-transform: none;
 }

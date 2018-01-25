@@ -9,3 +9,8 @@ https://uptowork.com/resume-templates#2
 https://css-tricks.com/snippets/css/a-guide-to-flexbox/
 
 https://codepen.io/anon/pen/Rxzbbg
+
+https://codepen.io/moroshko/pen/ZQLyNK?editors=0010
+
+
+http://www.kluczdokariery.pl/katalogzawodow/zawod,19,5,doradca-podatkowy.html

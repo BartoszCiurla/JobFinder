@@ -3,5 +3,6 @@ export default {
   signup: 'Rejestracja',
   login: 'Logowanie',
   home: 'Home',
-  dashboard: 'Panel'
+  dashboard: 'Panel',
+  logo: 'Jobfinder'
 };

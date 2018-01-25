@@ -12,7 +12,6 @@ textarea {
   border: 1px solid $background-shade;
   border-radius: 5px;
   color: $color-shade;
-  font-family: $font-primary;
   font-size: $type-base;
   margin: 0 0 $spacing-medium;
   outline: none;
@@ -30,6 +29,7 @@ textarea {
 .error-message {
   padding: 10px;
   font-size: $type-base;
+  font-family: $font-primary;
   font-weight: $font-weight-regular;
   text-align: left;
   color: $color-dark;

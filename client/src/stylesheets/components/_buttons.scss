@@ -4,11 +4,9 @@
   border: none;
   border-radius: 5px;
   display: inline-block;
-  font: {
-    family: $font-primary;
-    size: $type-h6;
-    weight: $font-weight-semibold;
-  }
+  font-family: 'Russo One', sans-serif;
+  font-size: $type-h6;
+  font-weight: $font-weight-semibold;
   outline: none;
   overflow: hidden;
   padding: 13px;
