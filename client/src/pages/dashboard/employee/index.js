@@ -14,8 +14,8 @@ class Employee extends Component {
         <GlobalHeader />
         <DashboardBar
           title={Resources.employeeDashboard}
-          navigateTo={Routes.curriculumVitaeBuilder}
-          linkTitle={Resources.addCV}
+          navigateTo={Routes.applicationBuilder}
+          linkTitle={Resources.addApplication}
         />
         <h1 key>Wybierz swoje cv</h1>
       </div>

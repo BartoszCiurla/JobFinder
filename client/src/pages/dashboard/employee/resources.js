@@ -1,5 +1,4 @@
 export default {
- addCV: 'Dodaj cv',
+ addApplication: 'Dodaj cv',
  employeeDashboard: 'Panel pracownika',
- refreshTheView: 'Odśwież widok'
 };

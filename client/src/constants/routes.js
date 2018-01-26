@@ -2,8 +2,8 @@ export default {
   homePage: '/',
   signup: '/signup',
   login: '/login',
-  jobOfferBuilder: '/jobOfferBuilder',
-  curriculumVitaeBuilder: '/curriculumVitaeBuilder',
+  offerBuilder: '/offerBuilder',
+  applicationBuilder: '/applicationBuilder',
   employer: '/employer',
   employee: '/employee'
 };

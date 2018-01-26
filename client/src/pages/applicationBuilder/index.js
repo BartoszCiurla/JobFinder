@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class CurriculumVitaeBuilder extends Component {
+class ApplicationBuilder extends Component {
   render() {
     return (
       <div />
@@ -8,4 +8,4 @@ class CurriculumVitaeBuilder extends Component {
   }
 }
 
-export default CurriculumVitaeBuilder;
+export default ApplicationBuilder;

@@ -48,3 +48,20 @@ textarea {
     left: 20px;
   }
 }
+
+.basic-autocomplete {
+  background: white;
+  border: 1px solid $background-shade;
+  border-radius: 5px;
+  color: $color-shade;
+  font-size: $type-base;
+  overflow: hidden;
+  margin: 0 0 $spacing-medium;
+  transition: border-color .15s $bezier;
+  width: 100%;
+  z-index: $level-99;
+
+  .item {
+    padding: $spacing-m-s;
+  }
+}

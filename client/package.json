@@ -30,6 +30,7 @@
   "license": "MIT",
   "dependencies": {
     "classnames": "2.2.5",
+    "downshift": "1.25.0",
     "lodash": "4.17.4",
     "moment": "2.20.1",
     "object-assign": "4.1.0",

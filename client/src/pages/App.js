@@ -11,8 +11,7 @@ import Signup from './signup';
 import Login from './login';
 import Employer from './dashboard/employer';
 import Employee from './dashboard/employee';
-import JobOfferBuilder from './jobOfferBuilder';
-//import CVBuilder from './cVBuilder';
+import OfferBuilder from './offerBuilder';
 
 import Routes from '../constants/routes';
 import { getUserTypes } from '../utils/auth';
@@ -33,7 +32,7 @@ class App extends Component {
           <Route path={Routes.login} component={Login} />
           <PrivateRoute path={Routes.employee} redirect={Routes.login} component={Employee} auth={isEmployee} />
           <PrivateRoute path={Routes.employer} redirect={Routes.login} component={Employer} auth={isEmployer} />
-          <PrivateRoute path={Routes.jobOfferBuilder} redirect={Routes.login} component={JobOfferBuilder} auth={isEmployer} />
+          <PrivateRoute path={Routes.offerBuilder} redirect={Routes.login} component={OfferBuilder} auth={isEmployer} />
         </Switch>
       </div>
     );

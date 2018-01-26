@@ -14,7 +14,7 @@ class Employer extends Component {
         <GlobalHeader />
         <DashboardBar
           title={Resources.employerDashboard}
-          navigateTo={Routes.jobOfferBuilder}
+          navigateTo={Routes.offerBuilder}
           linkTitle={Resources.addJobOffer}
         />
         <h1>Wybierz swoje oferty pracy</h1>

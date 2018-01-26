@@ -3,6 +3,6 @@ export default {
   signup: 'Rejestracja',
   login: 'Logowanie',
   home: 'Home',
-  jobOfferBuilder: 'Stwórz ofertę pracy',
-  cVBuilder: 'Stwórz cv'
+  offerBuilder: 'Stwórz ofertę pracy',
+  applicationBuilder: 'Stwórz cv'
 };

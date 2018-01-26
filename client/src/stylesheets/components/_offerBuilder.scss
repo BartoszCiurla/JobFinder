@@ -1,0 +1,20 @@
+.offer-builder {
+  animation: fadeIn 1s forwards;
+  padding-top: 20vh;
+  padding-bottom: 20vh;
+  display: flex;
+  justify-content: center;
+  align-items:center;
+
+  .form {
+    width: 480px;
+    align-items: center;
+    margin-left: 2vw;
+    margin-right: 2vw;
+
+    .title {
+      text-align: center;
+      font-size: $type-h3
+    }
+  }
+}
