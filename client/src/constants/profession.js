@@ -1,0 +1,1 @@
+export const GET_PROFESSIONS = "GET_PROFESSIONS";

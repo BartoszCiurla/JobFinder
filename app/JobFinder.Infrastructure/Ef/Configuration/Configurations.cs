@@ -1,10 +1,30 @@
 using JobFinder.Domain.CVs.Entities;
+using JobFinder.Domain.Professions.Entities;
 using JobFinder.Domain.Users.Entities;
 using JobFinder.Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace JobFinder.Infrastructure.Ef.Configurations
 {
+  #region
+  public class ProfessionConfiguration : EntityMappingConfiguration<Profession>
+  {
+    public override void Map(EntityTypeBuilder<Profession> builder)
+    {
+      builder.ToTable(nameof(Profession), SchemaName.JobFinder);
+    }
+  }
+
+  public class ProfessionCategoryConfiguration : EntityMappingConfiguration<ProfessionCategory>
+  {
+    public override void Map(EntityTypeBuilder<ProfessionCategory> builder)
+    {
+      builder.ToTable(nameof(ProfessionCategory), SchemaName.JobFinder);
+    }
+  }
+
+
+  #endregion
   #region CVs
   public class CVsConfiguration : EntityMappingConfiguration<CV>
   {
@@ -15,7 +35,7 @@ namespace JobFinder.Infrastructure.Ef.Configurations
   }
   #endregion
   #region Users
-  public class UserConfiguratinon : EntityMappingConfiguration<User>
+  public class UserConfiguration : EntityMappingConfiguration<User>
   {
     public override void Map(EntityTypeBuilder<User> builder)
     {

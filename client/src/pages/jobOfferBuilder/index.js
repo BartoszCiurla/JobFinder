@@ -1,4 +1,9 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import { getProfessions } from '../../actions/profession';
 
 import Autosuggest from '../../common/autosuggest';
 
@@ -11,6 +16,10 @@ class JobOfferBuilder extends Component {
       { name: 'cwe', id: 3 },
       { name: 'cwel', id: 4 }
     ]
+  }
+
+  componentWillMount() {
+    this.props.getProfessions();
   }
 
   onChange = (event, { newValue }) => {
@@ -35,4 +44,13 @@ class JobOfferBuilder extends Component {
   }
 }
 
-export default JobOfferBuilder;
+const mapDispatchToProps = dispatch => bindActionCreators({
+  getProfessions
+}, dispatch);
+
+JobOfferBuilder.propTypes = {
+  getProfessions: PropTypes.func.isRequired
+};
+
+export default connect(null, mapDispatchToProps)(JobOfferBuilder);
+
