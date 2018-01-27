@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withCookies, Cookies } from 'react-cookie';
+import { isEmpty } from 'lodash';
 
 import GlobalHeader from '../../../common/globalHeader';
 import DashboardBar from '../../../common/dashboardBar';
+import Offer from './components/Offer';
 
 import Resources from './resources';
 import Routes from '../../../constants/routes';
@@ -16,6 +18,12 @@ class Employer extends Component {
   componentWillMount() {
     this.props.getOffers(getUserCredentials(this.props.cookies));
   }
+
+  renderOffers = () => {
+    const { offers } = this.props;
+    return !isEmpty(offers) && this.props.offers.map(o => <Offer key={o.id} offer={o} />);
+  }
+
   render() {
     return (
       <div>
@@ -25,7 +33,10 @@ class Employer extends Component {
           navigateTo={Routes.offerBuilder}
           linkTitle={Resources.addJobOffer}
         />
-        <h1>Wybierz swoje oferty pracy</h1>
+        <h1 className="offers-title">{Resources.chooseAJobOffer}</h1>
+        <div className="dashboard-offers">
+          {this.renderOffers()}
+        </div>
       </div>
     );
   }

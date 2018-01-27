@@ -6,7 +6,8 @@ const defaultErrorMessage = (error) => console.log(`Occured some errors, do some
 
 export const getOffers = (credentials) => dispatch => {
   dispatch(setLoadingOffers());
-  Api.post('api/Offer/GetEmployerOffersList', { userId: credentials.userId }, credentials.token)
+
+  return Api.post('api/Offer/GetEmployerOffersList', { userId: credentials.userId }, credentials.token)
     .then(data => dispatch(setOffers(data.offers)))
     .catch(defaultErrorMessage);
 };

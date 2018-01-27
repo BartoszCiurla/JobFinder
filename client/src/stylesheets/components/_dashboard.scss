@@ -1,1 +1,23 @@
+.offers-title {
+    text-align: center;
+    font-size: 24px;
+}
+.dashboard-offers {
+  display: flex;
+  flex-wrap: wrap;
 
+  .offer {
+    border: 1px solid #dbe0e4;
+    width: 22.22222%;
+    float: left;
+    margin-left: 1.38889%;
+    margin-right: 1.38889%;
+    padding: 17px;
+    margin-bottom: 17px;
+    min-width: 150px;
+
+    &:hover {
+      transform: scale(1.05,1.05);
+    }
+  }
+}
