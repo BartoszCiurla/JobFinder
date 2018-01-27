@@ -131,13 +131,9 @@ namespace JobFinder.DbMigration.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid?>("ProfessionCategoryId");
-
                     b.Property<Guid?>("ProfessionId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ProfessionCategoryId");
 
                     b.HasIndex("ProfessionId");
 
@@ -232,10 +228,6 @@ namespace JobFinder.DbMigration.Migrations
 
             modelBuilder.Entity("JobFinder.Domain.Offers.Entities.Offer", b =>
                 {
-                    b.HasOne("JobFinder.Domain.Professions.Entities.ProfessionCategory", "ProfessionCategory")
-                        .WithMany()
-                        .HasForeignKey("ProfessionCategoryId");
-
                     b.HasOne("JobFinder.Domain.Professions.Entities.Profession", "Profession")
                         .WithMany()
                         .HasForeignKey("ProfessionId");

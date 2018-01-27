@@ -13,8 +13,8 @@ using System;
 namespace JobFinder.DbMigration.Migrations
 {
     [DbContext(typeof(JobFinderContext))]
-    [Migration("20180125230945_Professions")]
-    partial class Professions
+    [Migration("20180127142825_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -127,6 +127,20 @@ namespace JobFinder.DbMigration.Migrations
                     b.ToTable("CVSkill");
                 });
 
+            modelBuilder.Entity("JobFinder.Domain.Offers.Entities.Offer", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid?>("ProfessionId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProfessionId");
+
+                    b.ToTable("Offer","JobFinder");
+                });
+
             modelBuilder.Entity("JobFinder.Domain.Professions.Entities.Profession", b =>
                 {
                     b.Property<Guid>("Id")
@@ -211,6 +225,13 @@ namespace JobFinder.DbMigration.Migrations
                         .WithMany("Skills")
                         .HasForeignKey("CVId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("JobFinder.Domain.Offers.Entities.Offer", b =>
+                {
+                    b.HasOne("JobFinder.Domain.Professions.Entities.Profession", "Profession")
+                        .WithMany()
+                        .HasForeignKey("ProfessionId");
                 });
 
             modelBuilder.Entity("JobFinder.Domain.Professions.Entities.Profession", b =>

@@ -5,7 +5,6 @@ using JobFinder.Domain.Professions.Entities;
 using JobFinder.Domain.Users;
 using JobFinder.Domain.Users.Entities;
 using Microsoft.EntityFrameworkCore;
-
 namespace JobFinder.Infrastructure.Ef.Extensions
 {
   public static class DbContextExtensions
@@ -15,14 +14,13 @@ namespace JobFinder.Infrastructure.Ef.Extensions
       SeedUsers(jobFinderContext, passwordCryptoService);
       SeedProfessions(jobFinderContext);
     }
-
     private static void SeedProfessions(JobFinderContext jobFinderContext)
     {
       var professions = jobFinderContext.Set<Profession>();
-
       if (!professions.AnyAsync().Result)
       {
-        SeedProfession(jobFinderContext, "IT", new string[]{
+        SeedProfession(jobFinderContext, "IT", new string[]
+        {
           "Administrator",
           "Grafik",
           "Konsultant ds. Wdrożeń",
@@ -30,8 +28,8 @@ namespace JobFinder.Infrastructure.Ef.Extensions
           "Programista baz danych",
           "Projektant IT"
         });
-
-        SeedProfession(jobFinderContext, "Administracja", new string[]{
+        SeedProfession(jobFinderContext, "Administracja", new string[]
+        {
           "Administrator danych osobowych",
           "Analityk systemów",
           "Asystentka zarządu",
@@ -40,8 +38,8 @@ namespace JobFinder.Infrastructure.Ef.Extensions
           "Programista PLC",
           "Specjalista ds. ofertowania"
         });
-
-        SeedProfession(jobFinderContext, "Produkcja", new string[]{
+        SeedProfession(jobFinderContext, "Produkcja", new string[]
+        {
           "Automatyk",
           "Dyrektor ds. Produkcji",
           "Dyrektor ds. Rozwoju",
@@ -54,67 +52,53 @@ namespace JobFinder.Infrastructure.Ef.Extensions
           "Specjalista ds. planowania produkcji",
           "Technolog"
         });
-
-        SeedProfession(jobFinderContext, "Turystyka", new string[]{
+        SeedProfession(jobFinderContext, "Turystyka", new string[]
+        {
           "Pilot wycieczek",
           "Specjalista ds. turystyki"
         });
-
-        SeedProfession(jobFinderContext, "Nauka", new string[]{
+        SeedProfession(jobFinderContext, "Nauka", new string[]
+        {
           "Lektor",
           "Nauczyciel",
           "Pedagog",
           "Trener"
         });
       }
-
       jobFinderContext.SaveChangesAsync();
     }
-
     private static async void SeedProfession(JobFinderContext jobFinderContext, string professionCategory, string[] professions)
     {
       var category = ProfessionCategory.Create(Guid.NewGuid(), professionCategory);
-
       await jobFinderContext.Set<ProfessionCategory>().AddAsync(category);
 
-      List<Profession> items = new List<Profession>();
-      foreach (var item in professions)
-      {
-        items.Add(Profession.Create(Guid.NewGuid(), item, category));
-      }
-
+      var items = professions.Select(x => Profession.Create(Guid.NewGuid(), x, category));
       await jobFinderContext.Set<Profession>().AddRangeAsync(items);
     }
-
     private static void SeedUsers(JobFinderContext jobFinderContext, IPasswordCryptoService passwordCryptoService)
     {
       var users = jobFinderContext.Set<User>();
-
       if (!users.AnyAsync(bu => bu.UserType == UserType.Admin).Result)
       {
         SeedUser("Admin", "Admin", "admin@gmail.com", "admin1234", UserType.Admin, passwordCryptoService, jobFinderContext);
       }
-
       if (!users.AnyAsync(bu => bu.UserType == UserType.Employer).Result)
       {
         SeedUser("Employer", "Employer", "Employer@gmail.com", "Employer1234", UserType.Employer, passwordCryptoService, jobFinderContext);
       }
-
       if (!users.AnyAsync(bu => bu.UserType == UserType.Employee).Result)
       {
         SeedUser("Employee", "Employee", "Employee@gmail.com", "Employee1234", UserType.Employee, passwordCryptoService, jobFinderContext);
       }
-
       jobFinderContext.SaveChangesAsync();
     }
-
     private static async void SeedUser(string name,
-                               string surname,
-                               string email,
-                               string password,
-                               UserType userType,
-                               IPasswordCryptoService passwordCryptoService,
-                               JobFinderContext jobFinderContext)
+      string surname,
+      string email,
+      string password,
+      UserType userType,
+      IPasswordCryptoService passwordCryptoService,
+      JobFinderContext jobFinderContext)
     {
       var salt = passwordCryptoService.GenerateSalt();
       var passwordHash = passwordCryptoService.HashPassword(password, salt);

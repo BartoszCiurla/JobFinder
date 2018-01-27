@@ -30,6 +30,19 @@ namespace JobFinder.DbMigration.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ProfessionCategory",
+                schema: "JobFinder",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProfessionCategory", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "User",
                 schema: "JobFinder",
                 columns: table => new
@@ -138,6 +151,47 @@ namespace JobFinder.DbMigration.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Profession",
+                schema: "JobFinder",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Profession", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Profession_ProfessionCategory_CategoryId",
+                        column: x => x.CategoryId,
+                        principalSchema: "JobFinder",
+                        principalTable: "ProfessionCategory",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Offer",
+                schema: "JobFinder",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProfessionId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Offer", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Offer_Profession_ProfessionId",
+                        column: x => x.ProfessionId,
+                        principalSchema: "JobFinder",
+                        principalTable: "Profession",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_CVCertificate_CVId",
                 table: "CVCertificate",
@@ -157,6 +211,18 @@ namespace JobFinder.DbMigration.Migrations
                 name: "IX_CVSkill_CVId",
                 table: "CVSkill",
                 column: "CVId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Offer_ProfessionId",
+                schema: "JobFinder",
+                table: "Offer",
+                column: "ProfessionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Profession_CategoryId",
+                schema: "JobFinder",
+                table: "Profession",
+                column: "CategoryId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -174,11 +240,23 @@ namespace JobFinder.DbMigration.Migrations
                 name: "CVSkill");
 
             migrationBuilder.DropTable(
+                name: "Offer",
+                schema: "JobFinder");
+
+            migrationBuilder.DropTable(
                 name: "User",
                 schema: "JobFinder");
 
             migrationBuilder.DropTable(
                 name: "CV",
+                schema: "JobFinder");
+
+            migrationBuilder.DropTable(
+                name: "Profession",
+                schema: "JobFinder");
+
+            migrationBuilder.DropTable(
+                name: "ProfessionCategory",
                 schema: "JobFinder");
         }
     }
