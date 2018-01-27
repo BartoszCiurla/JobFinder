@@ -19,3 +19,7 @@ export const setLoadingOffers = () => (
 export const setOffers = (offers) => (
   { type: types.SET_OFFERS, payload: offers }
 );
+
+export const setOffer = (id) => (
+  { type: types.SET_OFFER, payload: id }
+);

@@ -11,6 +11,27 @@
     font-size: 24px;
   }
 
+  .btn-left {
+    cursor: pointer;
+    display:flex;
+    border-radius: 0;
+    display: flex;
+    flex: 0.1;
+    text-align: center;
+    padding: 0 25px 0 25px;
+
+    span {
+      a {
+        color: black;
+        font-size: $type-h6;
+        text-transform: uppercase;
+      }
+
+      margin: auto;
+      align-self: center;
+    }
+  }
+
   .btn-green {
     cursor: pointer;
     background-color: #28bd00;

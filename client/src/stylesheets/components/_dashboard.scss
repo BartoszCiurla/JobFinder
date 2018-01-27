@@ -1,10 +1,13 @@
-.offers-title {
-    text-align: center;
-    font-size: 24px;
-}
 .dashboard-offers {
+  top:50px;
   display: flex;
   flex-wrap: wrap;
+
+  .offers-title {
+    text-align: center;
+    font-size: 24px;
+    width: 100%;
+}
 
   .offer {
     border: 1px solid #dbe0e4;

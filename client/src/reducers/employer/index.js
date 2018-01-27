@@ -1,11 +1,18 @@
 import initialState from './initialState';
-import { SET_LOADING_OFFERS, SET_OFFERS } from '../../constants/employer';
+import { SET_LOADING_OFFERS, SET_OFFERS, SET_OFFER } from '../../constants/employer';
 
 const actions = {
   [SET_LOADING_OFFERS]: (state) => {
     const data = {
       ...state,
       isLoadingOffers: true
+    };
+    return { ...data };
+  },
+  [SET_OFFER]: (state, action) => {
+    const data = {
+      ...state,
+      selectedOffer: action.payload
     };
     return { ...data };
   },

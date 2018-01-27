@@ -11,7 +11,7 @@ import Offer from './components/Offer';
 
 import Resources from './resources';
 import Routes from '../../../constants/routes';
-import { getOffers } from '../../../actions/employer';
+import { getOffers, setOffer } from '../../../actions/employer';
 import { getUserCredentials } from '../../../utils/auth';
 
 class Employer extends Component {
@@ -21,10 +21,12 @@ class Employer extends Component {
 
   renderOffers = () => {
     const { offers } = this.props;
-    return !isEmpty(offers) && this.props.offers.map(o => <Offer key={o.id} offer={o} />);
+    return !isEmpty(offers) && this.props.offers.map(o => <Offer key={o.id} offer={o} onClick={this.props.setOffer} />);
   }
 
   render() {
+    const { selectedOffer } = this.props;
+
     return (
       <div>
         <GlobalHeader />
@@ -32,10 +34,18 @@ class Employer extends Component {
           title={Resources.employerDashboard}
           navigateTo={Routes.offerBuilder}
           linkTitle={Resources.addJobOffer}
+          showLeftButton={!!selectedOffer}
+          onClickLeftButton={() => this.props.setOffer('')}
+          leftButtonTitle={Resources.back}
         />
-        <h1 className="offers-title">{Resources.chooseAJobOffer}</h1>
         <div className="dashboard-offers">
-          {this.renderOffers()}
+          {selectedOffer ? [
+            <h1 key="offers" className="offers-title">{Resources.recommendedApplications}</h1>,
+          ]
+            : [
+              <h1 key="offers" className="offers-title">{Resources.chooseAJobOffer}</h1>,
+              this.renderOffers()
+            ]}
         </div>
       </div>
     );
@@ -46,15 +56,19 @@ Employer.propTypes = {
   isLoadingOffers: PropTypes.bool.isRequired,
   offers: PropTypes.array,
   getOffers: PropTypes.func.isRequired,
+  setOffer: PropTypes.func.isRequired,
   cookies: PropTypes.instanceOf(Cookies).isRequired,
+  selectedOffer: PropTypes.string,
 };
 
 const mapStateToProps = ({ employer }) => ({
   isLoadingOffers: employer.isLoadingOffers,
-  offers: employer.offers
+  offers: employer.offers,
+  selectedOffer: employer.selectedOffer
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+  setOffer,
   getOffers
 }, dispatch);
 

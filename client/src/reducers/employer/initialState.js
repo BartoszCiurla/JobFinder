@@ -1,4 +1,5 @@
 export default {
   isLoadingOffers: false,
-  offers: []
+  offers: [],
+  selectedOffer: ''
 };

@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 class Offer extends Component {
   render() {
-    const { profession, professionCategory } = this.props.offer;
+    const { profession, professionCategory, id } = this.props.offer;
     return (
-      <div className="offer">
+      <div onClick={() => this.props.onClick(id)} className="offer">
         <h1>{profession}</h1>
         <h5>{professionCategory}</h5>
       </div>
@@ -15,6 +15,7 @@ class Offer extends Component {
 
 Offer.propTypes = {
   offer: PropTypes.object.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default Offer;
