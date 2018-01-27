@@ -1,11 +1,9 @@
-import {store} from '../index';
-
 const Config = {
   development: {
       'apiUrl': 'http://localhost:5000/'
   },
   production:  {
-      'apiUrl': 'fromAssesToTorses'
+      'apiUrl': ''
   }
 };
 
@@ -22,12 +20,6 @@ const handleErrors = (response) => {
 
 const getRequestInfo = (url) => (`${getConfig().apiUrl}${url}`);
 
-const getAuthorizationToken = () => {
-  const { activeUser } = store.getState().account;
-
-  return activeUser && activeUser.token;
-};
-
 const init = (method) => {
   return {
     method,
@@ -38,7 +30,7 @@ const init = (method) => {
   };
 };
 
-const getRequestInit = (queryOrBody, method) => {
+const getRequestInit = (queryOrBody, method, token) => {
   let requestInit = init(method);
 
   if (method === 'GET') {
@@ -47,21 +39,19 @@ const getRequestInit = (queryOrBody, method) => {
     requestInit.body = JSON.stringify(queryOrBody);
   }
 
-  const token = getAuthorizationToken();
-
   token && requestInit.headers.append('Authorization',`Bearer ${token}`);
 
   return requestInit;
 };
 
 const Api = {
-  get: (url, query = {}) => (
-    fetch(getRequestInfo(url), getRequestInit(query, 'GET'))
+  get: (url, query = {}, token = '') => (
+    fetch(getRequestInfo(url), getRequestInit(query, 'GET', token))
       .then(handleErrors)
       .then(response => response.json())
   ),
-  post: (url, body = {}) => (
-    fetch(getRequestInfo(url), getRequestInit(body, 'POST'))
+  post: (url, body = {}, token = '') => (
+    fetch(getRequestInfo(url), getRequestInit(body, 'POST', token))
       .then(handleErrors)
       .then(response => response.json())
   )

@@ -1,4 +1,4 @@
 export default {
   title: 'Kreator oferty',
-  submit: 'Zapisz ofertę'
+  submit: 'Stwórz ofertę'
 };

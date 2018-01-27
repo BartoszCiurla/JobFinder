@@ -17,6 +17,14 @@ export const getUserTypes = (cookies) => {
   return userType;
 };
 
+export const getUserCredentials = (cookies) => {
+  const user = cookies.get(authCookie);
+  return {
+    userId: user.id,
+    token: user.token
+  };
+};
+
 export const getUserType = (cookies) => {
   const user = cookies.get(authCookie);
   return user && user.userType;

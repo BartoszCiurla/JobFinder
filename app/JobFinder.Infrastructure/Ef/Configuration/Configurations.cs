@@ -1,4 +1,5 @@
 using JobFinder.Domain.CVs.Entities;
+using JobFinder.Domain.Offers.Entities;
 using JobFinder.Domain.Professions.Entities;
 using JobFinder.Domain.Users.Entities;
 using JobFinder.Infrastructure.Extensions;
@@ -6,6 +7,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace JobFinder.Infrastructure.Ef.Configurations
 {
+  #region
+  public class OfferConfiguration : EntityMappingConfiguration<Offer>
+  {
+    public override void Map(EntityTypeBuilder<Offer> builder)
+    {
+      builder.ToTable(nameof(Offer), SchemaName.JobFinder);
+    }
+  }
+  #endregion
   #region
   public class ProfessionConfiguration : EntityMappingConfiguration<Profession>
   {

@@ -3,7 +3,7 @@ using Core.Domain.Ddd;
 
 namespace JobFinder.Domain.Professions.Entities
 {
-  public class Profession : Entity
+  public class Profession : AggregateRoot
   {
     public string Name { get; set; }
     public ProfessionCategory Category { get; set; }

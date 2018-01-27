@@ -6,14 +6,16 @@ import account from './account';
 import cVBuilder from './cVBuilder';
 import common from './common';
 import professions from './professions';
-import offer from './offer';
+import offerBuilder from './offerBuilder';
+import employer from './employer';
 
 const rootReducer = combineReducers({
   account,
   cVBuilder,
   common,
   professions,
-  offer,
+  offerBuilder,
+  employer,
   routing: routerReducer
 });
 

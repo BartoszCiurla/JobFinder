@@ -1,19 +1,19 @@
 import initialState from './initialState';
-import { SET_OFFER_CATEGORY, SET_OFFER_PROFESSION } from '../../constants/offer';
+import { SET_LOADING_OFFERS, SET_OFFERS } from '../../constants/employer';
 
 const actions = {
-  [SET_OFFER_CATEGORY]: (state, action) => {
+  [SET_LOADING_OFFERS]: (state) => {
     const data = {
       ...state,
-      category: action.payload,
-      profession: ''
+      isLoadingOffers: true
     };
     return { ...data };
   },
-  [SET_OFFER_PROFESSION]: (state, action) => {
+  [SET_OFFERS]: (state, action) => {
     const data = {
       ...state,
-      profession: action.payload
+      isLoadingOffers: false,
+      offers: action.payload
     };
     return { ...data };
   },

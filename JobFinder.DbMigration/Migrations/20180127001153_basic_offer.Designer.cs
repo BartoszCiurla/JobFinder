@@ -13,9 +13,10 @@ using System;
 namespace JobFinder.DbMigration.Migrations
 {
     [DbContext(typeof(JobFinderContext))]
-    partial class JobFinderContextModelSnapshot : ModelSnapshot
+    [Migration("20180127001153_basic_offer")]
+    partial class basic_offer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

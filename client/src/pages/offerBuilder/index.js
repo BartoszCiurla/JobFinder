@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { withCookies, Cookies } from 'react-cookie';
+import { withRouter } from 'react-router-dom';
 
 import Profession from '../../common/profession';
 
+import Routes from '../../constants/routes';
 import Resources from './resources';
-import { setOfferCategory, setOfferProfession } from '../../actions/offer';
-
-//import Autosuggest from '../../common/autosuggest';
+import { getUserCredentials } from '../../utils/auth';
+import { setOfferCategory, setOfferProfession, createOffer } from '../../actions/offerBuilder';
 
 class OfferBuilder extends Component {
   state = {}
@@ -18,6 +20,11 @@ class OfferBuilder extends Component {
       value: newValue
     });
   };
+
+  tryCreateOffer = () => {
+    this.props.createOffer(getUserCredentials(this.props.cookies))
+      .then(this.props.history.push(Routes.employer));
+  }
 
   render() {
     const {
@@ -35,7 +42,7 @@ class OfferBuilder extends Component {
             onChangeCategory={this.props.setOfferCategory}
             onChangeProfession={this.props.setOfferProfession}
           />
-          <button className="btn btn-primary full-width">{Resources.submit}</button>
+          <button onClick={this.tryCreateOffer} className="btn btn-primary full-width">{Resources.submit}</button>
         </div>
       </div>
     );
@@ -46,19 +53,22 @@ OfferBuilder.propTypes = {
   setOfferCategory: PropTypes.func.isRequired,
   setOfferProfession: PropTypes.func.isRequired,
   category: PropTypes.string.isRequired,
-  profession: PropTypes.string.isRequired
+  profession: PropTypes.string.isRequired,
+  cookies: PropTypes.instanceOf(Cookies).isRequired,
+  history: PropTypes.object.isRequired,
+  createOffer: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({ offer }) => ({
-  category: offer.category,
-  profession: offer.profession
+const mapStateToProps = ({ offerBuilder }) => ({
+  category: offerBuilder.category,
+  profession: offerBuilder.profession
 });
-
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   setOfferCategory,
-  setOfferProfession
+  setOfferProfession,
+  createOffer
 }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(OfferBuilder);
+export default withCookies(withRouter(connect(mapStateToProps, mapDispatchToProps)(OfferBuilder)));
 

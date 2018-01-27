@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Core.Domain.Ddd;
 using JobFinder.Application.Api.Common;
-using JobFinder.Application.Api.JobOffer.Commands;
 using JobFinder.Domain.Common;
 using JobFinder.WebApi.Core;
 using Microsoft.AspNetCore.Authorization;
