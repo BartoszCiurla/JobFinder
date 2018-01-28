@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace JobFinder.DbMigration.Migrations
 {
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -173,12 +173,41 @@ namespace JobFinder.DbMigration.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "JobApplication",
+                schema: "JobFinder",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProfessionId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JobApplication", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_JobApplication_Profession_ProfessionId",
+                        column: x => x.ProfessionId,
+                        principalSchema: "JobFinder",
+                        principalTable: "Profession",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_JobApplication_User_UserId",
+                        column: x => x.UserId,
+                        principalSchema: "JobFinder",
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Offer",
                 schema: "JobFinder",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ProfessionId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    ProfessionId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -188,6 +217,13 @@ namespace JobFinder.DbMigration.Migrations
                         column: x => x.ProfessionId,
                         principalSchema: "JobFinder",
                         principalTable: "Profession",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Offer_User_UserId",
+                        column: x => x.UserId,
+                        principalSchema: "JobFinder",
+                        principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -213,10 +249,28 @@ namespace JobFinder.DbMigration.Migrations
                 column: "CVId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_JobApplication_ProfessionId",
+                schema: "JobFinder",
+                table: "JobApplication",
+                column: "ProfessionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JobApplication_UserId",
+                schema: "JobFinder",
+                table: "JobApplication",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Offer_ProfessionId",
                 schema: "JobFinder",
                 table: "Offer",
                 column: "ProfessionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Offer_UserId",
+                schema: "JobFinder",
+                table: "Offer",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Profession_CategoryId",
@@ -240,11 +294,11 @@ namespace JobFinder.DbMigration.Migrations
                 name: "CVSkill");
 
             migrationBuilder.DropTable(
-                name: "Offer",
+                name: "JobApplication",
                 schema: "JobFinder");
 
             migrationBuilder.DropTable(
-                name: "User",
+                name: "Offer",
                 schema: "JobFinder");
 
             migrationBuilder.DropTable(
@@ -253,6 +307,10 @@ namespace JobFinder.DbMigration.Migrations
 
             migrationBuilder.DropTable(
                 name: "Profession",
+                schema: "JobFinder");
+
+            migrationBuilder.DropTable(
+                name: "User",
                 schema: "JobFinder");
 
             migrationBuilder.DropTable(

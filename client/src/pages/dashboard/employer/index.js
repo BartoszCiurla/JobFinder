@@ -21,7 +21,7 @@ class Employer extends Component {
 
   renderOffers = () => {
     const { offers } = this.props;
-    return !isEmpty(offers) && this.props.offers.map(o => <Offer key={o.id} offer={o} onClick={this.props.setOffer} />);
+    return !isEmpty(offers) && offers.map(o => <Offer key={o.id} offer={o} onClick={this.props.setOffer} />);
   }
 
   render() {

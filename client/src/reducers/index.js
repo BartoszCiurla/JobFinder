@@ -7,7 +7,9 @@ import cVBuilder from './cVBuilder';
 import common from './common';
 import professions from './professions';
 import offerBuilder from './offerBuilder';
+import applicationBuilder from './applicationBuilder';
 import employer from './employer';
+import employee from './employee';
 
 const rootReducer = combineReducers({
   account,
@@ -16,6 +18,8 @@ const rootReducer = combineReducers({
   professions,
   offerBuilder,
   employer,
+  employee,
+  applicationBuilder,
   routing: routerReducer
 });
 

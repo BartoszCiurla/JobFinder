@@ -13,8 +13,8 @@ using System;
 namespace JobFinder.DbMigration.Migrations
 {
     [DbContext(typeof(JobFinderContext))]
-    [Migration("20180127142825_Init")]
-    partial class Init
+    [Migration("20180128001734_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -22,6 +22,24 @@ namespace JobFinder.DbMigration.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.0.0-rtm-26452")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("JobFinder.Domain.Applications.Entities.JobApplication", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid?>("ProfessionId");
+
+                    b.Property<Guid?>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProfessionId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("JobApplication","JobFinder");
+                });
 
             modelBuilder.Entity("JobFinder.Domain.CVs.Entities.CV", b =>
                 {
@@ -134,9 +152,13 @@ namespace JobFinder.DbMigration.Migrations
 
                     b.Property<Guid?>("ProfessionId");
 
+                    b.Property<Guid?>("UserId");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ProfessionId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Offer","JobFinder");
                 });
@@ -195,6 +217,17 @@ namespace JobFinder.DbMigration.Migrations
                     b.ToTable("User","JobFinder");
                 });
 
+            modelBuilder.Entity("JobFinder.Domain.Applications.Entities.JobApplication", b =>
+                {
+                    b.HasOne("JobFinder.Domain.Professions.Entities.Profession", "Profession")
+                        .WithMany()
+                        .HasForeignKey("ProfessionId");
+
+                    b.HasOne("JobFinder.Domain.Users.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("JobFinder.Domain.CVs.Entities.CVCertificate", b =>
                 {
                     b.HasOne("JobFinder.Domain.CVs.Entities.CV")
@@ -232,6 +265,10 @@ namespace JobFinder.DbMigration.Migrations
                     b.HasOne("JobFinder.Domain.Professions.Entities.Profession", "Profession")
                         .WithMany()
                         .HasForeignKey("ProfessionId");
+
+                    b.HasOne("JobFinder.Domain.Users.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("JobFinder.Domain.Professions.Entities.Profession", b =>

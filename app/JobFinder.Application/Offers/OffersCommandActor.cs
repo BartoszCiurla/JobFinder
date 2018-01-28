@@ -6,6 +6,7 @@ using Core.Application.Actors;
 using Core.Application.Exceptions;
 using JobFinder.Application.Api.Common;
 using JobFinder.Application.Api.Offer.Commands;
+using JobFinder.Application.Services;
 using JobFinder.Domain.Offers.Entities;
 using JobFinder.Domain.Professions.Entities;
 using JobFinder.Domain.Users.Entities;
@@ -23,32 +24,18 @@ namespace JobFinder.Application.Offers
       await HandleCommand(command, async uow =>
       {
         var userRepository = uow.GetRepository<User>();
+        var user = UserService.Get(command.UserId, userRepository.Query());
+
         var professionCategoryRepository = uow.GetRepository<ProfessionCategory>();
         var professionRepository = uow.GetRepository<Profession>();
         var offerRepository = uow.GetRepository<Offer>();
-        if (userRepository.Query().FirstOrDefault(x => x.Id == command.UserId) == null)
-        {
-          throw new NotFoundApplicationException("Użytkownik nie istnieje");
-        }
-        ProfessionCategory professionCategory = command.Category.Id == Guid.Empty? null : professionCategoryRepository
-          .Query()
-          .FirstOrDefault(x => x.Id == command.Category.Id);
-        if (professionCategory == null)
-        {
-          professionCategory = ProfessionCategory.Create(Guid.NewGuid(), command.Category.Name);
-          professionCategoryRepository.Add(professionCategory);
-          await professionCategoryRepository.SaveChangesAsync();
-        }
-        Profession profession = command.Profession.Id == Guid.Empty? null : professionRepository
-          .Query()
-          .FirstOrDefault(x => x.Id == command.Profession.Id);
-        if (profession == null)
-        {
-          profession = Profession.Create(Guid.NewGuid(), command.Profession.Name, professionCategory);
-          professionRepository.Add(profession);
-          await professionRepository.SaveChangesAsync();
-        }
-        Offer offer = Offer.Create(Guid.NewGuid(), profession);
+
+        ProfessionCategory professionCategory = await ProfessionCategoryService.GetOrCreate(command.Category.Id, command.Category.Name, professionCategoryRepository);
+
+        Profession profession = await ProfessionService.GetOrCreate(command.Profession.Id, command.Profession.Name, professionRepository, professionCategory);
+
+        Offer offer = Offer.Create(Guid.NewGuid(), user, profession);
+
         offerRepository.Add(offer);
         await offerRepository.SaveChangesAsync();
         return offer.Id;

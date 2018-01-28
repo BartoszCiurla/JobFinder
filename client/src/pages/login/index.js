@@ -15,8 +15,8 @@ import Routes from '../../constants/routes';
 
 export class Login extends Component {
   state = {
-    email: 'Employer@gmail.com',
-    password: 'Employer1234',
+    email: 'Employee@gmail.com',
+    password: 'Employee1234',
     rememberMe: true,
     errors: []
   }

@@ -13,14 +13,6 @@ import { getUserCredentials } from '../../utils/auth';
 import { setOfferCategory, setOfferProfession, createOffer } from '../../actions/offerBuilder';
 
 class OfferBuilder extends Component {
-  state = {}
-  onChange = (event, { newValue }) => {
-    console.log(event);
-    this.setState({
-      value: newValue
-    });
-  };
-
   tryCreateOffer = () => {
     this.props.createOffer(getUserCredentials(this.props.cookies))
       .then(this.props.history.push(Routes.employer));
