@@ -23,6 +23,7 @@
   }
 
   .btn {
+    z-index: $level-99;
     position: absolute;
     cursor: pointer;
     top:50%;

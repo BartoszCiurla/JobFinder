@@ -16,6 +16,10 @@ class Profession extends Component {
       this.props.getProfessions();
   }
 
+  getErrorMessage = (name) => (
+    (_.find(this.props.errors, e => e.attribute === name) || { message: '' }).message
+  )
+
   getCategoryNames = () => (_.map(this.props.professionCategories, pc => pc.name))
 
   getProfessionsForCategory = (category) => {
@@ -40,7 +44,7 @@ class Profession extends Component {
      } = this.props;
 
     return !isLoadingProfessions && [
-      <ValidatedInput key="category" errorMessage="">
+      <ValidatedInput key="category" errorMessage={this.getErrorMessage("category")}>
         <BasicAutocomplete
           value={category}
           onChange={onChangeCategory}
@@ -48,7 +52,7 @@ class Profession extends Component {
           placeholder={Resources.categoryPlaceholder}
         />
       </ValidatedInput>,
-      category && <ValidatedInput key="profession" errorMessage="">
+      category && <ValidatedInput key="profession" errorMessage={this.getErrorMessage("profession")}>
         <BasicAutocomplete
           value={profession}
           onChange={onChangeProfession}
@@ -78,6 +82,7 @@ Profession.propTypes = {
   isLoadingProfessions: PropTypes.bool.isRequired,
   category: PropTypes.string.isRequired,
   profession: PropTypes.string.isRequired,
+  errors: PropTypes.array,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profession);
