@@ -1,0 +1,55 @@
+.stepWizard {
+  height: 100%;
+
+  .title {
+    text-align: center;
+    font-size: $type-h3;
+    top:20px;
+  }
+
+  .progressBar {
+    text-align: center;
+    top: 50px;
+
+    .item {
+      font-size: $type-h3;
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+
+    .active {
+      font-size: $type-h1;
+    }
+  }
+
+  .btn {
+    position: absolute;
+    cursor: pointer;
+    top:50%;
+
+    &_right {
+      right:0;
+      background: $background-tint;
+    }
+
+    &_left {
+      left:0;
+      background: $background-tint;
+    }
+  }
+
+  .step {
+    animation: fadeIn 1s forwards;
+    padding-top: 20vh;
+    padding-bottom: 20vh;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    .form {
+      width: 480px;
+      align-items: center;
+      margin-left: 2vw;
+      margin-right: 2vw;
+    }
+  }
+}

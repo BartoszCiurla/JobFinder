@@ -1,20 +1,22 @@
 .application-builder {
-  animation: fadeIn 1s forwards;
-  padding-top: 20vh;
-  padding-bottom: 20vh;
-  display: flex;
-  justify-content: center;
-  align-items:center;
+  .title {
+    text-align: center;
+    font-size: $type-h3
+  }
 
-  .form {
-    width: 480px;
-    align-items: center;
-    margin-left: 2vw;
-    margin-right: 2vw;
+  .step {
+    animation: fadeIn 1s forwards;
+    padding-top: 20vh;
+    padding-bottom: 20vh;
+    display: flex;
+    justify-content: center;
+    align-items:center;
 
-    .title {
-      text-align: center;
-      font-size: $type-h3
+    .form {
+      width: 480px;
+      align-items: center;
+      margin-left: 2vw;
+      margin-right: 2vw;
     }
   }
 }

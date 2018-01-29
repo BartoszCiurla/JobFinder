@@ -26,7 +26,6 @@ class App extends Component {
     } = getUserTypes(this.props.cookies);
 
     return (
-      <div>
         <Switch>
           <Route exact path={Routes.homePage} component={HomePage} />
           <Route path={Routes.signup} component={Signup} />
@@ -36,7 +35,6 @@ class App extends Component {
           <PrivateRoute path={Routes.employer} redirect={Routes.login} component={Employer} auth={isEmployer} />
           <PrivateRoute path={Routes.offerBuilder} redirect={Routes.login} component={OfferBuilder} auth={isEmployer} />
         </Switch>
-      </div>
     );
   }
 }
