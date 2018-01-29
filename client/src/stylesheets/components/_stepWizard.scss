@@ -51,6 +51,42 @@
       align-items: center;
       margin-left: 2vw;
       margin-right: 2vw;
+
+      .level-scale {
+        p{
+          font-size: $type-h4;
+          font-weight: $font-weight-semibold;
+        }
+
+        input {
+          -webkit-appearance: none;
+          -moz-appearance: none;
+          appearance: none;
+
+          border-radius: 50%;
+          width: 16px;
+          height: 16px;
+
+          border: 2px solid #999;
+          transition: 0.2s all linear;
+          outline: none;
+          margin-right: 5px;
+
+          position: relative;
+          //top: 4px;
+        }
+
+        input:checked {
+          border: 6px solid black;
+        }
+
+        padding-left: 10px;
+        height: 300px;
+        display:flex;
+        flex-direction: column;
+        justify-content: space-between;
+        font-size: $type-h5;
+      }
     }
   }
 }

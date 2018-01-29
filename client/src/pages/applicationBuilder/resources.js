@@ -5,5 +5,6 @@ export default {
   skills: 'Umiejętności',
   experience: 'Doświadczenie',
   education: 'Edukacja',
-  languages: 'Języki'
+  languages: 'Języki',
+  skillDescription: 'Opis umiejętności'
 };

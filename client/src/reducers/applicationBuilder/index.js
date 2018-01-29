@@ -1,5 +1,11 @@
 import initialState from './initialState';
-import { SET_APPLICATION_CATEGORY, SET_APPLICATION_PROFESSION } from '../../constants/applicationBuilder';
+import _ from 'lodash';
+import {
+  SET_APPLICATION_CATEGORY,
+  SET_APPLICATION_PROFESSION,
+  SET_APPLICATION_SKILL,
+  REMOVE_APPLICATION_SKILL
+} from '../../constants/applicationBuilder';
 
 const actions = {
   [SET_APPLICATION_CATEGORY]: (state, action) => {
@@ -17,6 +23,21 @@ const actions = {
     };
     return { ...data };
   },
+  [SET_APPLICATION_SKILL]: (state, action) => {
+    const data = {
+      ...state,
+      skills: [...state.skills, action.payload]
+    };
+
+    return { ...data };
+  },
+  [REMOVE_APPLICATION_SKILL]: (state, action) => {
+    const data = {
+      ...state,
+      skills: _.reject(state.skills, s => s.skill === action.payload)
+    };
+    return { ...data };
+  }
 };
 
 export default (state = initialState, action) => {

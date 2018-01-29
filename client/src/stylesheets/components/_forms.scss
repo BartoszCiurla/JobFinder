@@ -60,6 +60,7 @@ textarea {
   transition: border-color .15s $bezier;
   width: 100%;
   z-index: $level-1;
+  position: absolute;
 
   .item {
     padding: $spacing-m-s;

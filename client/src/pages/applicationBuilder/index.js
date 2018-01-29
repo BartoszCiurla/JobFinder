@@ -9,6 +9,7 @@ import { getUserCredentials } from '../../utils/auth';
 import Resources from './resources';
 import { validate as validateProfession } from '../../utils/validators/profession';
 import Profession from '../../common/profession';
+import Skills from '../../common/skills';
 import StepWizard from '../../common/stepWizard';
 import Routes from '../../constants/routes';
 import {
@@ -52,7 +53,7 @@ class ApplicationBuilder extends Component {
 
   skillsStep = () => {
     return {
-      renderStep: <div>Umiejętności</div>,
+      renderStep: <Skills placeholder={Resources.skillDescription} />,
       title: `${Resources.skills}`,
       validate: () => true
     };
