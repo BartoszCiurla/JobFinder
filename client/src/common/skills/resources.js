@@ -6,5 +6,7 @@ export default {
   5:"Ekspert",
   skillLevel: 'Poziom zaawansowania',
   skillDescription: 'Opis umiejętności',
-  submit: 'Dodaj'
+  submit: 'Dodaj',
+  skillTitle: 'Umiejętność',
+  levelTitle: 'Poziom'
 };

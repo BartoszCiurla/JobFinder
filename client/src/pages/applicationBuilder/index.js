@@ -16,6 +16,7 @@ import {
   setApplicationCategory,
   setApplicationProfession,
   setApplicationSkill,
+  removeApplicationSkill,
   createApplication
 } from '../../actions/applicationBuilder';
 
@@ -61,6 +62,7 @@ class ApplicationBuilder extends Component {
       renderStep:
         <Skills
           addSkill={this.props.setApplicationSkill}
+          removeSkill={this.props.removeApplicationSkill}
           addedSkills={skills}
         />,
       title: `${Resources.skills}`,
@@ -94,6 +96,7 @@ ApplicationBuilder.propTypes = {
   history: PropTypes.object.isRequired,
   createApplication: PropTypes.func.isRequired,
   setApplicationSkill: PropTypes.func.isRequired,
+  removeApplicationSkill: PropTypes.func.isRequired,
   skills: PropTypes.array
 };
 
@@ -107,6 +110,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   setApplicationCategory,
   setApplicationProfession,
   setApplicationSkill,
+  removeApplicationSkill,
   createApplication
 }, dispatch);
 

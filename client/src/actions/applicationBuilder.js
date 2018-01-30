@@ -23,3 +23,7 @@ export const setApplicationProfession = (profession) => (
 export const setApplicationSkill = (skill) => (
   { type: types.SET_APPLICATION_SKILL, payload: skill }
 );
+
+export const removeApplicationSkill = (skill) => (
+  { type: types.REMOVE_APPLICATION_SKILL, payload: skill }
+);

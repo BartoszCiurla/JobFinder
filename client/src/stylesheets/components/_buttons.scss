@@ -36,6 +36,15 @@
     }
   }
 
+  &-secondary {
+    background: $color-primary;
+    color: white;
+
+    &:hover {
+      background: darken($color-primary, 8%);
+    }
+  }
+
   &.full-width {
     width: 100%;
   }

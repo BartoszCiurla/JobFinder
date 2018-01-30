@@ -31,10 +31,10 @@ const actions = {
 
     return { ...data };
   },
-  [REMOVE_APPLICATION_SKILL]: (state, action) => {
+  [REMOVE_APPLICATION_SKILL]: (state, { payload: { description, level } }) => {
     const data = {
       ...state,
-      skills: _.reject(state.skills, s => s.skill === action.payload)
+      skills: _.reject(state.skills, s => s.description === description && s.level === level)
     };
     return { ...data };
   }

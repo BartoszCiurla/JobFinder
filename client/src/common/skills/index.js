@@ -2,15 +2,18 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import _ from 'lodash';
 
 import BasicAutocomplete from '../basicAutocomplete';
 import ValidatedInput from '../../common/ValidatedInput';
 
 import Resources from './resources';
+import { validate } from '../../utils/validators/skill';
 
 
 class Skills extends Component {
   state = {
+    errors: [],
     skill: {
       description: '',
       level: 0
@@ -29,10 +32,20 @@ class Skills extends Component {
     //todo get skills from api
   }
 
+  getErrorMessage = (name) => (
+    (_.find(this.state.errors, e => e.attribute === name) || { message: '' }).message
+  )
+
   addItem = () => {
     const { skill } = this.state;
-    this.props.addSkill(skill);
-    this.setState({ skill: { level: 0, description: '' } });
+    const validateResult = validate(skill);
+
+    this.setState({ errors: validateResult.errors });
+
+    if (validateResult.isValid()) {
+      this.props.addSkill(skill);
+      this.setState({ skill: { level: 0, description: '' } });
+    }
   }
 
   onChangeDescription = (value) => {
@@ -62,7 +75,15 @@ class Skills extends Component {
     const { addedSkills } = this.props;
     return (
       <div key="addedSkils" className="added-skills">
-        {addedSkills.map(({ description, level }, index) => <div className="added-skill" key={index}>{`${description} ${Resources[level].toLowerCase()}`}</div>)}
+        {addedSkills.map(({ description, level }, index) =>
+          (<div className="added-skill" key={index}>
+            {Resources.skillTitle} :
+            <span>{description}</span>
+            <br />
+            {Resources.levelTitle} :
+            <span>{Resources[level].toLowerCase()}</span>
+            <button onClick={() => this.props.removeSkill({ description, level })} className="btn btn-primary full-width">Usuń</button>
+          </div>))}
       </div>
     );
   }
@@ -73,7 +94,7 @@ class Skills extends Component {
 
     return [
       <div key="skill" className="skill-form">
-        <ValidatedInput errorMessage="">
+        <ValidatedInput errorMessage={this.getErrorMessage('skillDescription')}>
           <BasicAutocomplete
             value={description}
             onChange={this.onChangeDescription}
@@ -81,13 +102,13 @@ class Skills extends Component {
             items={items}
           />
         </ValidatedInput>
-        <ValidatedInput errorMessage="">
+        <ValidatedInput errorMessage={this.getErrorMessage('skillLevel')}>
           <div className="level-scale" key="scale">
             <p>{Resources.skillLevel}</p>
             {this.renderLevelScale(5, level)}
           </div>
         </ValidatedInput>
-        <button onClick={this.addItem} className="btn btn-primary full-width">{Resources.submit}</button>
+        <button onClick={this.addItem} className="btn btn-secondary full-width">{Resources.submit}</button>
       </div>,
       this.renderAddedSkills()
     ];
@@ -96,6 +117,7 @@ class Skills extends Component {
 
 Skills.propTypes = {
   addSkill: PropTypes.func.isRequired,
+  removeSkill: PropTypes.func.isRequired,
   addedSkills: PropTypes.array
 };
 

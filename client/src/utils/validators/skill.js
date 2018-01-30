@@ -1,18 +1,14 @@
-import _ from 'lodash';
 import { resultFactory, isValid } from './common';
 import Resources from './resource';
 
-export const validate = ({skill, skillLevel, addedSkills}) => {
+export const validate = (skill) => {
   const result = resultFactory();
 
-  !isValid(skill) &&
-    result.update('skill', Resources.skill);
+  !isValid(skill.description) &&
+    result.update('skillDescription', Resources.skillDescription);
 
-  !isValid(skillLevel) &&
+  skill.level === 0 &&
     result.update('skillLevel', Resources.skillLevel);
-
-  _.find(addedSkills, ak => ak.skill === skill) &&
-    result.update('skill', Resources.repeatedSkill);
 
   return result;
 };

@@ -66,6 +66,8 @@
           word-wrap: break-word;
           margin-top: 5px;
           border: 1px solid #dbe0e4;
+          text-align: left;
+          padding: 10px;
         }
       }
 
@@ -75,11 +77,6 @@
 
       .btn {
         margin-top: 20px;
-        background-color: #337ab7;
-
-        &:hover {
-          background: darken(#337ab7, 8%);
-        }
       }
 
       .level-scale {
@@ -89,6 +86,7 @@
         flex-direction: column;
         justify-content: space-between;
         font-size: $type-h5;
+        padding-bottom: 15px;
 
         p{
           font-size: $type-h4;
