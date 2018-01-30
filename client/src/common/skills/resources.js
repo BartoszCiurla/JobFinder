@@ -4,5 +4,7 @@ export default {
   3:"Wykwalifikowany",
   4:"Specjalista",
   5:"Ekspert",
-  skillLevel: 'Poziom zaawansowania'
+  skillLevel: 'Poziom zaawansowania',
+  skillDescription: 'Opis umiejętności',
+  submit: 'Dodaj'
 };

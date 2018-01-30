@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import BasicAutocomplete from '../basicAutocomplete';
 import ValidatedInput from '../../common/ValidatedInput';
 
 import Resources from './resources';
+
 
 class Skills extends Component {
   state = {
@@ -13,12 +16,25 @@ class Skills extends Component {
       level: 0
     },
     items: [
-      'c',
-      'cw',
-      'cwe',
-      'cwel'
+      'a',
+      'ab',
+      'abc',
+      'abcd'
     ]
   }
+
+  componentWillMount() {
+    // _.isEmpty(this.props.professionCategories) &&
+    //   this.props.getProfessions();
+    //todo get skills from api
+  }
+
+  addItem = () => {
+    const { skill } = this.state;
+    this.props.addSkill(skill);
+    this.setState({ skill: { level: 0, description: '' } });
+  }
+
   onChangeDescription = (value) => {
     this.setState({ skill: { ...this.state.skill, description: value } });
   }
@@ -37,15 +53,23 @@ class Skills extends Component {
 
   renderRadioInput = (value, level) => (
     <div key={value}>
-      <input className="radio" onClick={this.onChangeLevel} type="radio" id={`radio${value}`} value={value} name="radio-group" checked={value === level} />
+      <input type="radio" onClick={this.onChangeLevel} value={value} id={`radio${value}`} name="skillLevel" checked={value === level} />
       <label htmlFor={`radio${value}`}>{Resources[value]}</label>
     </div>
-  )
+  );
+
+  renderAddedSkills = () => {
+    const { addedSkills } = this.props;
+    return (
+      <div key="addedSkils" className="added-skills">
+        {addedSkills.map(({ description, level }, index) => <div className="added-skill" key={index}>{`${description} ${Resources[level].toLowerCase()}`}</div>)}
+      </div>
+    );
+  }
 
   render() {
     const { skill, items } = this.state;
     const { description, level } = skill;
-    const { placeholder } = this.props;
 
     return [
       <div key="skill" className="skill-form">
@@ -53,7 +77,7 @@ class Skills extends Component {
           <BasicAutocomplete
             value={description}
             onChange={this.onChangeDescription}
-            placeholder={placeholder}
+            placeholder={Resources.skillDescription}
             items={items}
           />
         </ValidatedInput>
@@ -63,13 +87,19 @@ class Skills extends Component {
             {this.renderLevelScale(5, level)}
           </div>
         </ValidatedInput>
-      </div>
+        <button onClick={this.addItem} className="btn btn-primary full-width">{Resources.submit}</button>
+      </div>,
+      this.renderAddedSkills()
     ];
   }
 }
 
 Skills.propTypes = {
-  placeholder: PropTypes.string.isRequired,
+  addSkill: PropTypes.func.isRequired,
+  addedSkills: PropTypes.array
 };
 
-export default Skills;
+const mapDispatchToProps = dispatch => bindActionCreators({
+}, dispatch);
+
+export default connect(null, mapDispatchToProps)(Skills);

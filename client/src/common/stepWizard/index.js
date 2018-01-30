@@ -15,9 +15,9 @@ class StepWizard extends Component {
       this.setState({ currentStep: this.state.currentStep + 1 });
   }
 
-  renderLeftButton = (onClick, title) => (<button key="leftButton" onClick={onClick} className="btn btn_left">{title}</button>)
+  renderLeftButton = (onClick, title) => (<button key="leftButton" onClick={onClick} className="btn nav nav_left">{title}</button>)
 
-  renderRightButton = (onClick, title) => (<button key="rightButton" onClick={onClick} className="btn btn_right">{title}</button>)
+  renderRightButton = (onClick, title) => (<button key="rightButton" onClick={onClick} className="btn nav nav_right">{title}</button>)
 
 
   renderNavigationBar = (currentStep) => {

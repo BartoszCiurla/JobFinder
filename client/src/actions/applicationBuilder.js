@@ -19,3 +19,7 @@ export const setApplicationCategory = (offerCategory) => (
 export const setApplicationProfession = (profession) => (
   { type: types.SET_APPLICATION_PROFESSION, payload: profession }
 );
+
+export const setApplicationSkill = (skill) => (
+  { type: types.SET_APPLICATION_SKILL, payload: skill }
+);

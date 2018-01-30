@@ -15,6 +15,7 @@ import Routes from '../../constants/routes';
 import {
   setApplicationCategory,
   setApplicationProfession,
+  setApplicationSkill,
   createApplication
 } from '../../actions/applicationBuilder';
 
@@ -52,8 +53,16 @@ class ApplicationBuilder extends Component {
   }
 
   skillsStep = () => {
+    const {
+      skills
+    } = this.props;
+
     return {
-      renderStep: <Skills placeholder={Resources.skillDescription} />,
+      renderStep:
+        <Skills
+          addSkill={this.props.setApplicationSkill}
+          addedSkills={skills}
+        />,
       title: `${Resources.skills}`,
       validate: () => true
     };
@@ -83,17 +92,21 @@ ApplicationBuilder.propTypes = {
   profession: PropTypes.string.isRequired,
   cookies: PropTypes.instanceOf(Cookies).isRequired,
   history: PropTypes.object.isRequired,
-  createApplication: PropTypes.func.isRequired
+  createApplication: PropTypes.func.isRequired,
+  setApplicationSkill: PropTypes.func.isRequired,
+  skills: PropTypes.array
 };
 
-const mapStateToProps = ({ applicationBuilder }) => ({
-  category: applicationBuilder.category,
-  profession: applicationBuilder.profession
+const mapStateToProps = ({ applicationBuilder: { category, profession, skills } }) => ({
+  category,
+  profession,
+  skills
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   setApplicationCategory,
   setApplicationProfession,
+  setApplicationSkill,
   createApplication
 }, dispatch);
 
