@@ -74,10 +74,23 @@ class ApplicationBuilder extends Component {
     };
   }
 
+  languagesStep = () => {
+
+    return {
+      renderStep:
+        (<div>
+          Języki
+      </div>),
+      title: `${Resources.languages}`,
+      validate: () => true
+    };
+  }
+
   render() {
     const steps = [
       this.professionStep(),
-      this.skillsStep()
+      this.skillsStep(),
+      this.languagesStep()
     ];
 
     return (

@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace JobFinder.WebApi.Controllers
 {
-  [Authorize]
   [Route("api/[controller]")]
   public class ProfessionController : BaseController
   {
@@ -20,7 +19,6 @@ namespace JobFinder.WebApi.Controllers
     { }
 
     [Route("GetProfessions")]
-    [AllowAnonymous]
     [HttpGet]
     public async Task<IActionResult> GetProfessions()
     {
@@ -28,7 +26,6 @@ namespace JobFinder.WebApi.Controllers
     }
 
     [Route("GetProposedSkills")]
-    [AllowAnonymous]
     [HttpPost]
     public async Task<IActionResult> GetProposedSkills([FromBody]GetProposedSkillsQuery query)
     {

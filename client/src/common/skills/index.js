@@ -9,7 +9,7 @@ import ValidatedInput from '../../common/ValidatedInput';
 
 import Resources from './resources';
 import { validate } from '../../utils/validators/skill';
-import { getSkills } from '../../actions/skill';
+import { getSkills } from '../../actions/skills';
 
 class Skills extends Component {
   state = {

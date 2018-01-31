@@ -1,6 +1,6 @@
 using JobFinder.Domain.Applications.Entities;
-using JobFinder.Domain.CVs.Entities;
 using JobFinder.Domain.JobApplications.Entities;
+using JobFinder.Domain.Languages.Entities;
 using JobFinder.Domain.Offers.Entities;
 using JobFinder.Domain.Professions.Entities;
 using JobFinder.Domain.Users.Entities;
@@ -9,6 +9,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace JobFinder.Infrastructure.Ef.Configurations
 {
+  public class LanguageConfiguration : EntityMappingConfiguration<Language>
+  {
+    public override void Map(EntityTypeBuilder<Language> builder)
+    {
+      builder.ToTable(nameof(Language), SchemaName.JobFinder);
+    }
+  }
   public class JobApplicationSkillConfiguration : EntityMappingConfiguration<JobApplicationSkill>
   {
     public override void Map(EntityTypeBuilder<JobApplicationSkill> builder)
@@ -49,13 +56,6 @@ namespace JobFinder.Infrastructure.Ef.Configurations
     public override void Map(EntityTypeBuilder<ProfessionCategory> builder)
     {
       builder.ToTable(nameof(ProfessionCategory), SchemaName.JobFinder);
-    }
-  }
-  public class CVsConfiguration : EntityMappingConfiguration<CV>
-  {
-    public override void Map(EntityTypeBuilder<CV> builder)
-    {
-      builder.ToTable(nameof(CV), SchemaName.JobFinder);
     }
   }
   public class UserConfiguration : EntityMappingConfiguration<User>
