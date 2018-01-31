@@ -9,7 +9,7 @@ import ValidatedInput from '../../common/ValidatedInput';
 
 import Resources from './resources';
 import { validate } from '../../utils/validators/skill';
-
+import { getSkills } from '../../actions/skill';
 
 class Skills extends Component {
   state = {
@@ -17,19 +17,12 @@ class Skills extends Component {
     skill: {
       description: '',
       level: 0
-    },
-    items: [
-      'a',
-      'ab',
-      'abc',
-      'abcd'
-    ]
+    }
   }
 
   componentWillMount() {
-    // _.isEmpty(this.props.professionCategories) &&
-    //   this.props.getProfessions();
-    //todo get skills from api
+    const { category, profession } = this.props;
+    _.isEmpty(this.props.proposedSkills) && this.props.getSkills(category, profession);
   }
 
   getErrorMessage = (name) => (
@@ -89,17 +82,18 @@ class Skills extends Component {
   }
 
   render() {
-    const { skill, items } = this.state;
+    const { isLoadingSkills, proposedSkills } = this.props;
+    const { skill } = this.state;
     const { description, level } = skill;
 
-    return [
+    return !isLoadingSkills && [
       <div key="skill" className="skill-form">
         <ValidatedInput errorMessage={this.getErrorMessage('skillDescription')}>
           <BasicAutocomplete
             value={description}
             onChange={this.onChangeDescription}
             placeholder={Resources.skillDescription}
-            items={items}
+            items={proposedSkills}
           />
         </ValidatedInput>
         <ValidatedInput errorMessage={this.getErrorMessage('skillLevel')}>
@@ -118,10 +112,20 @@ class Skills extends Component {
 Skills.propTypes = {
   addSkill: PropTypes.func.isRequired,
   removeSkill: PropTypes.func.isRequired,
-  addedSkills: PropTypes.array
+  addedSkills: PropTypes.array,
+  getSkills: PropTypes.func.isRequired,
+  isLoadingSkills: PropTypes.bool.isRequired,
+  proposedSkills: PropTypes.array,
+  category: PropTypes.string,
+  profession: PropTypes.string
 };
 
+const mapStateToProps = ({ skills: { isLoadingSkills, proposedSkills } }) => ({
+  isLoadingSkills, proposedSkills
+});
+
 const mapDispatchToProps = dispatch => bindActionCreators({
+  getSkills
 }, dispatch);
 
-export default connect(null, mapDispatchToProps)(Skills);
+export default connect(mapStateToProps, mapDispatchToProps)(Skills);

@@ -8,6 +8,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace JobFinder.Infrastructure.Ef.Configurations
 {
+  public class ProposedSkillConfiguration : EntityMappingConfiguration<ProposedSkill>
+  {
+    public override void Map(EntityTypeBuilder<ProposedSkill> builder)
+    {
+      builder.ToTable(nameof(ProposedSkill), SchemaName.JobFinder);
+    }
+  }
   public class JobApplicationConfiguration : EntityMappingConfiguration<JobApplication>
   {
     public override void Map(EntityTypeBuilder<JobApplication> builder)

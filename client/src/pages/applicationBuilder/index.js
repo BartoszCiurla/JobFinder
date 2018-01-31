@@ -55,7 +55,9 @@ class ApplicationBuilder extends Component {
 
   skillsStep = () => {
     const {
-      skills
+      skills,
+      category,
+      profession
     } = this.props;
 
     return {
@@ -64,6 +66,8 @@ class ApplicationBuilder extends Component {
           addSkill={this.props.setApplicationSkill}
           removeSkill={this.props.removeApplicationSkill}
           addedSkills={skills}
+          category={category}
+          profession={profession}
         />,
       title: `${Resources.skills}`,
       validate: () => true

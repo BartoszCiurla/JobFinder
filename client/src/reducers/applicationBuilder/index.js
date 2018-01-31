@@ -4,7 +4,8 @@ import {
   SET_APPLICATION_CATEGORY,
   SET_APPLICATION_PROFESSION,
   SET_APPLICATION_SKILL,
-  REMOVE_APPLICATION_SKILL
+  REMOVE_APPLICATION_SKILL,
+  CLEAN_APPLICATION_SKILLS
 } from '../../constants/applicationBuilder';
 
 const actions = {
@@ -35,6 +36,13 @@ const actions = {
     const data = {
       ...state,
       skills: _.reject(state.skills, s => s.description === description && s.level === level)
+    };
+    return { ...data };
+  },
+  [CLEAN_APPLICATION_SKILLS]: (state) => {
+    const data = {
+      ...state,
+      skills: []
     };
     return { ...data };
   }

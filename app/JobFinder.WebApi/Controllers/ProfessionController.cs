@@ -26,5 +26,13 @@ namespace JobFinder.WebApi.Controllers
     {
       return await SendQuery(DispatcherActorsNames.ProfessionQueryActor, new GetProfessionsQuery());
     }
+
+    [Route("GetProposedSkills")]
+    [AllowAnonymous]
+    [HttpPost]
+    public async Task<IActionResult> GetProposedSkills([FromBody]GetProposedSkillsQuery query)
+    {
+      return await SendQuery(DispatcherActorsNames.ProfessionQueryActor, query);
+    }
   }
 }

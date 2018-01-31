@@ -72,7 +72,7 @@ namespace JobFinder.Infrastructure.Ef.Extensions
       var category = ProfessionCategory.Create(Guid.NewGuid(), professionCategory);
       await jobFinderContext.Set<ProfessionCategory>().AddAsync(category);
 
-      var items = professions.Select(x => Profession.Create(Guid.NewGuid(), x, category));
+      var items = professions.Select(x => Profession.Create(Guid.NewGuid(), x, category, new List<ProposedSkill>()));
       await jobFinderContext.Set<Profession>().AddRangeAsync(items);
     }
     private static void SeedUsers(JobFinderContext jobFinderContext, IPasswordCryptoService passwordCryptoService)

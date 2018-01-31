@@ -190,6 +190,22 @@ namespace JobFinder.DbMigration.Migrations
                     b.ToTable("ProfessionCategory","JobFinder");
                 });
 
+            modelBuilder.Entity("JobFinder.Domain.Professions.Entities.ProposedSkill", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description");
+
+                    b.Property<Guid>("ProfessionId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProfessionId");
+
+                    b.ToTable("ProposedSkill","JobFinder");
+                });
+
             modelBuilder.Entity("JobFinder.Domain.Users.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -275,6 +291,14 @@ namespace JobFinder.DbMigration.Migrations
                     b.HasOne("JobFinder.Domain.Professions.Entities.ProfessionCategory", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId");
+                });
+
+            modelBuilder.Entity("JobFinder.Domain.Professions.Entities.ProposedSkill", b =>
+                {
+                    b.HasOne("JobFinder.Domain.Professions.Entities.Profession")
+                        .WithMany("ProposedSkills")
+                        .HasForeignKey("ProfessionId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

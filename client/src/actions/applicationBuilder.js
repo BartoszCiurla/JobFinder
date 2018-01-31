@@ -27,3 +27,7 @@ export const setApplicationSkill = (skill) => (
 export const removeApplicationSkill = (skill) => (
   { type: types.REMOVE_APPLICATION_SKILL, payload: skill }
 );
+
+export const cleanApplicationsSkills = () => (
+  { type: types.CLEAN_APPLICATION_SKILLS }
+);

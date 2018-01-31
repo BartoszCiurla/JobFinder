@@ -14,35 +14,35 @@ namespace Core.Akka.ActorAutostart
   {
     private readonly List<IActorRef> _autostartedActors;
     private readonly IActorSystemManager _actorSystemManager;
-    public List<IActorRef> AutostartedActors => _autostartedActors.ToList ();
-    public AutostartActorInitializer (IActorSystemManager actorSystemManager, ILifetimeScope lifetimeScope)
+    public List<IActorRef> AutostartedActors => _autostartedActors.ToList();
+    public AutostartActorInitializer(IActorSystemManager actorSystemManager, ILifetimeScope lifetimeScope)
     {
       _actorSystemManager = actorSystemManager;
-      _autostartedActors = new List<IActorRef> ();
-      new AutoFacDependencyResolver (lifetimeScope, lifetimeScope.Resolve<IActorSystemManager> ().ActorSystem);
+      _autostartedActors = new List<IActorRef>();
+      new AutoFacDependencyResolver(lifetimeScope, lifetimeScope.Resolve<IActorSystemManager>().ActorSystem);
     }
-    public void FindAndStartActors (params Assembly [] assembliesToScan)
+    public void FindAndStartActors(params Assembly[] assembliesToScan)
     {
       if (assembliesToScan == null || assembliesToScan.Length == 0)
       {
-        assembliesToScan = Assembly.GetEntryAssembly ().GetReferencedAssemblies ().Select (Assembly.Load).ToArray ();
+        assembliesToScan = Assembly.GetEntryAssembly().GetReferencedAssemblies().Select(Assembly.Load).ToArray();
       }
-      var allActorsToStart = assembliesToScan.SelectMany (assembly => assembly.GetTypes ().Where (x => x.IsSubclassOf (typeof (ActorBase))))
-        .Select (x => new { Type = x, Attribute = x.GetCustomAttribute<AutostartActorAttribute> () })
-        .Where (x => x.Attribute != null);
+      var allActorsToStart = assembliesToScan.SelectMany(assembly => assembly.GetTypes().Where(x => x.IsSubclassOf(typeof(ActorBase))))
+        .Select(x => new { Type = x, Attribute = x.GetCustomAttribute<AutostartActorAttribute>() })
+        .Where(x => x.Attribute != null);
       foreach (var actorToStart in allActorsToStart)
       {
-        var actor = _actorSystemManager.ActorSystem.ActorOf (_actorSystemManager.ActorSystem.DI ().Props (actorToStart.Type), actorToStart.Attribute.ActorName);
-        _autostartedActors.Add (actor);
+        var actor = _actorSystemManager.ActorSystem.ActorOf(_actorSystemManager.ActorSystem.DI().Props(actorToStart.Type), actorToStart.Attribute.ActorName);
+        _autostartedActors.Add(actor);
       }
     }
-    public void StopAllAutostartedActors ()
+    public void StopAllAutostartedActors()
     {
-      foreach (var actor in _autostartedActors.ToList ())
+      foreach (var actor in _autostartedActors.ToList())
       {
-        var wasStopped = actor.GracefulStop (TimeSpan.FromSeconds (3)).Result;
+        var wasStopped = actor.GracefulStop(TimeSpan.FromSeconds(3)).Result;
         if (wasStopped)
-          _autostartedActors.Remove (actor);
+          _autostartedActors.Remove(actor);
       }
     }
   }

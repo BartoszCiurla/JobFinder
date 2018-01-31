@@ -7,8 +7,8 @@ export const formatProfession = (category, profession, getState) => {
 
   if (!selectedCategory) {
     return {
-      category: { name: category },
-      profession: { name: profession }
+      category: { name: category, id: '' },
+      profession: { name: profession, id: '' }
     };
   }
 
@@ -21,7 +21,7 @@ export const formatProfession = (category, profession, getState) => {
   if (!formatedProfession) {
     return {
       category: formatedCategory,
-      profession: { name: profession }
+      profession: { name: profession, id: '' }
     };
   }
 

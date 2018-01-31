@@ -228,6 +228,27 @@ namespace JobFinder.DbMigration.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "ProposedSkill",
+                schema: "JobFinder",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProfessionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProposedSkill", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProposedSkill_Profession_ProfessionId",
+                        column: x => x.ProfessionId,
+                        principalSchema: "JobFinder",
+                        principalTable: "Profession",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_CVCertificate_CVId",
                 table: "CVCertificate",
@@ -277,6 +298,12 @@ namespace JobFinder.DbMigration.Migrations
                 schema: "JobFinder",
                 table: "Profession",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProposedSkill_ProfessionId",
+                schema: "JobFinder",
+                table: "ProposedSkill",
+                column: "ProfessionId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -302,15 +329,19 @@ namespace JobFinder.DbMigration.Migrations
                 schema: "JobFinder");
 
             migrationBuilder.DropTable(
+                name: "ProposedSkill",
+                schema: "JobFinder");
+
+            migrationBuilder.DropTable(
                 name: "CV",
                 schema: "JobFinder");
 
             migrationBuilder.DropTable(
-                name: "Profession",
+                name: "User",
                 schema: "JobFinder");
 
             migrationBuilder.DropTable(
-                name: "User",
+                name: "Profession",
                 schema: "JobFinder");
 
             migrationBuilder.DropTable(
