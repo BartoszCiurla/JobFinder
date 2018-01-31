@@ -1,10 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Core.Akka.ActorAutostart;
 using Core.Application.Actors;
 using Core.Application.Exceptions;
 using JobFinder.Application.Api.Common;
+using JobFinder.Application.Api.Common.Dtos;
 using JobFinder.Application.Api.Offer.Commands;
 using JobFinder.Application.Services;
 using JobFinder.Domain.Offers.Entities;
@@ -32,7 +34,7 @@ namespace JobFinder.Application.Offers
 
         ProfessionCategory professionCategory = await ProfessionCategoryService.GetOrCreate(command.Category.Id, command.Category.Name, professionCategoryRepository);
 
-        Profession profession = await ProfessionService.GetOrCreate(command.Profession.Id, command.Profession.Name, professionRepository, professionCategory);
+        Profession profession = await ProfessionService.GetOrCreate(command.Profession.Id, command.Profession.Name, professionRepository, professionCategory, new List<SkillDto>());
 
         Offer offer = Offer.Create(Guid.NewGuid(), user, profession);
 

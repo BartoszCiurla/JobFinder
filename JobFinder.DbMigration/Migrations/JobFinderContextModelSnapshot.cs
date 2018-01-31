@@ -144,6 +144,26 @@ namespace JobFinder.DbMigration.Migrations
                     b.ToTable("CVSkill");
                 });
 
+            modelBuilder.Entity("JobFinder.Domain.JobApplications.Entities.JobApplicationSkill", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("JobApplicationId");
+
+                    b.Property<int>("Level");
+
+                    b.Property<Guid?>("SkillId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("JobApplicationId");
+
+                    b.HasIndex("SkillId");
+
+                    b.ToTable("JobApplicationSkill","JobFinder");
+                });
+
             modelBuilder.Entity("JobFinder.Domain.Offers.Entities.Offer", b =>
                 {
                     b.Property<Guid>("Id")
@@ -273,6 +293,18 @@ namespace JobFinder.DbMigration.Migrations
                         .WithMany("Skills")
                         .HasForeignKey("CVId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("JobFinder.Domain.JobApplications.Entities.JobApplicationSkill", b =>
+                {
+                    b.HasOne("JobFinder.Domain.Applications.Entities.JobApplication")
+                        .WithMany("Skills")
+                        .HasForeignKey("JobApplicationId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("JobFinder.Domain.Professions.Entities.ProposedSkill", "Skill")
+                        .WithMany()
+                        .HasForeignKey("SkillId");
                 });
 
             modelBuilder.Entity("JobFinder.Domain.Offers.Entities.Offer", b =>

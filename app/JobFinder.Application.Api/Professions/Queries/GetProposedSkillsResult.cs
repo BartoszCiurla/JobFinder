@@ -18,10 +18,12 @@ namespace JobFinder.Application.Api.Professions.Queries
     public class ProposedSkillDto
     {
       public Guid Id { get; set; }
+      public Guid ProfessionId { get; set; }
       public string Description { get; set; }
-      public ProposedSkillDto(Guid id, string description)
+      public ProposedSkillDto(Guid id, Guid professionId, string description)
       {
         Id = id;
+        ProfessionId = professionId;
         Description = description;
       }
     }

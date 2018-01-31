@@ -22,7 +22,7 @@ class Skills extends Component {
 
   componentWillMount() {
     const { category, profession } = this.props;
-    _.isEmpty(this.props.proposedSkills) && this.props.getSkills(category, profession);
+    this.props.getSkills(category, profession);
   }
 
   getErrorMessage = (name) => (
@@ -121,7 +121,8 @@ Skills.propTypes = {
 };
 
 const mapStateToProps = ({ skills: { isLoadingSkills, proposedSkills } }) => ({
-  isLoadingSkills, proposedSkills
+  isLoadingSkills,
+  proposedSkills: proposedSkills.map(x => x.description)
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

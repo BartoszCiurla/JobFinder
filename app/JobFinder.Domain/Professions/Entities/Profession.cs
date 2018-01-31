@@ -20,6 +20,11 @@ namespace JobFinder.Domain.Professions.Entities
       ProposedSkills = proposedSkills;
     }
 
+    public void AddProposedSkill(ProposedSkill skill)
+    {
+      ProposedSkills.Add(skill);
+    }
+
     public static Profession Create(Guid id, string name, ProfessionCategory category, ICollection<ProposedSkill> proposedSkills)
     {
       return new Profession(id, name, category, proposedSkills);

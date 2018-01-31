@@ -249,6 +249,35 @@ namespace JobFinder.DbMigration.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "JobApplicationSkill",
+                schema: "JobFinder",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    JobApplicationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Level = table.Column<int>(type: "int", nullable: false),
+                    SkillId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JobApplicationSkill", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_JobApplicationSkill_JobApplication_JobApplicationId",
+                        column: x => x.JobApplicationId,
+                        principalSchema: "JobFinder",
+                        principalTable: "JobApplication",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_JobApplicationSkill_ProposedSkill_SkillId",
+                        column: x => x.SkillId,
+                        principalSchema: "JobFinder",
+                        principalTable: "ProposedSkill",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_CVCertificate_CVId",
                 table: "CVCertificate",
@@ -280,6 +309,18 @@ namespace JobFinder.DbMigration.Migrations
                 schema: "JobFinder",
                 table: "JobApplication",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JobApplicationSkill_JobApplicationId",
+                schema: "JobFinder",
+                table: "JobApplicationSkill",
+                column: "JobApplicationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JobApplicationSkill_SkillId",
+                schema: "JobFinder",
+                table: "JobApplicationSkill",
+                column: "SkillId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Offer_ProfessionId",
@@ -321,7 +362,7 @@ namespace JobFinder.DbMigration.Migrations
                 name: "CVSkill");
 
             migrationBuilder.DropTable(
-                name: "JobApplication",
+                name: "JobApplicationSkill",
                 schema: "JobFinder");
 
             migrationBuilder.DropTable(
@@ -329,11 +370,15 @@ namespace JobFinder.DbMigration.Migrations
                 schema: "JobFinder");
 
             migrationBuilder.DropTable(
-                name: "ProposedSkill",
+                name: "CV",
                 schema: "JobFinder");
 
             migrationBuilder.DropTable(
-                name: "CV",
+                name: "JobApplication",
+                schema: "JobFinder");
+
+            migrationBuilder.DropTable(
+                name: "ProposedSkill",
                 schema: "JobFinder");
 
             migrationBuilder.DropTable(

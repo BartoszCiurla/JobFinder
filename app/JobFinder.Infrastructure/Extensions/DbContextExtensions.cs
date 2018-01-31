@@ -19,15 +19,16 @@ namespace JobFinder.Infrastructure.Ef.Extensions
       var professions = jobFinderContext.Set<Profession>();
       if (!professions.AnyAsync().Result)
       {
-        SeedProfession(jobFinderContext, "IT", new string[]
-        {
-          "Administrator",
-          "Grafik",
-          "Konsultant ds. Wdrożeń",
-          "Programista",
-          "Programista baz danych",
-          "Projektant IT"
-        });
+        SeedProfessionHappyPath(jobFinderContext);
+        // SeedProfession(jobFinderContext, "IT", new string[]
+        // {
+        //   "Administrator",
+        //   "Grafik",
+        //   "Konsultant ds. Wdrożeń",
+        //   "Programista",
+        //   "Programista baz danych",
+        //   "Projektant IT"
+        // });
         SeedProfession(jobFinderContext, "Administracja", new string[]
         {
           "Administrator danych osobowych",
@@ -66,6 +67,83 @@ namespace JobFinder.Infrastructure.Ef.Extensions
         });
       }
       jobFinderContext.SaveChangesAsync();
+    }
+
+    private static async void SeedProfessionHappyPath(JobFinderContext jobFinderContext)
+    {
+      string professionCategory = "IT";
+      Dictionary<string, string[]> professionNames = new Dictionary<string, string[]>(){
+        {"Administrator", new string[]{
+          "znajomość zagadnień związanych z administracją określonymi zasobami informatycznymi (fizyczne sieci internetowe, serwery, systemy informatyczne)",
+          "ogólna wiedza na temat standardów informatycznych",
+          "znajomość języków programowania",
+          "znajomość narzędzi administracyjnych (panele administracyjne serwerów, programów do zarządzani ruchem w sieci, konta administracyjne systemów)"
+        }},
+        {
+          "Grafik",new string[]{
+            "doskonała znajomość środowisk i programów graficznych do obróbki (Corel, Photoshop, Gimp)",
+            "znajomość Flash i Action Script",
+            "wiedza z zakresu tworzenia wizualizacji (grafika 3D)",
+            "umiejętność przygotowywania grafiki na potrzeby różnych form wykorzystania (grafika WWW, DTP)",
+            "zdolności artystyczne",
+            "znajomość zagadnień związanych z prawami autorskimi",
+            "znajomość formalnych aspektów dotyczących np. projektowania znaku graficznego (Księga Znaku)"
+          }
+        },
+        {
+          "Konsultant ds. Wdrożeń", new string[]{
+            "znajomość zagadnień związanych z administracją określonymi zasobami informatycznymi (fizyczne sieci internetowe, serwery, systemy informatyczne)",
+            "ogólna wiedza na temat standardów informatycznych",
+            "znajomość języków programowania",
+            "znajomość narzędzi administracyjnych (panele administracyjne serwerów, programów do zarządzani ruchem w sieci, konta administracyjne systemów)",
+          }
+        },
+        {
+          "Programista",new string[]{
+            "znajomość języków programowania (np. Java, PHP, C/C++/C#, Python, Perl)",
+            "znajomość standardów oraz środowisk programistycznych",
+            "wiedza z zakresu inżynierii oprogramowania",
+            "znajomość zagadnień takich jak bazy danych i systemy operacyjne",
+            "metodyka prowadzenia projektów informatycznych"
+          }
+        },
+        {
+          "Programista baz danych",new string[]{
+            "znajomość baz danych (MySQL, PostgreSQL, Oracle, Access, Microsoft SQL Serwer)",
+            "znajomość zagadnień związanych z relacyjnością, obiektowością, operacyjnością",
+            "znajomość języka programowania baz danych (SQL)",
+            "wiedza z zakresu inżynierii oprogramowania",
+            "znajomość zagadnień związanych z administrowaniem serwerami baz danych",
+            "znajomość zagadnień związanych z bezpieczeństwem informacji"
+          }
+        },
+        {
+          "Projektant IT", new string[]{
+            "znajomość architektury systemów, metod projektowania systemów informatycznych",
+            "umiejętność opracowywania projektów i modeli rozwiązań informatycznych",
+            "znajomość oprogramowania wspierającego (prototypowanie)",
+            "znajomość UML oraz programów UML (np. MS Visio)",
+            "znajomość wzorców projektowych",
+            "znajomość języków programowania, znajomość standardów oraz środowisk programistycznych",
+            "wiedza z zakresu inżynierii oprogramowania",
+            "znajomość zagadnień takich jak bazy danych i systemy operacyjne",
+            "metodyka prowadzenia projektów informatycznych"
+          }
+        }
+      };
+
+      var category = ProfessionCategory.Create(Guid.NewGuid(), professionCategory);
+      await jobFinderContext.Set<ProfessionCategory>().AddAsync(category);
+
+      List<Profession> items = new List<Profession>();
+      foreach (var item in professionNames)
+      {
+        var professionId = Guid.NewGuid();
+        var proposedSkills = item.Value.Select(x => ProposedSkill.Create(Guid.NewGuid(), professionId, x));
+        items.Add(Profession.Create(professionId, item.Key, category, proposedSkills.ToList()));
+      }
+      await jobFinderContext.Set<Profession>().AddRangeAsync(items);
+
     }
     private static async void SeedProfession(JobFinderContext jobFinderContext, string professionCategory, string[] professions)
     {

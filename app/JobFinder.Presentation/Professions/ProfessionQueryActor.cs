@@ -55,7 +55,9 @@ namespace JobFinder.Presentation.Professions
 
         return new GetProposedSkillsResult(professionReadOnlyRepository
           .SelectMany(x => x.ProposedSkills)
-          .Select(p => new GetProposedSkillsResult.ProposedSkillDto(p.Id, p.Description)));
+          .GroupBy(x => x.Description)
+          .Select(x => x.First())
+          .Select(p => new GetProposedSkillsResult.ProposedSkillDto(p.Id, p.ProfessionId, p.Description)));
       });
     }
   }

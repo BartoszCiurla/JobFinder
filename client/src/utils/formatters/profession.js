@@ -2,13 +2,14 @@ import _ from 'lodash';
 
 export const formatProfession = (category, profession, getState) => {
   const categories = getState().professions.categories;
+  const emptyId = '00000000-0000-0000-0000-000000000000';
 
   const selectedCategory = categories.find(x => _.trim(x.name) === _.trim(category));
 
   if (!selectedCategory) {
     return {
-      category: { name: category, id: '' },
-      profession: { name: profession, id: '' }
+      category: { name: category, id: emptyId },
+      profession: { name: profession, id: emptyId }
     };
   }
 
@@ -21,7 +22,7 @@ export const formatProfession = (category, profession, getState) => {
   if (!formatedProfession) {
     return {
       category: formatedCategory,
-      profession: { name: profession, id: '' }
+      profession: { name: profession, id: emptyId }
     };
   }
 
