@@ -14,7 +14,7 @@ export const setLoadingLanguages = () => (
 export const getLanguages = () => dispatch => {
   dispatch(setLoadingLanguages());
 
-  Api.post('api/Profession/GetProposedSkills')
+  Api.get('api/Language/GetLanguages')
     .then(data => dispatch(setLanguages(data.languages)))
     .catch(defaultErrorMessage);
 };

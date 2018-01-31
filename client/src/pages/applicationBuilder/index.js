@@ -10,6 +10,7 @@ import Resources from './resources';
 import { validate as validateProfession } from '../../utils/validators/profession';
 import Profession from '../../common/profession';
 import Skills from '../../common/skills';
+import Languages from '../../common/languages';
 import StepWizard from '../../common/stepWizard';
 import Routes from '../../constants/routes';
 import {
@@ -17,7 +18,9 @@ import {
   setApplicationProfession,
   setApplicationSkill,
   removeApplicationSkill,
-  createApplication
+  createApplication,
+  setApplicationLanguage,
+  removeApplicationLanguage
 } from '../../actions/applicationBuilder';
 
 class ApplicationBuilder extends Component {
@@ -75,12 +78,17 @@ class ApplicationBuilder extends Component {
   }
 
   languagesStep = () => {
+    const {
+      languages
+    } = this.props;
 
     return {
       renderStep:
-        (<div>
-          Języki
-      </div>),
+        <Languages
+          addedLanguages={languages}
+          addLanguage={this.props.setApplicationLanguage}
+          removeLanguage={this.props.removeApplicationLanguage}
+        />,
       title: `${Resources.languages}`,
       validate: () => true
     };
@@ -114,13 +122,17 @@ ApplicationBuilder.propTypes = {
   createApplication: PropTypes.func.isRequired,
   setApplicationSkill: PropTypes.func.isRequired,
   removeApplicationSkill: PropTypes.func.isRequired,
-  skills: PropTypes.array
+  setApplicationLanguage: PropTypes.func.isRequired,
+  removeApplicationLanguage: PropTypes.func.isRequired,
+  skills: PropTypes.array,
+  languages: PropTypes.array
 };
 
-const mapStateToProps = ({ applicationBuilder: { category, profession, skills } }) => ({
+const mapStateToProps = ({ applicationBuilder: { category, profession, skills, languages } }) => ({
   category,
   profession,
-  skills
+  skills,
+  languages
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -128,6 +140,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   setApplicationProfession,
   setApplicationSkill,
   removeApplicationSkill,
+  setApplicationLanguage,
+  removeApplicationLanguage,
   createApplication
 }, dispatch);
 

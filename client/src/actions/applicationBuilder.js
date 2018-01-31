@@ -31,3 +31,11 @@ export const removeApplicationSkill = (skill) => (
 export const cleanApplicationsSkills = () => (
   { type: types.CLEAN_APPLICATION_SKILLS }
 );
+
+export const setApplicationLanguage = (language) => (
+  { type: types.SET_APPLICATION_LANGUAGE, payload: language }
+);
+
+export const removeApplicationLanguage = (language) => (
+  { type: types.REMOVE_APPLICATION_LANGUAGE, payload: language }
+);

@@ -67,15 +67,15 @@ class Skills extends Component {
   renderAddedSkills = () => {
     const { addedSkills } = this.props;
     return (
-      <div key="addedSkils" className="added-skills">
+      <div key="addedSkils" className="added-items">
         {addedSkills.map(({ description, level }, index) =>
-          (<div className="added-skill" key={index}>
+          (<div className="added-item" key={index}>
             {Resources.skillTitle} :
             <span>{description}</span>
             <br />
             {Resources.levelTitle} :
             <span>{Resources[level].toLowerCase()}</span>
-            <button onClick={() => this.props.removeSkill({ description, level })} className="btn btn-primary full-width">Usuń</button>
+            <button onClick={() => this.props.removeSkill({ description, level })} className="btn btn-primary full-width">{Resources.remove}</button>
           </div>))}
       </div>
     );
@@ -87,7 +87,7 @@ class Skills extends Component {
     const { description, level } = skill;
 
     return !isLoadingSkills && [
-      <div key="skill" className="skill-form">
+      <div key="skill">
         <ValidatedInput errorMessage={this.getErrorMessage('skillDescription')}>
           <BasicAutocomplete
             value={description}

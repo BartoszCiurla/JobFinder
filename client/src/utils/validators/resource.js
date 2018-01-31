@@ -9,6 +9,8 @@ export default {
   passwordConfirmation: 'potwierdzenie hasła musi pasować do hasła',
   skillDescription: 'prosimy o podanie umiejętności',
   skillLevel: 'prosimy o określenie stopnia zaawansowania',
+  languageName: 'prosimy o podanie języka',
+  languageLevel: 'prosimy o określenie stopnia zaawansowania',
   repeatedSkill: 'taka umiejętność już została dodana',
   company: 'prosimy o podanie nazwy firmy',
   role: 'prosimy o podanie stanowiska',

@@ -5,6 +5,8 @@ import {
   SET_APPLICATION_PROFESSION,
   SET_APPLICATION_SKILL,
   REMOVE_APPLICATION_SKILL,
+  SET_APPLICATION_LANGUAGE,
+  REMOVE_APPLICATION_LANGUAGE,
   CLEAN_APPLICATION_SKILLS
 } from '../../constants/applicationBuilder';
 
@@ -39,6 +41,22 @@ const actions = {
     };
     return { ...data };
   },
+  [SET_APPLICATION_LANGUAGE]: (state, action) => {
+    const data = {
+      ...state,
+      languages: [...state.languages, action.payload]
+    };
+
+    return { ...data };
+  },
+  [REMOVE_APPLICATION_LANGUAGE]: (state, { payload: { name, level } }) => {
+    const data = {
+      ...state,
+      languages: _.reject(state.languages, s => s.name === name && s.level === level)
+    };
+    return { ...data };
+  },
+
   [CLEAN_APPLICATION_SKILLS]: (state) => {
     const data = {
       ...state,
