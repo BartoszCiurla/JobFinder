@@ -79,6 +79,27 @@ namespace JobFinder.DbMigration.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ProposedCertificate",
+                schema: "JobFinder",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProfessionCategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProposedCertificate", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProposedCertificate_ProfessionCategory_ProfessionCategoryId",
+                        column: x => x.ProfessionCategoryId,
+                        principalSchema: "JobFinder",
+                        principalTable: "ProfessionCategory",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "JobApplication",
                 schema: "JobFinder",
                 columns: table => new
@@ -268,6 +289,12 @@ namespace JobFinder.DbMigration.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ProposedCertificate_ProfessionCategoryId",
+                schema: "JobFinder",
+                table: "ProposedCertificate",
+                column: "ProfessionCategoryId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ProposedSkill_ProfessionId",
                 schema: "JobFinder",
                 table: "ProposedSkill",
@@ -286,6 +313,10 @@ namespace JobFinder.DbMigration.Migrations
 
             migrationBuilder.DropTable(
                 name: "Offer",
+                schema: "JobFinder");
+
+            migrationBuilder.DropTable(
+                name: "ProposedCertificate",
                 schema: "JobFinder");
 
             migrationBuilder.DropTable(

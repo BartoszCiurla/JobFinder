@@ -137,6 +137,22 @@ namespace JobFinder.DbMigration.Migrations
                     b.ToTable("ProfessionCategory","JobFinder");
                 });
 
+            modelBuilder.Entity("JobFinder.Domain.Professions.Entities.ProposedCertificate", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("ProfessionCategoryId");
+
+                    b.Property<string>("Title");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProfessionCategoryId");
+
+                    b.ToTable("ProposedCertificate","JobFinder");
+                });
+
             modelBuilder.Entity("JobFinder.Domain.Professions.Entities.ProposedSkill", b =>
                 {
                     b.Property<Guid>("Id")
@@ -230,6 +246,14 @@ namespace JobFinder.DbMigration.Migrations
                     b.HasOne("JobFinder.Domain.Professions.Entities.ProfessionCategory", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId");
+                });
+
+            modelBuilder.Entity("JobFinder.Domain.Professions.Entities.ProposedCertificate", b =>
+                {
+                    b.HasOne("JobFinder.Domain.Professions.Entities.ProfessionCategory")
+                        .WithMany("ProposedCertificates")
+                        .HasForeignKey("ProfessionCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("JobFinder.Domain.Professions.Entities.ProposedSkill", b =>

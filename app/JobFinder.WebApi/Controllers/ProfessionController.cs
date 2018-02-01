@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Core.Domain.Ddd;
 using JobFinder.Application.Api.Common;
+using JobFinder.Application.Api.Languages.Queries;
 using JobFinder.Application.Api.Professions.Queries;
 using JobFinder.Domain.Common;
 using JobFinder.WebApi.Core;
@@ -28,6 +29,19 @@ namespace JobFinder.WebApi.Controllers
     [Route("GetProposedSkills")]
     [HttpPost]
     public async Task<IActionResult> GetProposedSkills([FromBody]GetProposedSkillsQuery query)
+    {
+      return await SendQuery(DispatcherActorsNames.ProfessionQueryActor, query);
+    }
+    [Route("GetLanguages")]
+    [HttpGet]
+    public async Task<IActionResult> GetLanguages()
+    {
+      return await SendQuery(DispatcherActorsNames.ProfessionQueryActor, new GetLanguagesListQuery());
+    }
+
+    [Route("GetProposedCertificates")]
+    [HttpPost]
+    public async Task<IActionResult> GetProposedCertificates([FromBody]GetProposedCertificatesQuery query)
     {
       return await SendQuery(DispatcherActorsNames.ProfessionQueryActor, query);
     }

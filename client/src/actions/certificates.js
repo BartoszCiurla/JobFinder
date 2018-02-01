@@ -1,5 +1,6 @@
 import * as types from '../constants/certificates';
 import Api from '../utils/api';
+import { formatProfession } from '../utils/formatters/profession';
 
 const defaultErrorMessage = (error) => console.log(`Occured some errors, do something with that! ${error}`);
 
@@ -13,11 +14,10 @@ export const setLoadingCertificates = () => (
 
 export const getCertificates = (category) => (dispatch, getState) => {
   dispatch(setLoadingCertificates());
-  dispatch(setCertificates([]));
-  // Api.post('api/Profession/GetProposedSkills', {
-  //   professionCategoryId: formatedProfession.category.id,
-  //   professionId: formatedProfession.profession.id
-  // })
-  //   .then(data => dispatch(setCertifications(data.proposedSkills)))
-  //   .catch(defaultErrorMessage);
+  const formatedProfession = formatProfession(category, '', getState);
+  Api.post('api/Profession/GetProposedCertificates', {
+    professionCategoryId: formatedProfession.category.id,
+  })
+    .then(data => dispatch(setCertificates(data.proposedCertificates)))
+    .catch(defaultErrorMessage);
 };

@@ -99,11 +99,13 @@ class ApplicationBuilder extends Component {
 
   certificatesStep = () => {
     const {
-      certificates
+      certificates,
+      category
     } = this.props;
     return {
       renderStep:
         <Certificates
+          category={category}
           addedCertificates={certificates}
           addCertificate={this.props.setApplicationCertificate}
           removeCertificate={this.props.removeApplicationCertificate}

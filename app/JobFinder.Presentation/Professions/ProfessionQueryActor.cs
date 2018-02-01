@@ -4,7 +4,9 @@ using System.Threading.Tasks;
 using Core.Akka.ActorAutostart;
 using Core.Presentation.Actors;
 using JobFinder.Application.Api.Common;
+using JobFinder.Application.Api.Languages.Queries;
 using JobFinder.Application.Api.Professions.Queries;
+using JobFinder.Domain.Languages.Entities;
 using JobFinder.Domain.Professions.Entities;
 
 namespace JobFinder.Presentation.Professions
@@ -17,6 +19,8 @@ namespace JobFinder.Presentation.Professions
     {
       ReceiveAsync<GetProfessionsQuery>(Handle);
       ReceiveAsync<GetProposedSkillsQuery>(Handle);
+      ReceiveAsync<GetLanguagesListQuery>(Handle);
+      ReceiveAsync<GetProposedCertificatesQuery>(Handle);
     }
 
     private async Task Handle(GetProfessionsQuery query)
@@ -60,5 +64,29 @@ namespace JobFinder.Presentation.Professions
           .Select(p => new GetProposedSkillsResult.ProposedSkillDto(p.Id, p.ProfessionId, p.Description)));
       });
     }
+
+    private async Task Handle(GetLanguagesListQuery query)
+    {
+      await HandleQuery(query, (uow) =>
+      {
+        return new GetLanguagesListResult(uow.GetRepository<ProposedLanguage>()
+                  .Query()
+                  .Select(x => new GetLanguagesListResult.LanguageDto(x.Id, x.Name)));
+      });
+    }
+
+    private async Task Handle(GetProposedCertificatesQuery query)
+    {
+      await HandleQuery(query, (uow) =>
+      {
+        var professionCategoryReadOnlyRepository = uow.GetRepository<ProfessionCategory>().Query().Where(x => x.Id == query.ProfessionCategoryId);
+        return new GetProposedCertificatesResult(professionCategoryReadOnlyRepository
+          .SelectMany(x => x.ProposedCertificates)
+          .GroupBy(x => x.Title)
+          .Select(x => x.First())
+          .Select(p => new GetProposedCertificatesResult.ProposedCertificateDto(p.Id, p.ProfessionCategoryId, p.Title)));
+      });
+    }
+
   }
 }

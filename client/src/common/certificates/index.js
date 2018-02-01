@@ -18,7 +18,8 @@ class Certificates extends Component {
   }
 
   componentWillMount() {
-    isEmpty(this.props.proposedCertificates) && this.props.getCertificates();
+    const { category } = this.props;
+    isEmpty(this.props.proposedCertificates) && this.props.getCertificates(category);
   }
 
   getErrorMessage = (name) => (
@@ -46,7 +47,7 @@ class Certificates extends Component {
 
     return (
       <div key="addedCertificates" className="added-items">
-        {map(addedCertificates, ({title}, index) =>
+        {map(addedCertificates, ({ title }, index) =>
           (<div className="added-item" key={index}>
             {Resources.certificateTitle} :
             <span>{title}</span>
@@ -79,6 +80,7 @@ class Certificates extends Component {
 }
 
 Certificates.propTypes = {
+  category: PropTypes.string,
   getCertificates: PropTypes.func.isRequired,
   isLoadingCertificates: PropTypes.bool.isRequired,
   proposedCertificates: PropTypes.array,

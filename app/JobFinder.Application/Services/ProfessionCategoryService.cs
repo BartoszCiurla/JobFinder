@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Core.Domain.Ddd;
@@ -15,7 +16,7 @@ namespace JobFinder.Application.Services
                 .FirstOrDefault(x => x.Id == id);
             if (professionCategory == null)
             {
-                professionCategory = ProfessionCategory.Create(Guid.NewGuid(), name);
+                professionCategory = ProfessionCategory.Create(Guid.NewGuid(), name, new List<ProposedCertificate>());
                 repository.Add(professionCategory);
             }
             return professionCategory;
