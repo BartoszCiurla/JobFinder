@@ -7,6 +7,8 @@ import {
   REMOVE_APPLICATION_SKILL,
   SET_APPLICATION_LANGUAGE,
   REMOVE_APPLICATION_LANGUAGE,
+  SET_APPLICATION_CERTIFICATE,
+  REMOVE_APPLICATION_CERTIFICATE,
   CLEAN_APPLICATION_SKILLS
 } from '../../constants/applicationBuilder';
 
@@ -56,7 +58,21 @@ const actions = {
     };
     return { ...data };
   },
+  [SET_APPLICATION_CERTIFICATE]: (state, action) => {
+    const data = {
+      ...state,
+      certificates: [...state.certificates, { title: action.payload }]
+    };
 
+    return { ...data };
+  },
+  [REMOVE_APPLICATION_CERTIFICATE]: (state, { payload }) => {
+    const data = {
+      ...state,
+      certificates: _.reject(state.certificates, s => s.title === payload)
+    };
+    return { ...data };
+  },
   [CLEAN_APPLICATION_SKILLS]: (state) => {
     const data = {
       ...state,

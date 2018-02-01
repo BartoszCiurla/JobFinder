@@ -2,5 +2,6 @@ export default {
   category: '',
   profession: '',
   skills: [],
-  languages: []
+  languages: [],
+  certificates: []
 };

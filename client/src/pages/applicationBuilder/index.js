@@ -11,6 +11,7 @@ import { validate as validateProfession } from '../../utils/validators/professio
 import Profession from '../../common/profession';
 import Skills from '../../common/skills';
 import Languages from '../../common/languages';
+import Certificates from '../../common/certificates';
 import StepWizard from '../../common/stepWizard';
 import Routes from '../../constants/routes';
 import {
@@ -20,7 +21,9 @@ import {
   removeApplicationSkill,
   createApplication,
   setApplicationLanguage,
-  removeApplicationLanguage
+  removeApplicationLanguage,
+  setApplicationCertificate,
+  removeApplicationCertificate
 } from '../../actions/applicationBuilder';
 
 class ApplicationBuilder extends Component {
@@ -28,8 +31,8 @@ class ApplicationBuilder extends Component {
     errors: []
   }
   tryCreateApplication = () => {
-    this.props.createApplication(getUserCredentials(this.props.cookies));
-    // .then(this.props.history.push(Routes.employee));
+    this.props.createApplication(getUserCredentials(this.props.cookies))
+      .then(this.props.history.push(Routes.employee));
   }
 
   professionStep = () => {
@@ -94,11 +97,28 @@ class ApplicationBuilder extends Component {
     };
   }
 
+  certificatesStep = () => {
+    const {
+      certificates
+    } = this.props;
+    return {
+      renderStep:
+        <Certificates
+          addedCertificates={certificates}
+          addCertificate={this.props.setApplicationCertificate}
+          removeCertificate={this.props.removeApplicationCertificate}
+        />,
+      title: `${Resources.certificates}`,
+      validate: () => true
+    };
+  }
+
   render() {
     const steps = [
       this.professionStep(),
       this.skillsStep(),
-      this.languagesStep()
+      this.languagesStep(),
+      this.certificatesStep()
     ];
 
     return (
@@ -124,15 +144,19 @@ ApplicationBuilder.propTypes = {
   removeApplicationSkill: PropTypes.func.isRequired,
   setApplicationLanguage: PropTypes.func.isRequired,
   removeApplicationLanguage: PropTypes.func.isRequired,
+  setApplicationCertificate: PropTypes.func.isRequired,
+  removeApplicationCertificate: PropTypes.func.isRequired,
   skills: PropTypes.array,
-  languages: PropTypes.array
+  languages: PropTypes.array,
+  certificates: PropTypes.array
 };
 
-const mapStateToProps = ({ applicationBuilder: { category, profession, skills, languages } }) => ({
+const mapStateToProps = ({ applicationBuilder: { category, profession, skills, languages, certificates } }) => ({
   category,
   profession,
   skills,
-  languages
+  languages,
+  certificates
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -142,6 +166,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   removeApplicationSkill,
   setApplicationLanguage,
   removeApplicationLanguage,
+  setApplicationCertificate,
+  removeApplicationCertificate,
   createApplication
 }, dispatch);
 

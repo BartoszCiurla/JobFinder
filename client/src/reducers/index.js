@@ -7,6 +7,7 @@ import common from './common';
 import professions from './professions';
 import skills from './skills';
 import languages from './languages';
+import certificates from './certificates';
 import offerBuilder from './offerBuilder';
 import applicationBuilder from './applicationBuilder';
 import employer from './employer';
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   employee,
   applicationBuilder,
   languages,
+  certificates,
   routing: routerReducer
 });
 

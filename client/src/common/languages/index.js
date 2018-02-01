@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { isEmpty, find } from 'lodash';
+import { isEmpty, find, map } from 'lodash';
 
 import BasicAutocomplete from '../basicAutocomplete';
 import ValidatedInput from '../../common/ValidatedInput';
@@ -119,7 +119,7 @@ Languages.propTypes = {
 
 const mapStateToProps = ({ languages: { isLoadingLanguages, proposedLanguages } }) => ({
   isLoadingLanguages,
-  proposedLanguages: proposedLanguages.map(x => x.name)
+  proposedLanguages: map(proposedLanguages, ps => ps.name)
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

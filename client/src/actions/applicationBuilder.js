@@ -39,3 +39,12 @@ export const setApplicationLanguage = (language) => (
 export const removeApplicationLanguage = (language) => (
   { type: types.REMOVE_APPLICATION_LANGUAGE, payload: language }
 );
+
+export const setApplicationCertificate = (certificate) => (
+  { type: types.SET_APPLICATION_CERTIFICATE, payload: certificate }
+);
+
+export const removeApplicationCertificate = (certificate) => (
+  { type: types.REMOVE_APPLICATION_CERTIFICATE, payload: certificate }
+);
+
