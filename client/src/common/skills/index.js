@@ -31,7 +31,7 @@ class Skills extends Component {
 
   addItem = () => {
     const { skill } = this.state;
-    const validateResult = validate(skill);
+    const validateResult = validate(skill, this.props.addedSkills);
 
     this.setState({ errors: validateResult.errors });
 

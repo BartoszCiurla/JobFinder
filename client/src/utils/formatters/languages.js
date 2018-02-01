@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import toPascalCase from './toPascalCase';
 
 export const formatLanguages = (languages, getState) => {
   const proposedLanguages = getState().languages.proposedLanguages;
@@ -16,7 +17,7 @@ export const formatLanguages = (languages, getState) => {
 
     return {
       id: emptyId,
-      name: l.name,
+      name: toPascalCase(l.name),
       level: l.level
     };
   });

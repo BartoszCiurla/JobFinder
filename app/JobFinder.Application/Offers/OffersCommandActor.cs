@@ -32,14 +32,17 @@ namespace JobFinder.Application.Offers
         var professionRepository = uow.GetRepository<Profession>();
         var offerRepository = uow.GetRepository<Offer>();
 
-        ProfessionCategory professionCategory = await ProfessionCategoryService.GetOrCreate(command.Category.Id, command.Category.Name, professionCategoryRepository);
+        ProfessionCategory professionCategory = ProfessionCategoryService.GetOrCreate(command.Category.Id, command.Category.Name, professionCategoryRepository);
 
-        Profession profession = await ProfessionService.GetOrCreate(command.Profession.Id, command.Profession.Name, professionRepository, professionCategory, new List<SkillDto>());
+        Profession profession = ProfessionService.GetOrCreate(command.Profession.Id, command.Profession.Name, professionRepository, professionCategory, new List<SkillDto>());
 
         Offer offer = Offer.Create(Guid.NewGuid(), user, profession);
 
         offerRepository.Add(offer);
+        await professionCategoryRepository.SaveChangesAsync();
+        await professionRepository.SaveChangesAsync();
         await offerRepository.SaveChangesAsync();
+
         return offer.Id;
       });
     }

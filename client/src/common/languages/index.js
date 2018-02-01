@@ -30,7 +30,7 @@ class Languages extends Component {
 
   addItem = () => {
     const { language } = this.state;
-    const validateResult = validate(language);
+    const validateResult = validate(language, this.props.addedLanguages);
 
     this.setState({ errors: validateResult.errors });
 

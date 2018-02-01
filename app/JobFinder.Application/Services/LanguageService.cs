@@ -11,21 +11,18 @@ namespace JobFinder.Application.Services
 {
     public class LanguageService
     {
-        public static async Task<List<ProposedLanguage>> GetOrCreate(IRepository<ProposedLanguage> repository, IEnumerable<LanguageDto> languages)
+        public static IEnumerable<ProposedLanguage> GetOrCreate(IRepository<ProposedLanguage> repository, IEnumerable<LanguageDto> languages)
         {
-            List<ProposedLanguage> proposedLanguages = new List<ProposedLanguage>();
             foreach (var language in languages)
             {
-                if (language.Id == Guid.Empty)
+                var proposedLanguage = repository.Query().FirstOrDefault(x => x.Name == language.Name);
+                if (proposedLanguage == null)
                 {
-                    var proposedLanguage = ProposedLanguage.Create(Guid.NewGuid(), language.Name);
+                    proposedLanguage = ProposedLanguage.Create(Guid.NewGuid(), language.Name);
                     repository.Add(proposedLanguage);
-                    proposedLanguages.Add(proposedLanguage);
-                    await repository.SaveChangesAsync();
                 }
-                proposedLanguages.Add(await repository.FindById(language.Id));
+                yield return proposedLanguage;
             }
-            return proposedLanguages;
         }
         public static IEnumerable<JobApplicationLanguage> Create(Guid jobApplicationId, IEnumerable<ProposedLanguage> proposedLanguages, IEnumerable<LanguageDto> languages)
         {

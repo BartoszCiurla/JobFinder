@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Core.Application.Api.Messages;
 
 namespace JobFinder.Application.Api.Professions.Queries
@@ -8,7 +9,10 @@ namespace JobFinder.Application.Api.Professions.Queries
   {
     public IEnumerable<ProposedSkillDto> ProposedSkills { get; set; }
 
-    public GetProposedSkillsResult() { }
+    public GetProposedSkillsResult()
+    {
+        ProposedSkills = Enumerable.Empty<ProposedSkillDto>();
+    }
 
     public GetProposedSkillsResult(IEnumerable<ProposedSkillDto> proposedSkills)
     {

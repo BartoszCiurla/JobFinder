@@ -11,7 +11,7 @@ namespace JobFinder.Application.Services
 {
   public class ProfessionService
   {
-    public static async Task<Profession> GetOrCreate(Guid id,
+    public static Profession GetOrCreate(Guid id,
       string name,
       IRepository<Profession> repository,
       ProfessionCategory category,
@@ -24,7 +24,6 @@ namespace JobFinder.Application.Services
         profession = Profession.Create(professionId, name, category,
           skills.Select(x => ProposedSkill.Create(Guid.NewGuid(), professionId, x.Description)).ToList());
         repository.Add(profession);
-        await repository.SaveChangesAsync();
         return profession;
       }
       foreach (var proposedSkill in skills.Where(x => x.ProfessionId == Guid.Empty)
@@ -33,7 +32,6 @@ namespace JobFinder.Application.Services
         profession.AddProposedSkill(proposedSkill);
       }
       repository.Update(profession);
-      await repository.SaveChangesAsync();
       return profession;
     }
   }

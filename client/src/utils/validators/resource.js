@@ -11,6 +11,7 @@ export default {
   skillLevel: 'prosimy o określenie stopnia zaawansowania',
   languageName: 'prosimy o podanie języka',
   languageLevel: 'prosimy o określenie stopnia zaawansowania',
+  repeatedLanguage: 'taki język już został dodany',
   repeatedSkill: 'taka umiejętność już została dodana',
   company: 'prosimy o podanie nazwy firmy',
   role: 'prosimy o podanie stanowiska',

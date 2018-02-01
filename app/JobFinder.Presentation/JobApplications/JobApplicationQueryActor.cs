@@ -23,12 +23,14 @@ namespace JobFinder.Presentation.JobApplications
 
                 return new GetEmployeeJobApplicationListResult(offerReadOnlyRepository
                     .Query()
-                    .Where(x => x.User.Id == query.UserId)
-                    .Include(x => x.User)
-                    .Include(x => x.Profession).ThenInclude(x => x.Category)
-                    .Include(x => x.Skills).ThenInclude(x => x.Skill)
-                    .Select(x => new GetEmployeeJobApplicationListResult.JobApplicationDto(x.Id, x.Profession.Name, x.Profession.Category.Name, x.Skills
-                        .Select(y => new GetEmployeeJobApplicationListResult.JobApplicationSkillDto(y.Id, y.Skill.Description, y.Level)))));
+                    .Where(ja => ja.User.Id == query.UserId)
+                    .Include(ja => ja.User)
+                    .Include(ja => ja.Languages).ThenInclude(jal => jal.Language)
+                    .Include(ja => ja.Profession).ThenInclude(jap => jap.Category)
+                    .Include(ja => ja.Skills).ThenInclude(jas => jas.Skill)
+                    .Select(ja => new GetEmployeeJobApplicationListResult.JobApplicationDto(ja.Id, ja.Profession.Name, ja.Profession.Category.Name,
+                        ja.Skills.Select(s => new GetEmployeeJobApplicationListResult.JobApplicationSkillDto(s.Id, s.Skill.Description, s.Level)),
+                        ja.Languages.Select(l => new GetEmployeeJobApplicationListResult.JobApplicationLanguageDto(l.Id, l.Language.Name, l.Level)))));
             });
         }
     }

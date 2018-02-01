@@ -29,19 +29,17 @@ namespace JobFinder.Application.JobApplications
         var professionCategoryRepository = uow.GetRepository<ProfessionCategory>();
         var professionRepository = uow.GetRepository<Profession>();
         var jobApplicationRepository = uow.GetRepository<JobApplication>();
-        //todo
-        //var languageRepository = uow.GetRepository<ProposedLanguage>();
+        var languageRepository = uow.GetRepository<ProposedLanguage>();
 
         var user = UserService.Get(command.UserId, userRepository.Query());
 
-        ProfessionCategory professionCategory = await ProfessionCategoryService
+        ProfessionCategory professionCategory = ProfessionCategoryService
           .GetOrCreate(command.Category.Id, command.Category.Name, professionCategoryRepository);
 
-        Profession profession = await ProfessionService
+        Profession profession = ProfessionService
           .GetOrCreate(command.Profession.Id, command.Profession.Name, professionRepository, professionCategory, command.Skills);
 
         var applicationId = Guid.NewGuid();
-        var proposedLanguages = new List<ProposedLanguage>();// await LanguageService.GetOrCreate(languageRepository, command.Languages);
 
         JobApplication application = JobApplication
           .Create(applicationId,
@@ -53,11 +51,16 @@ namespace JobFinder.Application.JobApplications
               command.Skills).ToList(),
             LanguageService.Create(
               applicationId,
-              proposedLanguages,
+              LanguageService.GetOrCreate(languageRepository,command.Languages),
               command.Languages).ToList());
 
         jobApplicationRepository.Add(application);
+
+        await professionCategoryRepository.SaveChangesAsync();
+        await professionRepository.SaveChangesAsync();
+        await languageRepository.SaveChangesAsync();
         await jobApplicationRepository.SaveChangesAsync();
+
         return application.Id;
       });
     }

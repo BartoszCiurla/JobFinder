@@ -8,7 +8,7 @@ namespace JobFinder.Application.Services
 {
     public class ProfessionCategoryService
     {
-        public static async Task<ProfessionCategory> GetOrCreate(Guid id, string name, IRepository<ProfessionCategory> repository)
+        public static ProfessionCategory GetOrCreate(Guid id, string name, IRepository<ProfessionCategory> repository)
         {
             ProfessionCategory professionCategory = id == Guid.Empty? null : repository
                 .Query()
@@ -17,7 +17,6 @@ namespace JobFinder.Application.Services
             {
                 professionCategory = ProfessionCategory.Create(Guid.NewGuid(), name);
                 repository.Add(professionCategory);
-                await repository.SaveChangesAsync();
             }
             return professionCategory;
         }

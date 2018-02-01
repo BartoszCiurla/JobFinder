@@ -16,12 +16,18 @@ namespace JobFinder.Application.Api.JobApplications.Queries
             public string Profession { get; set; }
             public string ProfessionCategory { get; set; }
             public IEnumerable<JobApplicationSkillDto> Skills { get; set; }
-            public JobApplicationDto(Guid id, string profession, string professionCategory, IEnumerable<JobApplicationSkillDto> skills)
+            public IEnumerable<JobApplicationLanguageDto> Languages { get; set; }
+            public JobApplicationDto(Guid id,
+            string profession,
+            string professionCategory,
+            IEnumerable<JobApplicationSkillDto> skills,
+            IEnumerable<JobApplicationLanguageDto> languages)
             {
                 Id = id;
                 Profession = profession;
                 ProfessionCategory = professionCategory;
                 Skills = skills;
+                Languages = languages;
             }
         }
         public class JobApplicationSkillDto
@@ -33,6 +39,18 @@ namespace JobFinder.Application.Api.JobApplications.Queries
             {
                 Id = id;
                 Description = description;
+                Level = level;
+            }
+        }
+        public class JobApplicationLanguageDto
+        {
+            public Guid Id { get; set; }
+            public string Name { get; set; }
+            public int Level { get; set; }
+            public JobApplicationLanguageDto(Guid id, string name, int level)
+            {
+                Id = id;
+                Name = name;
                 Level = level;
             }
         }
