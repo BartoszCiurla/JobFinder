@@ -12,7 +12,7 @@ using System;
 namespace JobFinder.DbMigration.Migrations
 {
     [DbContext(typeof(JobFinderContext))]
-    [Migration("20180131174001_init")]
+    [Migration("20180201002250_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,6 +40,26 @@ namespace JobFinder.DbMigration.Migrations
                     b.ToTable("JobApplication","JobFinder");
                 });
 
+            modelBuilder.Entity("JobFinder.Domain.JobApplications.Entities.JobApplicationLanguage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("JobApplicationId");
+
+                    b.Property<Guid?>("LanguageId");
+
+                    b.Property<int>("Level");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("JobApplicationId");
+
+                    b.HasIndex("LanguageId");
+
+                    b.ToTable("JobApplicationLanguage","JobFinder");
+                });
+
             modelBuilder.Entity("JobFinder.Domain.JobApplications.Entities.JobApplicationSkill", b =>
                 {
                     b.Property<Guid>("Id")
@@ -60,7 +80,7 @@ namespace JobFinder.DbMigration.Migrations
                     b.ToTable("JobApplicationSkill","JobFinder");
                 });
 
-            modelBuilder.Entity("JobFinder.Domain.Languages.Entities.Language", b =>
+            modelBuilder.Entity("JobFinder.Domain.Languages.Entities.ProposedLanguage", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -69,7 +89,7 @@ namespace JobFinder.DbMigration.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Language","JobFinder");
+                    b.ToTable("ProposedLanguage","JobFinder");
                 });
 
             modelBuilder.Entity("JobFinder.Domain.Offers.Entities.Offer", b =>
@@ -169,6 +189,18 @@ namespace JobFinder.DbMigration.Migrations
                     b.HasOne("JobFinder.Domain.Users.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("JobFinder.Domain.JobApplications.Entities.JobApplicationLanguage", b =>
+                {
+                    b.HasOne("JobFinder.Domain.Applications.Entities.JobApplication")
+                        .WithMany("Languages")
+                        .HasForeignKey("JobApplicationId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("JobFinder.Domain.Languages.Entities.ProposedLanguage", "Language")
+                        .WithMany()
+                        .HasForeignKey("LanguageId");
                 });
 
             modelBuilder.Entity("JobFinder.Domain.JobApplications.Entities.JobApplicationSkill", b =>

@@ -9,6 +9,7 @@ using JobFinder.Application.Api.JobApplications.Commands;
 using JobFinder.Application.Services;
 using JobFinder.Domain.Applications.Entities;
 using JobFinder.Domain.JobApplications.Entities;
+using JobFinder.Domain.Languages.Entities;
 using JobFinder.Domain.Professions.Entities;
 using JobFinder.Domain.Users.Entities;
 namespace JobFinder.Application.JobApplications
@@ -25,11 +26,12 @@ namespace JobFinder.Application.JobApplications
       await HandleCommand(command, async uow =>
       {
         var userRepository = uow.GetRepository<User>();
-        var user = UserService.Get(command.UserId, userRepository.Query());
-
         var professionCategoryRepository = uow.GetRepository<ProfessionCategory>();
         var professionRepository = uow.GetRepository<Profession>();
         var jobApplicationRepository = uow.GetRepository<JobApplication>();
+        var languageRepository = uow.GetRepository<ProposedLanguage>();
+
+        var user = UserService.Get(command.UserId, userRepository.Query());
 
         ProfessionCategory professionCategory = await ProfessionCategoryService
           .GetOrCreate(command.Category.Id, command.Category.Name, professionCategoryRepository);
@@ -38,9 +40,20 @@ namespace JobFinder.Application.JobApplications
           .GetOrCreate(command.Profession.Id, command.Profession.Name, professionRepository, professionCategory, command.Skills);
 
         var applicationId = Guid.NewGuid();
+        var proposedLanguages = await LanguageService.GetOrCreate(languageRepository, command.Languages);
 
         JobApplication application = JobApplication
-          .Create(applicationId, user, profession, SkillsService.Create(applicationId,profession,command.Skills).ToList());
+          .Create(applicationId,
+            user,
+            profession,
+            SkillsService.Create(
+              applicationId,
+              profession,
+              command.Skills).ToList(),
+            LanguageService.Create(
+              applicationId,
+              proposedLanguages,
+              command.Languages).ToList());
 
         jobApplicationRepository.Add(application);
         await jobApplicationRepository.SaveChangesAsync();

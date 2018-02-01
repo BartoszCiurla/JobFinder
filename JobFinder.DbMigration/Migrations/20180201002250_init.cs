@@ -12,19 +12,6 @@ namespace JobFinder.DbMigration.Migrations
                 name: "JobFinder");
 
             migrationBuilder.CreateTable(
-                name: "Language",
-                schema: "JobFinder",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Language", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "ProfessionCategory",
                 schema: "JobFinder",
                 columns: table => new
@@ -35,6 +22,19 @@ namespace JobFinder.DbMigration.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ProfessionCategory", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProposedLanguage",
+                schema: "JobFinder",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProposedLanguage", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -156,6 +156,35 @@ namespace JobFinder.DbMigration.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "JobApplicationLanguage",
+                schema: "JobFinder",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    JobApplicationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    LanguageId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Level = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JobApplicationLanguage", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_JobApplicationLanguage_JobApplication_JobApplicationId",
+                        column: x => x.JobApplicationId,
+                        principalSchema: "JobFinder",
+                        principalTable: "JobApplication",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_JobApplicationLanguage_ProposedLanguage_LanguageId",
+                        column: x => x.LanguageId,
+                        principalSchema: "JobFinder",
+                        principalTable: "ProposedLanguage",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "JobApplicationSkill",
                 schema: "JobFinder",
                 columns: table => new
@@ -197,6 +226,18 @@ namespace JobFinder.DbMigration.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_JobApplicationLanguage_JobApplicationId",
+                schema: "JobFinder",
+                table: "JobApplicationLanguage",
+                column: "JobApplicationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JobApplicationLanguage_LanguageId",
+                schema: "JobFinder",
+                table: "JobApplicationLanguage",
+                column: "LanguageId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_JobApplicationSkill_JobApplicationId",
                 schema: "JobFinder",
                 table: "JobApplicationSkill",
@@ -236,15 +277,19 @@ namespace JobFinder.DbMigration.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "JobApplicationLanguage",
+                schema: "JobFinder");
+
+            migrationBuilder.DropTable(
                 name: "JobApplicationSkill",
                 schema: "JobFinder");
 
             migrationBuilder.DropTable(
-                name: "Language",
+                name: "Offer",
                 schema: "JobFinder");
 
             migrationBuilder.DropTable(
-                name: "Offer",
+                name: "ProposedLanguage",
                 schema: "JobFinder");
 
             migrationBuilder.DropTable(

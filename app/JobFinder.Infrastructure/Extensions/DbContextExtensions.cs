@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using JobFinder.Domain.Languages.Entities;
 using JobFinder.Domain.Professions.Entities;
 using JobFinder.Domain.Users;
@@ -10,18 +11,18 @@ namespace JobFinder.Infrastructure.Ef.Extensions
 {
   public static class DbContextExtensions
   {
-    public static void EnsureSeedData(this JobFinderContext jobFinderContext, IPasswordCryptoService passwordCryptoService)
+    public static async void EnsureSeedData(this JobFinderContext jobFinderContext, IPasswordCryptoService passwordCryptoService)
     {
-      SeedLanguages(jobFinderContext);
-      SeedUsers(jobFinderContext, passwordCryptoService);
-      SeedProfessions(jobFinderContext);
+      await SeedLanguages(jobFinderContext);
+      await SeedUsers(jobFinderContext, passwordCryptoService);
+      await SeedProfessions(jobFinderContext);
     }
-    private static void SeedProfessions(JobFinderContext jobFinderContext)
+    private static async Task SeedProfessions(JobFinderContext jobFinderContext)
     {
       var professions = jobFinderContext.Set<Profession>();
       if (!professions.AnyAsync().Result)
       {
-        SeedProfessionHappyPath(jobFinderContext);
+        await SeedProfessionHappyPath(jobFinderContext);
         // SeedProfession(jobFinderContext, "IT", new string[]
         // {
         //   "Administrator",
@@ -31,7 +32,7 @@ namespace JobFinder.Infrastructure.Ef.Extensions
         //   "Programista baz danych",
         //   "Projektant IT"
         // });
-        SeedProfession(jobFinderContext, "Administracja", new string[]
+        await SeedProfession(jobFinderContext, "Administracja", new string[]
         {
           "Administrator danych osobowych",
           "Analityk systemów",
@@ -41,7 +42,7 @@ namespace JobFinder.Infrastructure.Ef.Extensions
           "Programista PLC",
           "Specjalista ds. ofertowania"
         });
-        SeedProfession(jobFinderContext, "Produkcja", new string[]
+        await SeedProfession(jobFinderContext, "Produkcja", new string[]
         {
           "Automatyk",
           "Dyrektor ds. Produkcji",
@@ -55,12 +56,12 @@ namespace JobFinder.Infrastructure.Ef.Extensions
           "Specjalista ds. planowania produkcji",
           "Technolog"
         });
-        SeedProfession(jobFinderContext, "Turystyka", new string[]
+        await SeedProfession(jobFinderContext, "Turystyka", new string[]
         {
           "Pilot wycieczek",
           "Specjalista ds. turystyki"
         });
-        SeedProfession(jobFinderContext, "Nauka", new string[]
+        await SeedProfession(jobFinderContext, "Nauka", new string[]
         {
           "Lektor",
           "Nauczyciel",
@@ -68,9 +69,9 @@ namespace JobFinder.Infrastructure.Ef.Extensions
           "Trener"
         });
       }
-      jobFinderContext.SaveChangesAsync();
+      await jobFinderContext.SaveChangesAsync();
     }
-    private static async void SeedProfessionHappyPath(JobFinderContext jobFinderContext)
+    private static async Task SeedProfessionHappyPath(JobFinderContext jobFinderContext)
     {
       string professionCategory = "IT";
       Dictionary<string, string[]> professionNames = new Dictionary<string, string[]>()
@@ -158,31 +159,31 @@ namespace JobFinder.Infrastructure.Ef.Extensions
       }
       await jobFinderContext.Set<Profession>().AddRangeAsync(items);
     }
-    private static async void SeedProfession(JobFinderContext jobFinderContext, string professionCategory, string[] professions)
+    private static async Task SeedProfession(JobFinderContext jobFinderContext, string professionCategory, string[] professions)
     {
       var category = ProfessionCategory.Create(Guid.NewGuid(), professionCategory);
       await jobFinderContext.Set<ProfessionCategory>().AddAsync(category);
       var items = professions.Select(x => Profession.Create(Guid.NewGuid(), x, category, new List<ProposedSkill>()));
       await jobFinderContext.Set<Profession>().AddRangeAsync(items);
     }
-    private static void SeedUsers(JobFinderContext jobFinderContext, IPasswordCryptoService passwordCryptoService)
+    private static async Task SeedUsers(JobFinderContext jobFinderContext, IPasswordCryptoService passwordCryptoService)
     {
       var users = jobFinderContext.Set<User>();
       if (!users.AnyAsync(bu => bu.UserType == UserType.Admin).Result)
       {
-        SeedUser("Admin", "Admin", "admin@gmail.com", "admin1234", UserType.Admin, passwordCryptoService, jobFinderContext);
+        await SeedUser("Admin", "Admin", "admin@gmail.com", "admin1234", UserType.Admin, passwordCryptoService, jobFinderContext);
       }
       if (!users.AnyAsync(bu => bu.UserType == UserType.Employer).Result)
       {
-        SeedUser("Employer", "Employer", "Employer@gmail.com", "Employer1234", UserType.Employer, passwordCryptoService, jobFinderContext);
+        await SeedUser("Employer", "Employer", "Employer@gmail.com", "Employer1234", UserType.Employer, passwordCryptoService, jobFinderContext);
       }
       if (!users.AnyAsync(bu => bu.UserType == UserType.Employee).Result)
       {
-        SeedUser("Employee", "Employee", "Employee@gmail.com", "Employee1234", UserType.Employee, passwordCryptoService, jobFinderContext);
+        await SeedUser("Employee", "Employee", "Employee@gmail.com", "Employee1234", UserType.Employee, passwordCryptoService, jobFinderContext);
       }
-      jobFinderContext.SaveChangesAsync();
+      await jobFinderContext.SaveChangesAsync();
     }
-    private static async void SeedUser(string name,
+    private static async Task SeedUser(string name,
       string surname,
       string email,
       string password,
@@ -195,13 +196,13 @@ namespace JobFinder.Infrastructure.Ef.Extensions
       var user = User.Create(Guid.NewGuid(), name, surname, email, passwordHash, salt, userType);
       await jobFinderContext.Set<User>().AddAsync(user);
     }
-    private static async void SeedLanguages(JobFinderContext jobFinderContext)
+    private static async Task SeedLanguages(JobFinderContext jobFinderContext)
     {
-      var languages = jobFinderContext.Set<Language>();
+      var languages = jobFinderContext.Set<ProposedLanguage>();
       if (!languages.AnyAsync().Result)
       {
-        var english = Language.Create(Guid.NewGuid(), "Angielski");
-        var german = Language.Create(Guid.NewGuid(), "Niemiecki");
+        var english = ProposedLanguage.Create(Guid.NewGuid(), "Angielski");
+        var german = ProposedLanguage.Create(Guid.NewGuid(), "Niemiecki");
         await jobFinderContext.AddRangeAsync(new [] { english, german });
         await jobFinderContext.SaveChangesAsync();
       }

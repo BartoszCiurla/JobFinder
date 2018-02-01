@@ -19,7 +19,7 @@ namespace JobFinder.Presentation.Languages
         {
             await HandleQuery(query, (uow) =>
             {
-                return new GetLanguagesListResult(uow.GetRepository<Language>()
+                return new GetLanguagesListResult(uow.GetRepository<ProposedLanguage>()
                     .Query()
                     .Select(x => new GetLanguagesListResult.LanguageDto(x.Id, x.Name)));
             });

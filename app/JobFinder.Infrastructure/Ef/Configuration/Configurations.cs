@@ -9,11 +9,18 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace JobFinder.Infrastructure.Ef.Configurations
 {
-  public class LanguageConfiguration : EntityMappingConfiguration<Language>
+  public class JobApplicationLanguageConfiguration : EntityMappingConfiguration<JobApplicationLanguage>
   {
-    public override void Map(EntityTypeBuilder<Language> builder)
+    public override void Map(EntityTypeBuilder<JobApplicationLanguage> builder)
     {
-      builder.ToTable(nameof(Language), SchemaName.JobFinder);
+      builder.ToTable(nameof(JobApplicationLanguage), SchemaName.JobFinder);
+    }
+  }
+  public class ProposedLanguageConfiguration : EntityMappingConfiguration<ProposedLanguage>
+  {
+    public override void Map(EntityTypeBuilder<ProposedLanguage> builder)
+    {
+      builder.ToTable(nameof(ProposedLanguage), SchemaName.JobFinder);
     }
   }
   public class JobApplicationSkillConfiguration : EntityMappingConfiguration<JobApplicationSkill>

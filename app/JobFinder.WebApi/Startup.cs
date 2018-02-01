@@ -27,31 +27,31 @@ namespace JobFinder.WebApi
   public class Startup
   {
     private readonly SecurityKey _issuerSigningKey;
-    public Startup (IHostingEnvironment env)
+    public Startup(IHostingEnvironment env)
     {
-      var builder = new ConfigurationBuilder ()
-        .SetBasePath (env.ContentRootPath)
-        .AddJsonFile ("appsettings.json", optional : false, reloadOnChange : true)
-        .AddJsonFile ($"appsettings.{env.EnvironmentName}.json", optional : true)
-        .AddEnvironmentVariables ();
-      Configuration = builder.Build ();
-      _issuerSigningKey = new SymmetricSecurityKey (Encoding.ASCII.GetBytes (Configuration.GetSection ("SecretKey").Value.ToString ()));
+      var builder = new ConfigurationBuilder()
+        .SetBasePath(env.ContentRootPath)
+        .AddJsonFile("appsettings.json", optional : false, reloadOnChange : true)
+        .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional : true)
+        .AddEnvironmentVariables();
+      Configuration = builder.Build();
+      _issuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("SecretKey").Value.ToString()));
     }
     public IConfigurationRoot Configuration { get; }
-    public void ConfigureServices (IServiceCollection services)
+    public void ConfigureServices(IServiceCollection services)
     {
-      var jwtOptions = Configuration.GetSection (nameof (JwtOptions));
-      services.Configure<JwtOptions> (options =>
+      var jwtOptions = Configuration.GetSection(nameof(JwtOptions));
+      services.Configure<JwtOptions>(options =>
       {
-        options.Issuer = jwtOptions [nameof (JwtOptions.Issuer)];
-        options.Audience = jwtOptions [nameof (JwtOptions.Audience)];
-        options.TokenName = jwtOptions [nameof (JwtOptions.TokenName)];
-        options.Path = jwtOptions [nameof (JwtOptions.Path)];
-        options.Subject = jwtOptions [nameof (JwtOptions.Subject)];
-        options.ValidFor = TimeSpan.FromMinutes (Convert.ToInt32 (jwtOptions [nameof (JwtOptions.ValidFor)]));
-        options.SigningCredentials = new SigningCredentials (_issuerSigningKey, SecurityAlgorithms.HmacSha256);
+        options.Issuer = jwtOptions[nameof(JwtOptions.Issuer)];
+        options.Audience = jwtOptions[nameof(JwtOptions.Audience)];
+        options.TokenName = jwtOptions[nameof(JwtOptions.TokenName)];
+        options.Path = jwtOptions[nameof(JwtOptions.Path)];
+        options.Subject = jwtOptions[nameof(JwtOptions.Subject)];
+        options.ValidFor = TimeSpan.FromMinutes(Convert.ToInt32(jwtOptions[nameof(JwtOptions.ValidFor)]));
+        options.SigningCredentials = new SigningCredentials(_issuerSigningKey, SecurityAlgorithms.HmacSha256);
       });
-      services.AddAuthentication (options =>
+      services.AddAuthentication(options =>
       {
         options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
         options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -59,10 +59,10 @@ namespace JobFinder.WebApi
         options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
         options.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
         options.DefaultSignOutScheme = JwtBearerDefaults.AuthenticationScheme;
-      }).AddJwtBearer (options =>
+      }).AddJwtBearer(options =>
       {
-        options.Configuration = new OpenIdConnectConfiguration ();
-        options.Audience = Configuration ["JwtOptions:Audience"];
+        options.Configuration = new OpenIdConnectConfiguration();
+        options.Audience = Configuration["JwtOptions:Audience"];
         options.RequireHttpsMetadata = false;
         options.SaveToken = true;
         options.TokenValidationParameters = new TokenValidationParameters
@@ -74,45 +74,44 @@ namespace JobFinder.WebApi
         };
       });
       services.AddCors(o => o.AddPolicy("AllowAll", builder =>
-            {
-                builder.AllowAnyOrigin()
-                       .AllowAnyMethod()
-                       .AllowAnyHeader();
-            }));
-
+      {
+        builder.AllowAnyOrigin()
+          .AllowAnyMethod()
+          .AllowAnyHeader();
+      }));
       services.AddMvc().AddJsonOptions(options =>
       {
-        options.SerializerSettings.Converters.Add(new StringEnumConverter {
-            CamelCaseText = true
+        options.SerializerSettings.Converters.Add(new StringEnumConverter
+        {
+          CamelCaseText = true
         });
       });
-
-      services.AddSwaggerGen (c =>
+      services.AddSwaggerGen(c =>
       {
-        c.SwaggerDoc ("v1", new Info { Title = "JobFinder api", Version = "v1" });
+        c.SwaggerDoc("v1", new Info { Title = "JobFinder api", Version = "v1" });
       });
     }
-    public void Configure (IApplicationBuilder app,
+    public void Configure(IApplicationBuilder app,
       IHostingEnvironment env,
       IAutostartActorInitializer autostartActorInitializer,
       DbContext dbContext,
       IPasswordCryptoService passwordCryptoService)
     {
       app.UseCors("AllowAll");
-      app.UseMiddleware<JwtTokenMiddleware> ();
-      app.UseAuthentication ();
-      app.UseMvc ();
-      app.UseSwagger ();
-      app.UseSwaggerUI (c =>
+      app.UseMiddleware<JwtTokenMiddleware>();
+      app.UseAuthentication();
+      app.UseMvc();
+      app.UseSwagger();
+      app.UseSwaggerUI(c =>
       {
-        c.SwaggerEndpoint ("/swagger/v1/swagger.json", "JobFinder api v1");
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "JobFinder api v1");
       });
-      (dbContext as JobFinderContext).EnsureSeedData (passwordCryptoService);
-      autostartActorInitializer.FindAndStartActors ();
+      (dbContext as JobFinderContext).EnsureSeedData(passwordCryptoService);
+      autostartActorInitializer.FindAndStartActors();
     }
-    public void ConfigureContainer (ContainerBuilder builder)
+    public void ConfigureContainer(ContainerBuilder builder)
     {
-      builder.RegisterModule (new JobFinderWebApiModule ());
+      builder.RegisterModule(new JobFinderWebApiModule());
     }
   }
 }
