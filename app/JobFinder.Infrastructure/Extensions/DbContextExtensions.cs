@@ -11,18 +11,22 @@ namespace JobFinder.Infrastructure.Ef.Extensions
 {
   public static class DbContextExtensions
   {
-    public static async void EnsureSeedData(this JobFinderContext jobFinderContext, IPasswordCryptoService passwordCryptoService)
+    public static async void EnsureSeedData (this JobFinderContext jobFinderContext, IPasswordCryptoService passwordCryptoService)
     {
-      await SeedLanguages(jobFinderContext);
-      await SeedUsers(jobFinderContext, passwordCryptoService);
-      await SeedProfessions(jobFinderContext);
+      var professionDbSet = jobFinderContext.Set<Profession> ();
+      var professionCategoryDbSet = jobFinderContext.Set<ProfessionCategory> ();
+      var userDbSet = jobFinderContext.Set<User> ();
+      var languageDbSet = jobFinderContext.Set<ProposedLanguage> ();
+      await SeedLanguages (languageDbSet);
+      await SeedUsers (userDbSet, passwordCryptoService);
+      await SeedProfessions (professionDbSet, professionCategoryDbSet);
+      await jobFinderContext.SaveChangesAsync ();
     }
-    private static async Task SeedProfessions(JobFinderContext jobFinderContext)
+    private static async Task SeedProfessions (DbSet<Profession> professionDbSet, DbSet<ProfessionCategory> professionCategoryDbSet)
     {
-      var professions = jobFinderContext.Set<Profession>();
-      if (!professions.AnyAsync().Result)
+      if (!professionDbSet.AnyAsync ().Result)
       {
-        await SeedProfessionHappyPath(jobFinderContext);
+        await SeedProfessionHappyPath (professionDbSet, professionCategoryDbSet);
         // SeedProfession(jobFinderContext, "IT", new string[]
         // {
         //   "Administrator",
@@ -32,7 +36,7 @@ namespace JobFinder.Infrastructure.Ef.Extensions
         //   "Programista baz danych",
         //   "Projektant IT"
         // });
-        await SeedProfession(jobFinderContext, "Administracja", new string[]
+        await SeedProfession (professionCategoryDbSet, professionDbSet, "Administracja", new string []
         {
           "Administrator danych osobowych",
           "Analityk systemów",
@@ -42,7 +46,7 @@ namespace JobFinder.Infrastructure.Ef.Extensions
           "Programista PLC",
           "Specjalista ds. ofertowania"
         });
-        await SeedProfession(jobFinderContext, "Produkcja", new string[]
+        await SeedProfession (professionCategoryDbSet, professionDbSet, "Produkcja", new string []
         {
           "Automatyk",
           "Dyrektor ds. Produkcji",
@@ -56,12 +60,12 @@ namespace JobFinder.Infrastructure.Ef.Extensions
           "Specjalista ds. planowania produkcji",
           "Technolog"
         });
-        await SeedProfession(jobFinderContext, "Turystyka", new string[]
+        await SeedProfession (professionCategoryDbSet, professionDbSet, "Turystyka", new string []
         {
           "Pilot wycieczek",
           "Specjalista ds. turystyki"
         });
-        await SeedProfession(jobFinderContext, "Nauka", new string[]
+        await SeedProfession (professionCategoryDbSet, professionDbSet, "Nauka", new string []
         {
           "Lektor",
           "Nauczyciel",
@@ -69,16 +73,15 @@ namespace JobFinder.Infrastructure.Ef.Extensions
           "Trener"
         });
       }
-      await jobFinderContext.SaveChangesAsync();
     }
-    private static async Task SeedProfessionHappyPath(JobFinderContext jobFinderContext)
+    private static async Task SeedProfessionHappyPath (DbSet<Profession> professionDbSet, DbSet<ProfessionCategory> professionCategoryDbSet)
     {
       string professionCategory = "IT";
-      Dictionary<string, string[]> professionNames = new Dictionary<string, string[]>()
+      Dictionary<string, string []> professionNames = new Dictionary<string, string []> ()
       {
         {
         "Administrator",
-        new string[]
+        new string []
         {
         "znajomość zagadnień związanych z administracją określonymi zasobami informatycznymi (fizyczne sieci internetowe, serwery, systemy informatyczne)",
         "ogólna wiedza na temat standardów informatycznych",
@@ -88,7 +91,7 @@ namespace JobFinder.Infrastructure.Ef.Extensions
         },
         {
         "Grafik",
-        new string[]
+        new string []
         {
         "doskonała znajomość środowisk i programów graficznych do obróbki (Corel, Photoshop, Gimp)",
         "znajomość Flash i Action Script",
@@ -101,7 +104,7 @@ namespace JobFinder.Infrastructure.Ef.Extensions
         },
         {
         "Konsultant ds. Wdrożeń",
-        new string[]
+        new string []
         {
         "znajomość zagadnień związanych z administracją określonymi zasobami informatycznymi (fizyczne sieci internetowe, serwery, systemy informatyczne)",
         "ogólna wiedza na temat standardów informatycznych",
@@ -111,7 +114,7 @@ namespace JobFinder.Infrastructure.Ef.Extensions
         },
         {
         "Programista",
-        new string[]
+        new string []
         {
         "znajomość języków programowania (np. Java, PHP, C/C++/C#, Python, Perl)",
         "znajomość standardów oraz środowisk programistycznych",
@@ -122,7 +125,7 @@ namespace JobFinder.Infrastructure.Ef.Extensions
         },
         {
         "Programista baz danych",
-        new string[]
+        new string []
         {
         "znajomość baz danych (MySQL, PostgreSQL, Oracle, Access, Microsoft SQL Serwer)",
         "znajomość zagadnień związanych z relacyjnością, obiektowością, operacyjnością",
@@ -134,7 +137,7 @@ namespace JobFinder.Infrastructure.Ef.Extensions
         },
         {
         "Projektant IT",
-        new string[]
+        new string []
         {
         "znajomość architektury systemów, metod projektowania systemów informatycznych",
         "umiejętność opracowywania projektów i modeli rozwiązań informatycznych",
@@ -148,63 +151,58 @@ namespace JobFinder.Infrastructure.Ef.Extensions
         }
         }
       };
-      var category = ProfessionCategory.Create(Guid.NewGuid(), professionCategory);
-      await jobFinderContext.Set<ProfessionCategory>().AddAsync(category);
-      List<Profession> items = new List<Profession>();
+      var category = ProfessionCategory.Create (Guid.NewGuid (), professionCategory);
+      await professionCategoryDbSet.AddAsync (category);
+      List<Profession> items = new List<Profession> ();
       foreach (var item in professionNames)
       {
-        var professionId = Guid.NewGuid();
-        var proposedSkills = item.Value.Select(x => ProposedSkill.Create(Guid.NewGuid(), professionId, x));
-        items.Add(Profession.Create(professionId, item.Key, category, proposedSkills.ToList()));
+        var professionId = Guid.NewGuid ();
+        var proposedSkills = item.Value.Select (x => ProposedSkill.Create (Guid.NewGuid (), professionId, x));
+        items.Add (Profession.Create (professionId, item.Key, category, proposedSkills.ToList ()));
       }
-      await jobFinderContext.Set<Profession>().AddRangeAsync(items);
+      await professionDbSet.AddRangeAsync (items);
     }
-    private static async Task SeedProfession(JobFinderContext jobFinderContext, string professionCategory, string[] professions)
+    private static async Task SeedProfession (DbSet<ProfessionCategory> professionCategoryDbSet, DbSet<Profession> professionDbSet, string professionCategory, string [] professions)
     {
-      var category = ProfessionCategory.Create(Guid.NewGuid(), professionCategory);
-      await jobFinderContext.Set<ProfessionCategory>().AddAsync(category);
-      var items = professions.Select(x => Profession.Create(Guid.NewGuid(), x, category, new List<ProposedSkill>()));
-      await jobFinderContext.Set<Profession>().AddRangeAsync(items);
+      var category = ProfessionCategory.Create (Guid.NewGuid (), professionCategory);
+      await professionCategoryDbSet.AddAsync (category);
+      var items = professions.Select (x => Profession.Create (Guid.NewGuid (), x, category, new List<ProposedSkill> ()));
+      await professionDbSet.AddRangeAsync (items);
     }
-    private static async Task SeedUsers(JobFinderContext jobFinderContext, IPasswordCryptoService passwordCryptoService)
+    private static async Task SeedUsers (DbSet<User> userDbSet, IPasswordCryptoService passwordCryptoService)
     {
-      var users = jobFinderContext.Set<User>();
-      if (!users.AnyAsync(bu => bu.UserType == UserType.Admin).Result)
+      if (!userDbSet.AnyAsync (bu => bu.UserType == UserType.Admin).Result)
       {
-        await SeedUser("Admin", "Admin", "admin@gmail.com", "admin1234", UserType.Admin, passwordCryptoService, jobFinderContext);
+        await SeedUser (userDbSet, "Admin", "Admin", "admin@gmail.com", "admin1234", UserType.Admin, passwordCryptoService);
       }
-      if (!users.AnyAsync(bu => bu.UserType == UserType.Employer).Result)
+      if (!userDbSet.AnyAsync (bu => bu.UserType == UserType.Employer).Result)
       {
-        await SeedUser("Employer", "Employer", "Employer@gmail.com", "Employer1234", UserType.Employer, passwordCryptoService, jobFinderContext);
+        await SeedUser (userDbSet, "Employer", "Employer", "Employer@gmail.com", "Employer1234", UserType.Employer, passwordCryptoService);
       }
-      if (!users.AnyAsync(bu => bu.UserType == UserType.Employee).Result)
+      if (!userDbSet.AnyAsync (bu => bu.UserType == UserType.Employee).Result)
       {
-        await SeedUser("Employee", "Employee", "Employee@gmail.com", "Employee1234", UserType.Employee, passwordCryptoService, jobFinderContext);
+        await SeedUser (userDbSet, "Employee", "Employee", "Employee@gmail.com", "Employee1234", UserType.Employee, passwordCryptoService);
       }
-      await jobFinderContext.SaveChangesAsync();
     }
-    private static async Task SeedUser(string name,
+    private static async Task SeedUser (DbSet<User> userDbSet, string name,
       string surname,
       string email,
       string password,
       UserType userType,
-      IPasswordCryptoService passwordCryptoService,
-      JobFinderContext jobFinderContext)
+      IPasswordCryptoService passwordCryptoService)
     {
-      var salt = passwordCryptoService.GenerateSalt();
-      var passwordHash = passwordCryptoService.HashPassword(password, salt);
-      var user = User.Create(Guid.NewGuid(), name, surname, email, passwordHash, salt, userType);
-      await jobFinderContext.Set<User>().AddAsync(user);
+      var salt = passwordCryptoService.GenerateSalt ();
+      var passwordHash = passwordCryptoService.HashPassword (password, salt);
+      var user = User.Create (Guid.NewGuid (), name, surname, email, passwordHash, salt, userType);
+      await userDbSet.AddAsync (user);
     }
-    private static async Task SeedLanguages(JobFinderContext jobFinderContext)
+    private static async Task SeedLanguages (DbSet<ProposedLanguage> languageDbSet)
     {
-      var languages = jobFinderContext.Set<ProposedLanguage>();
-      if (!languages.AnyAsync().Result)
+      if (!languageDbSet.AnyAsync ().Result)
       {
-        var english = ProposedLanguage.Create(Guid.NewGuid(), "Angielski");
-        var german = ProposedLanguage.Create(Guid.NewGuid(), "Niemiecki");
-        await jobFinderContext.AddRangeAsync(new [] { english, german });
-        await jobFinderContext.SaveChangesAsync();
+        var english = ProposedLanguage.Create (Guid.NewGuid (), "Angielski");
+        var german = ProposedLanguage.Create (Guid.NewGuid (), "Niemiecki");
+        await languageDbSet.AddRangeAsync (new [] { english, german });
       }
     }
   }

@@ -29,7 +29,8 @@ namespace JobFinder.Application.JobApplications
         var professionCategoryRepository = uow.GetRepository<ProfessionCategory>();
         var professionRepository = uow.GetRepository<Profession>();
         var jobApplicationRepository = uow.GetRepository<JobApplication>();
-        var languageRepository = uow.GetRepository<ProposedLanguage>();
+        //todo
+        //var languageRepository = uow.GetRepository<ProposedLanguage>();
 
         var user = UserService.Get(command.UserId, userRepository.Query());
 
@@ -40,7 +41,7 @@ namespace JobFinder.Application.JobApplications
           .GetOrCreate(command.Profession.Id, command.Profession.Name, professionRepository, professionCategory, command.Skills);
 
         var applicationId = Guid.NewGuid();
-        var proposedLanguages = await LanguageService.GetOrCreate(languageRepository, command.Languages);
+        var proposedLanguages = new List<ProposedLanguage>();// await LanguageService.GetOrCreate(languageRepository, command.Languages);
 
         JobApplication application = JobApplication
           .Create(applicationId,
