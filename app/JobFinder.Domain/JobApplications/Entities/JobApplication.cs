@@ -12,25 +12,29 @@ namespace JobFinder.Domain.Applications.Entities
     public Profession Profession { get; private set; }
     public virtual ICollection<JobApplicationSkill> Skills { get; private set; }
     public virtual ICollection<JobApplicationLanguage> Languages { get; private set; }
+    public virtual ICollection<JobApplicationCertificate> Certificates { get; private set; }
     protected JobApplication() : base(Guid.Empty) { }
     protected JobApplication(Guid id,
       User user,
       Profession profession,
       ICollection<JobApplicationSkill> skills,
-      ICollection<JobApplicationLanguage> languages) : base(id)
+      ICollection<JobApplicationLanguage> languages,
+      ICollection<JobApplicationCertificate> certificates) : base(id)
     {
       Profession = profession;
       User = user;
       Skills = skills;
       Languages = languages;
+      Certificates = certificates;
     }
     public static JobApplication Create(Guid id,
       User user,
       Profession profession,
       ICollection<JobApplicationSkill> skills,
-      ICollection<JobApplicationLanguage> languages)
+      ICollection<JobApplicationLanguage> languages,
+      ICollection<JobApplicationCertificate> certificates)
     {
-      return new JobApplication(id, user, profession, skills, languages);
+      return new JobApplication(id, user, profession, skills, languages, certificates);
     }
   }
 }

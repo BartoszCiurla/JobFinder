@@ -8,7 +8,7 @@ export const getJobApplications = (credentials) => dispatch => {
   dispatch(setLoadingJobApplications());
 
   return Api.post('api/JobApplication/GetEmployeeJobApplicationList', { userId: credentials.userId }, credentials.token)
-    .then(data => dispatch(setJobApplications(data.offers)))
+    .then(data => dispatch(setJobApplications(data.applications)))
     .catch(defaultErrorMessage);
 };
 
@@ -16,8 +16,8 @@ export const setLoadingJobApplications= () => (
   { type: types.SET_LOADING_JOB_APPLICATIONS }
 );
 
-export const setJobApplications = (offers) => (
-  { type: types.SET_JOB_APPLICATIONS, payload: offers }
+export const setJobApplications = (applications) => (
+  { type: types.SET_JOB_APPLICATIONS, payload: applications }
 );
 
 export const setJobApplication = (id) => (

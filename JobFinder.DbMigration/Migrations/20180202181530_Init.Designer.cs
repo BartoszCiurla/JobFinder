@@ -12,8 +12,8 @@ using System;
 namespace JobFinder.DbMigration.Migrations
 {
     [DbContext(typeof(JobFinderContext))]
-    [Migration("20180201222053_init")]
-    partial class init
+    [Migration("20180202181530_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -38,6 +38,24 @@ namespace JobFinder.DbMigration.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("JobApplication","JobFinder");
+                });
+
+            modelBuilder.Entity("JobFinder.Domain.JobApplications.Entities.JobApplicationCertificate", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid?>("CertificateId");
+
+                    b.Property<Guid>("JobApplicationId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CertificateId");
+
+                    b.HasIndex("JobApplicationId");
+
+                    b.ToTable("JobApplicationCertificate","JobFinder");
                 });
 
             modelBuilder.Entity("JobFinder.Domain.JobApplications.Entities.JobApplicationLanguage", b =>
@@ -205,6 +223,18 @@ namespace JobFinder.DbMigration.Migrations
                     b.HasOne("JobFinder.Domain.Users.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("JobFinder.Domain.JobApplications.Entities.JobApplicationCertificate", b =>
+                {
+                    b.HasOne("JobFinder.Domain.Professions.Entities.ProposedCertificate", "Certificate")
+                        .WithMany()
+                        .HasForeignKey("CertificateId");
+
+                    b.HasOne("JobFinder.Domain.Applications.Entities.JobApplication")
+                        .WithMany("Certificates")
+                        .HasForeignKey("JobApplicationId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("JobFinder.Domain.JobApplications.Entities.JobApplicationLanguage", b =>

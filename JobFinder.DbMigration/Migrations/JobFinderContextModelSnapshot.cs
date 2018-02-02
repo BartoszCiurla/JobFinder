@@ -39,6 +39,24 @@ namespace JobFinder.DbMigration.Migrations
                     b.ToTable("JobApplication","JobFinder");
                 });
 
+            modelBuilder.Entity("JobFinder.Domain.JobApplications.Entities.JobApplicationCertificate", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid?>("CertificateId");
+
+                    b.Property<Guid>("JobApplicationId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CertificateId");
+
+                    b.HasIndex("JobApplicationId");
+
+                    b.ToTable("JobApplicationCertificate","JobFinder");
+                });
+
             modelBuilder.Entity("JobFinder.Domain.JobApplications.Entities.JobApplicationLanguage", b =>
                 {
                     b.Property<Guid>("Id")
@@ -204,6 +222,18 @@ namespace JobFinder.DbMigration.Migrations
                     b.HasOne("JobFinder.Domain.Users.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("JobFinder.Domain.JobApplications.Entities.JobApplicationCertificate", b =>
+                {
+                    b.HasOne("JobFinder.Domain.Professions.Entities.ProposedCertificate", "Certificate")
+                        .WithMany()
+                        .HasForeignKey("CertificateId");
+
+                    b.HasOne("JobFinder.Domain.Applications.Entities.JobApplication")
+                        .WithMany("Certificates")
+                        .HasForeignKey("JobApplicationId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("JobFinder.Domain.JobApplications.Entities.JobApplicationLanguage", b =>

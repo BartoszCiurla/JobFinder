@@ -6,7 +6,7 @@ const defaultErrorMessage = (error) => console.log(`Occured some errors, do some
 
 export const createApplication = (credentials) => (dispatch, getState) => {
   const body = { ...format(getState), userId: credentials.userId };
-  console.log(body);
+
   return Api.post('api/JobApplication/Create', body, credentials.token)
     .then(data => console.log(data))
     .catch(defaultErrorMessage);

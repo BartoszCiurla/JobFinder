@@ -28,9 +28,11 @@ namespace JobFinder.Presentation.JobApplications
                     .Include(ja => ja.Languages).ThenInclude(jal => jal.Language)
                     .Include(ja => ja.Profession).ThenInclude(jap => jap.Category)
                     .Include(ja => ja.Skills).ThenInclude(jas => jas.Skill)
+                    .Include(ja => ja.Certificates).ThenInclude(jac => jac.Certificate)
                     .Select(ja => new GetEmployeeJobApplicationListResult.JobApplicationDto(ja.Id, ja.Profession.Name, ja.Profession.Category.Name,
                         ja.Skills.Select(s => new GetEmployeeJobApplicationListResult.JobApplicationSkillDto(s.Id, s.Skill.Description, s.Level)),
-                        ja.Languages.Select(l => new GetEmployeeJobApplicationListResult.JobApplicationLanguageDto(l.Id, l.Language.Name, l.Level)))));
+                        ja.Languages.Select(l => new GetEmployeeJobApplicationListResult.JobApplicationLanguageDto(l.Id, l.Language.Name, l.Level)),
+                        ja.Certificates.Select(c => new GetEmployeeJobApplicationListResult.JobApplicationCertificateDto(c.Id, c.Certificate.Title)))));
             });
         }
     }

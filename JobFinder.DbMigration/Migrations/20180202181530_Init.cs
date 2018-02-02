@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace JobFinder.DbMigration.Migrations
 {
-    public partial class init : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -177,6 +177,34 @@ namespace JobFinder.DbMigration.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "JobApplicationCertificate",
+                schema: "JobFinder",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CertificateId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    JobApplicationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JobApplicationCertificate", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_JobApplicationCertificate_ProposedCertificate_CertificateId",
+                        column: x => x.CertificateId,
+                        principalSchema: "JobFinder",
+                        principalTable: "ProposedCertificate",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_JobApplicationCertificate_JobApplication_JobApplicationId",
+                        column: x => x.JobApplicationId,
+                        principalSchema: "JobFinder",
+                        principalTable: "JobApplication",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "JobApplicationLanguage",
                 schema: "JobFinder",
                 columns: table => new
@@ -247,6 +275,18 @@ namespace JobFinder.DbMigration.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_JobApplicationCertificate_CertificateId",
+                schema: "JobFinder",
+                table: "JobApplicationCertificate",
+                column: "CertificateId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JobApplicationCertificate_JobApplicationId",
+                schema: "JobFinder",
+                table: "JobApplicationCertificate",
+                column: "JobApplicationId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_JobApplicationLanguage_JobApplicationId",
                 schema: "JobFinder",
                 table: "JobApplicationLanguage",
@@ -303,6 +343,10 @@ namespace JobFinder.DbMigration.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "JobApplicationCertificate",
+                schema: "JobFinder");
+
             migrationBuilder.DropTable(
                 name: "JobApplicationLanguage",
                 schema: "JobFinder");

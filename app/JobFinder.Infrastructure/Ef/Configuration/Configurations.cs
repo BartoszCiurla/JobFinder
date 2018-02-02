@@ -9,6 +9,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace JobFinder.Infrastructure.Ef.Configurations
 {
+  public class JobApplicationCertificateConfiguration : EntityMappingConfiguration<JobApplicationCertificate>
+  {
+    public override void Map(EntityTypeBuilder<JobApplicationCertificate> builder)
+    {
+      builder.ToTable(nameof(JobApplicationCertificate), SchemaName.JobFinder);
+    }
+  }
   public class ProposedCertificateConfiguration : EntityMappingConfiguration<ProposedCertificate>
   {
     public override void Map(EntityTypeBuilder<ProposedCertificate> builder)

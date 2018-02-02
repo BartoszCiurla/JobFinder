@@ -31,8 +31,8 @@ class ApplicationBuilder extends Component {
     errors: []
   }
   tryCreateApplication = () => {
-    this.props.createApplication(getUserCredentials(this.props.cookies))
-      .then(this.props.history.push(Routes.employee));
+    this.props.createApplication(getUserCredentials(this.props.cookies));
+      //.then(this.props.history.push(Routes.employee));
   }
 
   professionStep = () => {

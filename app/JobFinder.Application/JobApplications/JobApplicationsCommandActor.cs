@@ -34,7 +34,7 @@ namespace JobFinder.Application.JobApplications
         var user = UserService.Get(command.UserId, userRepository.Query());
 
         ProfessionCategory professionCategory = ProfessionCategoryService
-          .GetOrCreate(command.Category.Id, command.Category.Name, professionCategoryRepository);
+          .GetOrCreate(command.Category.Id, command.Category.Name, command.Certificates, professionCategoryRepository);
 
         Profession profession = ProfessionService
           .GetOrCreate(command.Profession.Id, command.Profession.Name, professionRepository, professionCategory, command.Skills);
@@ -51,11 +51,14 @@ namespace JobFinder.Application.JobApplications
               command.Skills).ToList(),
             LanguageService.Create(
               applicationId,
-              LanguageService.GetOrCreate(languageRepository,command.Languages),
-              command.Languages).ToList());
+              LanguageService.GetOrCreate(languageRepository, command.Languages),
+              command.Languages).ToList(),
+            CertificatesService.Create(
+              applicationId,
+              professionCategory,
+              command.Certificates).ToList());
 
         jobApplicationRepository.Add(application);
-
         await professionCategoryRepository.SaveChangesAsync();
         await professionRepository.SaveChangesAsync();
         await languageRepository.SaveChangesAsync();

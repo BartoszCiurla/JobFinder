@@ -11,5 +11,6 @@ namespace JobFinder.Application.Api.JobApplications.Commands
     public ProfessionDto Profession { get; set; }
     public IEnumerable<SkillDto> Skills { get; set; }
     public IEnumerable<LanguageDto> Languages { get; set; }
+    public IEnumerable<CertificateDto> Certificates { get; set; }
   }
 }
