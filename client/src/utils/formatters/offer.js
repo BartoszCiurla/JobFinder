@@ -1,9 +1,23 @@
 import { formatProfession } from './profession';
+import { formatSkills } from './skills';
+import { formatLanguages } from './languages';
 
 export const format = (getState) => {
-  const { category, profession } = getState().offerBuilder;
+  const { category, profession, requiredSkills, welcomeSkills, languages } = getState().offerBuilder;
+
+  const formatedProfession = formatProfession(category, profession, getState);
+
+  const formatedRequiredSkills = formatSkills(requiredSkills, formatedProfession.profession, getState);
+
+  const formatedWelcomeSkills = formatSkills(welcomeSkills, formatedProfession.profession, getState);
+
+  const formatedLanguages = formatLanguages(languages, getState);
+
 
   return {
-    ...formatProfession(category, profession, getState)
+    ...formatedProfession,
+    requiredSkills: formatedRequiredSkills,
+    welcomeSkills: formatedWelcomeSkills,
+    languages: formatedLanguages
   };
 };

@@ -1,4 +1,7 @@
 export default {
   category: '',
-  profession: ''
+  profession: '',
+  requiredSkills: [],
+  welcomeSkills: [],
+  languages: []
 };

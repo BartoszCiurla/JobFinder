@@ -4,39 +4,154 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withCookies, Cookies } from 'react-cookie';
 import { withRouter } from 'react-router-dom';
+import _ from 'lodash';
 
 import Profession from '../../common/profession';
+import StepWizard from '../../common/stepWizard';
+import Skills from '../../common/skills';
+import Languages from '../../common/languages';
 
 import Routes from '../../constants/routes';
 import Resources from './resources';
+import { validate as validateProfession } from '../../utils/validators/profession';
+import { validate as validateSkill } from '../../utils/validators/skill';
 import { getUserCredentials } from '../../utils/auth';
-import { setOfferCategory, setOfferProfession, createOffer } from '../../actions/offerBuilder';
+import {
+  setOfferCategory,
+  setOfferProfession,
+  setOfferRequiredSkill,
+  removeOfferRequiredSkill,
+  setOfferWelcomeSkill,
+  removeOfferWelcomeSkill,
+  setOfferLanguage,
+  removeOfferLanguage,
+  createOffer
+} from '../../actions/offerBuilder';
 
 class OfferBuilder extends Component {
+  state = {
+    errors: []
+  }
+
   tryCreateOffer = () => {
     this.props.createOffer(getUserCredentials(this.props.cookies))
       .then(this.props.history.push(Routes.employer));
   }
 
-  render() {
+  welcomeSkillValidator = (skill, addedSkills) => {
+    const { requiredSkills } = this.props;
+
+    return validateSkill(skill, _.concat(addedSkills, requiredSkills));
+  }
+
+  professionStep = () => {
     const {
       category,
       profession
     } = this.props;
 
+    return {
+      renderStep:
+        <Profession
+          category={category}
+          profession={profession}
+          onChangeCategory={this.props.setOfferCategory}
+          onChangeProfession={this.props.setOfferProfession}
+          errors={this.state.errors}
+        />,
+      title: `${Resources.profession}`,
+      validate: () => {
+        const validateResult = validateProfession(category, profession);
+        this.setState({ errors: validateResult.errors });
+        return validateResult.isValid();
+      }
+    };
+  }
+
+  requiredSkillsStep = () => {
+    const {
+      requiredSkills,
+      category,
+      profession
+    } = this.props;
+
+    return {
+      renderStep:
+        <Skills
+          addSkill={this.props.setOfferRequiredSkill}
+          removeSkill={this.props.removeOfferRequiredSkill}
+          addedSkills={requiredSkills}
+          category={category}
+          profession={profession}
+        />,
+      title: `${Resources.requiredSkills}`,
+      validate: () => true
+    };
+  }
+
+  welcomeSkillsStep = () => {
+    const {
+      welcomeSkills,
+      category,
+      profession
+    } = this.props;
+
+    return {
+      renderStep:
+        <Skills
+          addSkill={this.props.setOfferWelcomeSkill}
+          removeSkill={this.props.removeOfferWelcomeSkill}
+          addedSkills={welcomeSkills}
+          customValidation={this.welcomeSkillValidator}
+          category={category}
+          profession={profession}
+        />,
+      title: `${Resources.welcomeSkills}`,
+      validate: () => true
+    };
+  }
+
+  languagesStep = () => {
+    const {
+      languages
+    } = this.props;
+
+    return {
+      renderStep:
+        <Languages
+          addedLanguages={languages}
+          addLanguage={this.props.setOfferLanguage}
+          removeLanguage={this.props.removeOfferLanguage}
+        />,
+      title: `${Resources.languages}`,
+      validate: () => true
+    };
+  }
+
+  additional = () => {
+    return {
+      renderStep:<div>in develop</div>,
+      title: `${Resources.additional}`,
+      validate: () => true
+    };
+  }
+
+  render() {
+    const steps = [
+      this.professionStep(),
+      this.requiredSkillsStep(),
+      this.welcomeSkillsStep(),
+      this.languagesStep(),
+      this.additional()
+    ];
+
     return (
-      <div className="offer-builder">
-        <div className="form">
-          <h2 className="title">{Resources.title}</h2>
-          <Profession
-            category={category}
-            profession={profession}
-            onChangeCategory={this.props.setOfferCategory}
-            onChangeProfession={this.props.setOfferProfession}
-          />
-          <button onClick={this.tryCreateOffer} className="btn btn-primary full-width">{Resources.submit}</button>
-        </div>
-      </div>
+      <StepWizard
+        steps={steps}
+        title={Resources.title}
+        onSubmit={this.tryCreateOffer}
+        onCancel={() => this.props.history.push(Routes.employer)}
+      />
     );
   }
 }
@@ -44,21 +159,39 @@ class OfferBuilder extends Component {
 OfferBuilder.propTypes = {
   setOfferCategory: PropTypes.func.isRequired,
   setOfferProfession: PropTypes.func.isRequired,
+  setOfferRequiredSkill: PropTypes.func.isRequired,
+  removeOfferRequiredSkill: PropTypes.func.isRequired,
+  setOfferWelcomeSkill: PropTypes.func.isRequired,
+  removeOfferWelcomeSkill: PropTypes.func.isRequired,
+  setOfferLanguage: PropTypes.func.isRequired,
+  removeOfferLanguage: PropTypes.func.isRequired,
   category: PropTypes.string.isRequired,
   profession: PropTypes.string.isRequired,
+  requiredSkills: PropTypes.array,
+  welcomeSkills: PropTypes.array,
+  languages: PropTypes.array,
   cookies: PropTypes.instanceOf(Cookies).isRequired,
   history: PropTypes.object.isRequired,
   createOffer: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({ offerBuilder }) => ({
-  category: offerBuilder.category,
-  profession: offerBuilder.profession
+const mapStateToProps = ({ offerBuilder: { category, profession, requiredSkills, welcomeSkills, languages } }) => ({
+  category,
+  profession,
+  requiredSkills,
+  welcomeSkills,
+  languages
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   setOfferCategory,
   setOfferProfession,
+  setOfferRequiredSkill,
+  removeOfferRequiredSkill,
+  setOfferWelcomeSkill,
+  removeOfferWelcomeSkill,
+  setOfferLanguage,
+  removeOfferLanguage,
   createOffer
 }, dispatch);
 

@@ -31,7 +31,8 @@ class Skills extends Component {
 
   addItem = () => {
     const { skill } = this.state;
-    const validateResult = validate(skill, this.props.addedSkills);
+    const { customValidation } = this.props;
+    const validateResult = customValidation ? customValidation(skill, this.props.addedSkills) : validate(skill, this.props.addedSkills);
 
     this.setState({ errors: validateResult.errors });
 
@@ -113,6 +114,7 @@ Skills.propTypes = {
   addSkill: PropTypes.func.isRequired,
   removeSkill: PropTypes.func.isRequired,
   addedSkills: PropTypes.array,
+  customValidation: PropTypes.func,
   getSkills: PropTypes.func.isRequired,
   isLoadingSkills: PropTypes.bool.isRequired,
   proposedSkills: PropTypes.array,
