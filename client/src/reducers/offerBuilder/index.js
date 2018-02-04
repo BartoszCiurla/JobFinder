@@ -8,6 +8,7 @@ import {
   SET_OFFER_WELCOME_SKILL,
   REMOVE_OFFER_WELCOME_SKILL,
   SET_OFFER_LANGUAGE,
+  SET_OFFER_REGULAR_FIELD,
   REMOVE_OFFER_LANGUAGE
 } from '../../constants/offerBuilder';
 
@@ -72,6 +73,14 @@ const actions = {
     };
     return { ...data };
   },
+  [SET_OFFER_REGULAR_FIELD]: (state, { payload: { name, value } }) => {
+    const data = {
+      ...state,
+      [name]: value
+    };
+
+    return { ...data };
+  }
 };
 
 export default (state = initialState, action) => {

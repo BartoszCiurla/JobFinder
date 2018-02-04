@@ -10,6 +10,7 @@ import Profession from '../../common/profession';
 import StepWizard from '../../common/stepWizard';
 import Skills from '../../common/skills';
 import Languages from '../../common/languages';
+import Additional from './components/Additional';
 
 import Routes from '../../constants/routes';
 import Resources from './resources';
@@ -25,6 +26,7 @@ import {
   removeOfferWelcomeSkill,
   setOfferLanguage,
   removeOfferLanguage,
+  setOfferRegularField,
   createOffer
 } from '../../actions/offerBuilder';
 
@@ -129,8 +131,13 @@ class OfferBuilder extends Component {
   }
 
   additional = () => {
+    const { certificatesWillBeAnAdvantage } = this.props;
     return {
-      renderStep:<div>in develop</div>,
+      renderStep:
+        <Additional
+          certificatesWillBeAnAdvantage={certificatesWillBeAnAdvantage}
+          setRegularField={this.props.setOfferRegularField}
+        />,
       title: `${Resources.additional}`,
       validate: () => true
     };
@@ -165,8 +172,10 @@ OfferBuilder.propTypes = {
   removeOfferWelcomeSkill: PropTypes.func.isRequired,
   setOfferLanguage: PropTypes.func.isRequired,
   removeOfferLanguage: PropTypes.func.isRequired,
+  setOfferRegularField: PropTypes.func.isRequired,
   category: PropTypes.string.isRequired,
   profession: PropTypes.string.isRequired,
+  certificatesWillBeAnAdvantage: PropTypes.bool.isRequired,
   requiredSkills: PropTypes.array,
   welcomeSkills: PropTypes.array,
   languages: PropTypes.array,
@@ -175,9 +184,10 @@ OfferBuilder.propTypes = {
   createOffer: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({ offerBuilder: { category, profession, requiredSkills, welcomeSkills, languages } }) => ({
+const mapStateToProps = ({ offerBuilder: { category, profession, requiredSkills, welcomeSkills, languages, certificatesWillBeAnAdvantage } }) => ({
   category,
   profession,
+  certificatesWillBeAnAdvantage,
   requiredSkills,
   welcomeSkills,
   languages
@@ -192,6 +202,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   removeOfferWelcomeSkill,
   setOfferLanguage,
   removeOfferLanguage,
+  setOfferRegularField,
   createOffer
 }, dispatch);
 
