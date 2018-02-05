@@ -9,6 +9,27 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace JobFinder.Infrastructure.Ef.Configurations
 {
+  public class OfferWelcomeSkillCertificateConfiguration : EntityMappingConfiguration<OfferWelcomeSkill>
+  {
+    public override void Map(EntityTypeBuilder<OfferWelcomeSkill> builder)
+    {
+      builder.ToTable(nameof(OfferWelcomeSkill), SchemaName.JobFinder);
+    }
+  }
+  public class OfferRequiredSkillCertificateConfiguration : EntityMappingConfiguration<OfferRequiredSkill>
+  {
+    public override void Map(EntityTypeBuilder<OfferRequiredSkill> builder)
+    {
+      builder.ToTable(nameof(OfferRequiredSkill), SchemaName.JobFinder);
+    }
+  }
+  public class OfferLanguageCertificateConfiguration : EntityMappingConfiguration<OfferLanguage>
+  {
+    public override void Map(EntityTypeBuilder<OfferLanguage> builder)
+    {
+      builder.ToTable(nameof(OfferLanguage), SchemaName.JobFinder);
+    }
+  }
   public class JobApplicationCertificateConfiguration : EntityMappingConfiguration<JobApplicationCertificate>
   {
     public override void Map(EntityTypeBuilder<JobApplicationCertificate> builder)
