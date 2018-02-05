@@ -6,9 +6,17 @@ const defaultErrorMessage = (error) => console.log(`Occured some errors, do some
 
 export const createOffer = (credentials) => (dispatch, getState) => {
   const body = { ...format(getState), userId: credentials.userId };
-  return Api.post('api/Offer/Create', body, credentials.token)
-    .then(data => console.log(data))
-    .catch(defaultErrorMessage);
+  return new Promise((resolve, reject) => {
+    Api.post('api/Offer/Create', body, credentials.token)
+      .then(() => {
+        dispatch(cleanOfferData());
+        resolve();
+      })
+      .catch((e) => {
+        defaultErrorMessage(e);
+        reject();
+      });
+  });
 };
 
 export const setOfferCategory = (offerCategory) => (
@@ -45,4 +53,8 @@ export const removeOfferLanguage = (language) => (
 
 export const setOfferRegularField = (fieldData) => (
   { type: types.SET_OFFER_REGULAR_FIELD, payload: fieldData }
+);
+
+export const cleanOfferData = () => (
+  { type: types.CLEAN_OFFER_DATA }
 );

@@ -7,9 +7,17 @@ const defaultErrorMessage = (error) => console.log(`Occured some errors, do some
 export const createApplication = (credentials) => (dispatch, getState) => {
   const body = { ...format(getState), userId: credentials.userId };
 
-  return Api.post('api/JobApplication/Create', body, credentials.token)
-    .then(data => console.log(data))
-    .catch(defaultErrorMessage);
+  return new Promise((resolve, reject) => {
+    Api.post('api/JobApplication/Create', body, credentials.token)
+      .then(() => {
+        dispatch(cleanApplicationData());
+        resolve();
+      })
+      .catch((e) => {
+        defaultErrorMessage(e);
+        reject();
+      });
+  });
 };
 
 export const setApplicationCategory = (offerCategory) => (
@@ -28,8 +36,8 @@ export const removeApplicationSkill = (skill) => (
   { type: types.REMOVE_APPLICATION_SKILL, payload: skill }
 );
 
-export const cleanApplicationsSkills = () => (
-  { type: types.CLEAN_APPLICATION_SKILLS }
+export const cleanApplicationData = () => (
+  { type: types.CLEAN_APPLICATION_DATA }
 );
 
 export const setApplicationLanguage = (language) => (

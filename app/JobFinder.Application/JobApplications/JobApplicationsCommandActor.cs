@@ -45,11 +45,11 @@ namespace JobFinder.Application.JobApplications
           .Create(applicationId,
             user,
             profession,
-            SkillsService.Create(
+            SkillsService.Create<JobApplicationSkill>(
               applicationId,
               profession,
               command.Skills).ToList(),
-            LanguageService.Create(
+            LanguageService.Create<JobApplicationLanguage>(
               applicationId,
               LanguageService.GetOrCreate(languageRepository, command.Languages),
               command.Languages).ToList(),
@@ -59,6 +59,7 @@ namespace JobFinder.Application.JobApplications
               command.Certificates).ToList());
 
         jobApplicationRepository.Add(application);
+
         await professionCategoryRepository.SaveChangesAsync();
         await professionRepository.SaveChangesAsync();
         await languageRepository.SaveChangesAsync();

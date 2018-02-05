@@ -3,7 +3,7 @@ export default {
   submit: 'Stwórz ofertę',
   profession: 'Zawód',
   requiredSkills: 'Wymagane umiejętności',
-  welcomeSkills: 'Mile widziale umiejętności',
+  welcomeSkills: 'Mile widziane umiejętności',
   languages: "Języki",
   additional: "Dodatkowe"
 };

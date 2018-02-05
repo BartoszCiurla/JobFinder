@@ -9,7 +9,8 @@ import {
   REMOVE_OFFER_WELCOME_SKILL,
   SET_OFFER_LANGUAGE,
   SET_OFFER_REGULAR_FIELD,
-  REMOVE_OFFER_LANGUAGE
+  REMOVE_OFFER_LANGUAGE,
+  CLEAN_OFFER_DATA
 } from '../../constants/offerBuilder';
 
 const actions = {
@@ -80,6 +81,9 @@ const actions = {
     };
 
     return { ...data };
+  },
+  [CLEAN_OFFER_DATA]: () => {
+    return { ...initialState };
   }
 };
 

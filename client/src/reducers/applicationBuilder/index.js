@@ -9,7 +9,7 @@ import {
   REMOVE_APPLICATION_LANGUAGE,
   SET_APPLICATION_CERTIFICATE,
   REMOVE_APPLICATION_CERTIFICATE,
-  CLEAN_APPLICATION_SKILLS
+  CLEAN_APPLICATION_DATA
 } from '../../constants/applicationBuilder';
 
 const actions = {
@@ -73,12 +73,8 @@ const actions = {
     };
     return { ...data };
   },
-  [CLEAN_APPLICATION_SKILLS]: (state) => {
-    const data = {
-      ...state,
-      skills: []
-    };
-    return { ...data };
+  [CLEAN_APPLICATION_DATA]: () => {
+    return { ...initialState };
   }
 };
 
