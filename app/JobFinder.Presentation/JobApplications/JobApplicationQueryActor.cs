@@ -19,9 +19,9 @@ namespace JobFinder.Presentation.JobApplications
         {
             await HandleQuery(query, uow =>
             {
-                var offerReadOnlyRepository = uow.GetRepository<JobApplication>();
+                var jobApplicationReadOnlyRepository = uow.GetRepository<JobApplication>();
 
-                return new GetEmployeeJobApplicationListResult(offerReadOnlyRepository
+                return new GetEmployeeJobApplicationListResult(jobApplicationReadOnlyRepository
                     .Query()
                     .Where(ja => ja.User.Id == query.UserId)
                     .Include(ja => ja.User)

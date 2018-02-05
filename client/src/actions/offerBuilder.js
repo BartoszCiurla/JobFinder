@@ -1,22 +1,21 @@
 import Api from '../utils/api';
 import * as types from '../constants/offerBuilder';
+import { getOffers } from './employer';
 import { format } from '../utils/formatters/offer';
 
 const defaultErrorMessage = (error) => console.log(`Occured some errors, do something with that! ${error}`);
 
 export const createOffer = (credentials) => (dispatch, getState) => {
   const body = { ...format(getState), userId: credentials.userId };
-  return new Promise((resolve, reject) => {
-    Api.post('api/Offer/Create', body, credentials.token)
-      .then(() => {
-        dispatch(cleanOfferData());
-        resolve();
-      })
-      .catch((e) => {
-        defaultErrorMessage(e);
-        reject();
-      });
-  });
+
+  return Api.post('api/Offer/Create', body, credentials.token)
+    .then(() => {
+      dispatch(cleanOfferData());
+      dispatch(getOffers(credentials));
+    })
+    .catch((e) => {
+      defaultErrorMessage(e);
+    });
 };
 
 export const setOfferCategory = (offerCategory) => (

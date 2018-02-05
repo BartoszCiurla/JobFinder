@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Core.Domain.Ddd;
 using JobFinder.Application.Api.Common;
+using JobFinder.Application.Api.JobApplications.Queries;
 using JobFinder.Application.Api.Offer.Commands;
 using JobFinder.Application.Api.Offer.Queries;
 using JobFinder.WebApi.Core;
@@ -33,6 +34,13 @@ namespace JobFinder.WebApi.Controllers
     public async Task<IActionResult> GetEmployerOffersList([FromBody]GetEmployerOffersListQuery query)
     {
       return await SendQuery(DispatcherActorsNames.OfferQueryActor, query);
+    }
+
+    [Route("GetRecommendedApplicationList")]
+    [HttpPost]
+    public async Task<IActionResult> GetRecommendedApplicationList([FromBody]GetRecommendedApplicationListQuery query)
+    {
+      return await SendQuery(DispatcherActorsNames.JobApplicationsRecommendationQueryActor, query);
     }
   }
 }

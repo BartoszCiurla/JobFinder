@@ -1,23 +1,21 @@
 import Api from '../utils/api';
 import * as types from '../constants/applicationBuilder';
 import { format } from '../utils/formatters/application';
+import { getJobApplications } from './employee';
 
 const defaultErrorMessage = (error) => console.log(`Occured some errors, do something with that! ${error}`);
 
 export const createApplication = (credentials) => (dispatch, getState) => {
   const body = { ...format(getState), userId: credentials.userId };
 
-  return new Promise((resolve, reject) => {
-    Api.post('api/JobApplication/Create', body, credentials.token)
-      .then(() => {
-        dispatch(cleanApplicationData());
-        resolve();
-      })
-      .catch((e) => {
-        defaultErrorMessage(e);
-        reject();
-      });
-  });
+  return Api.post('api/JobApplication/Create', body, credentials.token)
+    .then(() => {
+      dispatch(cleanApplicationData());
+      dispatch(getJobApplications(credentials));
+    })
+    .catch((e) => {
+      defaultErrorMessage(e);
+    });
 };
 
 export const setApplicationCategory = (offerCategory) => (

@@ -12,6 +12,10 @@ export const getOffers = (credentials) => dispatch => {
     .catch(defaultErrorMessage);
 };
 
+export const getRecommendedApplications = (offerId, credentials) => dispatch => {
+  return Api.post('api/Offer/GetRecommendedApplicationList', { offerId: offerId }, credentials.token);
+};
+
 export const setLoadingOffers = () => (
   { type: types.SET_LOADING_OFFERS }
 );

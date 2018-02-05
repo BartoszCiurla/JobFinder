@@ -8,10 +8,11 @@ import { isEmpty } from 'lodash';
 import GlobalHeader from '../../../common/globalHeader';
 import DashboardBar from '../../../common/dashboardBar';
 import Offer from './components/Offer';
+import RecommendedApplications from './components/RecommendedApplications';
 
 import Resources from './resources';
 import Routes from '../../../constants/routes';
-import { getOffers, setOffer } from '../../../actions/employer';
+import { getOffers, setOffer, getRecommendedApplications } from '../../../actions/employer';
 import { getUserCredentials } from '../../../utils/auth';
 
 class Employer extends Component {
@@ -22,6 +23,10 @@ class Employer extends Component {
   renderOffers = () => {
     const { offers } = this.props;
     return !isEmpty(offers) && offers.map(o => <Offer key={o.id} offer={o} onClick={this.props.setOffer} />);
+  }
+
+  getRecommendedApplications = (offerId) => {
+    this.props.getRecommendedApplications(offerId, getUserCredentials(this.props.cookies));
   }
 
   render() {
@@ -41,6 +46,11 @@ class Employer extends Component {
         <div className="dashboard-offers">
           {selectedOffer ? [
             <h1 key="offers" className="offers-title">{Resources.recommendedApplications}</h1>,
+            <RecommendedApplications
+              key="recommendedApplications"
+              getRecommendedApplications={this.getRecommendedApplications}
+              offerId={selectedOffer}
+            />
           ]
             : [
               <h1 key="offers" className="offers-title">{Resources.chooseAJobOffer}</h1>,
@@ -57,6 +67,7 @@ Employer.propTypes = {
   offers: PropTypes.array,
   getOffers: PropTypes.func.isRequired,
   setOffer: PropTypes.func.isRequired,
+  getRecommendedApplications: PropTypes.func.isRequired,
   cookies: PropTypes.instanceOf(Cookies).isRequired,
   selectedOffer: PropTypes.string,
 };
@@ -69,7 +80,8 @@ const mapStateToProps = ({ employer }) => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   setOffer,
-  getOffers
+  getOffers,
+  getRecommendedApplications
 }, dispatch);
 
 export default withCookies(connect(mapStateToProps, mapDispatchToProps)(Employer));
