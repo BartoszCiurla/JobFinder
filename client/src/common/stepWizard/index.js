@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import FaAngleLeft from 'react-icons/lib/fa/angle-left';
+import FaAngleRight from 'react-icons/lib/fa/angle-right';
 
 import Resources from './resources';
 
@@ -15,12 +17,30 @@ class StepWizard extends Component {
       this.setState({ currentStep: this.state.currentStep + 1 });
   }
 
-  renderLeftButton = (onClick, title) => (<button key="leftButton" onClick={onClick} className="btn nav nav_left">{title}</button>)
+  renderLeftButton = (onClick, title) => (
+    <div key="leftButton" className="leftButton">
+      <button
+        onClick={onClick}
+        className="btn nav nav_left">
+        <span><FaAngleLeft size={35} /></span>
+        <span>{title}</span>
+      </button>
+    </div>
+  )
 
-  renderRightButton = (onClick, title) => (<button key="rightButton" onClick={onClick} className="btn nav nav_right">{title}</button>)
+  renderRightButton = (onClick, title) => (
+    <div key="rightButton" className="rightButton">
+      <button
+        onClick={onClick}
+        className="btn nav nav_right">
+        <span>{title}</span>
+        <span><FaAngleRight size={35} /></span>
+      </button>
+    </div>
+  )
 
 
-  renderNavigationBar = (currentStep) => {
+  renderContent = (currentStep) => {
     const stepsLength = this.props.steps.length - 1;
 
     return [
@@ -30,6 +50,14 @@ class StepWizard extends Component {
         : this.renderRightButton(this.props.onSubmit, Resources.submit)
     ];
   }
+
+  renderStep = (currentStep) => (
+    <div key="step" className="step">
+      <div className="form">
+        {this.props.steps[currentStep].renderStep}
+      </div>
+    </div>
+  )
 
   renderProgressBar = (currentStep) => (
     <div className="progressBar">
@@ -46,11 +74,9 @@ class StepWizard extends Component {
       <div className="stepWizard">
         <h1 className="title">{this.props.title}</h1>
         {this.renderProgressBar(currentStep)}
-        {this.renderNavigationBar(currentStep)}
-        <div className="step">
-          <div className="form">
-            {this.props.steps[currentStep].renderStep}
-          </div>
+        <div className="content">
+          {this.renderContent(currentStep)}
+          {this.renderStep(currentStep)}
         </div>
       </div>
     );

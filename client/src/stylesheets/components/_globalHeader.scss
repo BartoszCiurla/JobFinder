@@ -1,24 +1,40 @@
 .header {
   width: 100%;
+  min-height: 150px;
   display: flex;
-  flex-flow: row wrap;
   align-items: center;
   background: #fff;
   text-align: center;
 
+  .header-right {
+    .btn.ghost.transparent {
+      &:hover {
+        transform: scale(1.2,1.2);
+      }
+    }
+  }
+
   .header-center {
+    b {
+      font-weight: bold
+    }
     margin-left: auto;
-    margin-right: auto
+    margin-right: auto;
+    display:flex;
+    justify-content: center;
+    font-size: $type-h4;
+    text-transform: uppercase;
   }
 
   .header-right {
-    display: flex;
+    align-self: flex-end;
   }
 
   .header-logo {
     color:$color-action;
     font-size: $type-h1;
     padding: 10px;
+    align-self: flex-end;
   }
 }
 

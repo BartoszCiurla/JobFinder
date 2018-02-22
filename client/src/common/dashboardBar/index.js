@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import FaPlus from 'react-icons/lib/fa/plus';
+import FaAngleLeft from 'react-icons/lib/fa/angle-left';
 
 import { NavLink } from 'react-router-dom';
 
@@ -9,16 +11,19 @@ const DashboardBar = (props) => {
       <div onClick={props.onClickLeftButton} className="btn-left">
         {props.showLeftButton &&
           <span>
+            <FaAngleLeft size={50} />
             <a>{props.leftButtonTitle}</a>
           </span>}
       </div>
-      <h2 className="title" >{props.title}</h2>
-      <div className="btn-green">
+      <h2 className="title" >
+        {props.title}
+      </h2>
+      <NavLink className="btn-green" to={props.navigateTo}>
         <span>
-          <NavLink to={props.navigateTo}>{props.linkTitle}</NavLink>
+          {props.linkTitle}
         </span>
-      </div>
-
+        <FaPlus size={50} />
+      </NavLink>
     </div>
   );
 };

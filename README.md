@@ -14,3 +14,6 @@ https://codepen.io/moroshko/pen/ZQLyNK?editors=0010
 
 
 http://www.kluczdokariery.pl/katalogzawodow/zawod,19,5,doradca-podatkowy.html
+
+
+http://gorangajic.github.io/react-icons/index.html
