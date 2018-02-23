@@ -15,7 +15,7 @@ export const setLoadingCertificates = () => (
 export const getCertificates = (category) => (dispatch, getState) => {
   dispatch(setLoadingCertificates());
   const formatedProfession = formatProfession(category, '', getState);
-  Api.post('api/Profession/GetProposedCertificates', {
+  Api.get('api/Profession/GetProposedCertificates', {
     professionCategoryId: formatedProfession.category.id,
   })
     .then(data => dispatch(setCertificates(data.proposedCertificates)))

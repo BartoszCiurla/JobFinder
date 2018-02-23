@@ -1,9 +1,9 @@
 const Config = {
   development: {
-      'apiUrl': 'http://localhost:5000/'
+    'apiUrl': 'http://localhost:5000/'
   },
-  production:  {
-      'apiUrl': ''
+  production: {
+    'apiUrl': ''
   }
 };
 
@@ -30,23 +30,38 @@ const init = (method) => {
   };
 };
 
+const getQueryString = (params) => {
+  return '?' + Object
+    .keys(params)
+    .map(k => {
+      if (Array.isArray(params[k])) {
+        return params[k]
+          .map(val => `${encodeURIComponent(k)}[]=${encodeURIComponent(val)}`)
+          .join('&');
+      }
+
+      return `${encodeURIComponent(k)}=${encodeURIComponent(params[k])}`;
+    })
+    .join('&');
+};
+
 const getRequestInit = (queryOrBody, method, token) => {
   let requestInit = init(method);
 
   if (method === 'GET') {
-    requestInit.query = JSON.stringify(queryOrBody);
+    requestInit.query = getQueryString(queryOrBody);
   } else {
     requestInit.body = JSON.stringify(queryOrBody);
   }
 
-  token && requestInit.headers.append('Authorization',`Bearer ${token}`);
+  token && requestInit.headers.append('Authorization', `Bearer ${token}`);
 
   return requestInit;
 };
 
 const Api = {
   get: (url, query = {}, token = '') => (
-    fetch(getRequestInfo(url), getRequestInit(query, 'GET', token))
+    fetch(getRequestInfo(url) + getQueryString(query), getRequestInit(query, 'GET', token))
       .then(handleErrors)
       .then(response => response.json())
   ),

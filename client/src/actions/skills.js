@@ -17,7 +17,7 @@ export const getSkills = (category, profession) => (dispatch, getState) => {
   dispatch(setLoadingSkills());
   const formatedProfession = formatProfession(category, profession, getState);
 
-  Api.post('api/Profession/GetProposedSkills', {
+  Api.get('api/Profession/GetProposedSkills', {
     professionCategoryId: formatedProfession.category.id,
     professionId: formatedProfession.profession.id
   })

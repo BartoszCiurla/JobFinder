@@ -7,7 +7,7 @@ const defaultErrorMessage = (error) => console.log(`Occured some errors, do some
 export const getJobApplications = (credentials) => dispatch => {
   dispatch(setLoadingJobApplications());
 
-  return Api.post('api/JobApplication/GetEmployeeJobApplicationList', { userId: credentials.userId }, credentials.token)
+  return Api.get('api/JobApplication/GetEmployeeJobApplicationList', { userId: credentials.userId }, credentials.token)
     .then(data => dispatch(setJobApplications(data.applications)))
     .catch(defaultErrorMessage);
 };

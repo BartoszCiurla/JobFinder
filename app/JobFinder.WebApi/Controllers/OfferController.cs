@@ -10,37 +10,32 @@ using JobFinder.Application.Api.Offer.Queries;
 using JobFinder.WebApi.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
 namespace JobFinder.WebApi.Controllers
 {
-  [Authorize(Roles = "Employer")]
-  [Route("api/[controller]")]
+  [Authorize (Roles = "Employer")]
+  [Route ("api/[controller]")]
   public class OfferController : BaseController
   {
-    public OfferController(ControllerBootstraper controllerBootstraper) : base(controllerBootstraper)
+    public OfferController (ControllerBootstraper controllerBootstraper) : base (controllerBootstraper)
     {
-
     }
-
-    [Route("Create")]
+    [Route ("Create")]
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] CreateOfferCommand command)
+    public async Task<IActionResult> Create ([FromBody] CreateOfferCommand command)
     {
-      return await SendCommand(DispatcherActorsNames.OfferCommandActor, command);
+      return await SendCommand (DispatcherActorsNames.OfferCommandActor, command);
     }
-
-    [Route("GetEmployerOffersList")]
-    [HttpPost]
-    public async Task<IActionResult> GetEmployerOffersList([FromBody]GetEmployerOffersListQuery query)
+    [Route ("GetEmployerOffersList")]
+    [HttpGet]
+    public async Task<IActionResult> GetEmployerOffersList ([FromQuery] GetEmployerOffersListQuery query)
     {
-      return await SendQuery(DispatcherActorsNames.OfferQueryActor, query);
+      return await SendQuery (DispatcherActorsNames.OfferQueryActor, query);
     }
-
-    [Route("GetRecommendedApplicationList")]
-    [HttpPost]
-    public async Task<IActionResult> GetRecommendedApplicationList([FromBody]GetRecommendedApplicationListQuery query)
+    [Route ("GetRecommendedApplicationList")]
+    [HttpGet]
+    public async Task<IActionResult> GetRecommendedApplicationList ([FromQuery] GetRecommendedApplicationListQuery query)
     {
-      return await SendQuery(DispatcherActorsNames.JobApplicationsRecommendationQueryActor, query);
+      return await SendQuery (DispatcherActorsNames.JobApplicationsRecommendationQueryActor, query);
     }
   }
 }

@@ -21,7 +21,14 @@ class Employee extends Component {
 
   renderJobApplications = () => {
     const { jobApplications } = this.props;
-    return !isEmpty(jobApplications) && jobApplications.map(o => <JobApplication key={o.id} jobApplication={o} onClick={this.props.setJobApplication} />);
+    return !isEmpty(jobApplications) && jobApplications.map(o =>
+      (<JobApplication
+        key={o.id}
+        jobApplication={o}
+        onClick={this.props.setJobApplication}
+        onRemove={(id) => console.log(id)}
+      />)
+    );
   }
   render() {
     const { selectedJobApplication } = this.props;

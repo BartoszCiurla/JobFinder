@@ -19,8 +19,31 @@
     margin-bottom: 17px;
     min-width: 150px;
 
+    h1{
+      padding-top: 10px;
+    }
+
+    .close {
+      top: 0;
+      right: 0;
+      position: absolute;
+      display: none;
+    }
+
+    .details {
+      display: none;
+      position: absolute;
+      top: 38%;
+      left: 48%;
+    }
+
     &:hover {
       transform: scale(1.05,1.05);
+      background: rgba(204,209,213,.25);
+
+      .close, .details {
+        display: block;
+      }
     }
   }
 }

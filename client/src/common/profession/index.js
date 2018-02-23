@@ -57,7 +57,7 @@ class Profession extends Component {
           value={profession}
           onChange={onChangeProfession}
           items={this.getProfessionsForCategory(category)}
-          placeholder={Resources.categoryPlaceholder}
+          placeholder={Resources.professionPlaceholder}
         />
       </ValidatedInput>
     ];

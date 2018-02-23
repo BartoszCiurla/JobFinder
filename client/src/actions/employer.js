@@ -7,13 +7,13 @@ const defaultErrorMessage = (error) => console.log(`Occured some errors, do some
 export const getOffers = (credentials) => dispatch => {
   dispatch(setLoadingOffers());
 
-  return Api.post('api/Offer/GetEmployerOffersList', { userId: credentials.userId }, credentials.token)
+  return Api.get('api/Offer/GetEmployerOffersList', { userId: credentials.userId }, credentials.token)
     .then(data => dispatch(setOffers(data.offers)))
     .catch(defaultErrorMessage);
 };
 
-export const getRecommendedApplications = (offerId, credentials) => dispatch => {
-  return Api.post('api/Offer/GetRecommendedApplicationList', { offerId: offerId }, credentials.token);
+export const getRecommendedApplications = (offerId, credentials) => () => {
+  return Api.get('api/Offer/GetRecommendedApplicationList', { offerId: offerId }, credentials.token);
 };
 
 export const setLoadingOffers = () => (

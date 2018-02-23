@@ -10,40 +10,35 @@ using JobFinder.Domain.Common;
 using JobFinder.WebApi.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
 namespace JobFinder.WebApi.Controllers
 {
-  [Route("api/[controller]")]
+  [Route ("api/[controller]")]
   public class ProfessionController : BaseController
   {
-    public ProfessionController(ControllerBootstraper controllerBootstraper) : base(controllerBootstraper)
-    { }
-
-    [Route("GetProfessions")]
+    public ProfessionController (ControllerBootstraper controllerBootstraper) : base (controllerBootstraper) { }
+    [Route ("GetProfessions")]
     [HttpGet]
-    public async Task<IActionResult> GetProfessions()
+    public async Task<IActionResult> GetProfessions ()
     {
-      return await SendQuery(DispatcherActorsNames.ProfessionQueryActor, new GetProfessionsQuery());
+      return await SendQuery (DispatcherActorsNames.ProfessionQueryActor, new GetProfessionsQuery ());
     }
-
-    [Route("GetProposedSkills")]
-    [HttpPost]
-    public async Task<IActionResult> GetProposedSkills([FromBody]GetProposedSkillsQuery query)
-    {
-      return await SendQuery(DispatcherActorsNames.ProfessionQueryActor, query);
-    }
-    [Route("GetLanguages")]
+    [Route ("GetProposedSkills")]
     [HttpGet]
-    public async Task<IActionResult> GetLanguages()
+    public async Task<IActionResult> GetProposedSkills ([FromQuery] GetProposedSkillsQuery query)
     {
-      return await SendQuery(DispatcherActorsNames.ProfessionQueryActor, new GetLanguagesListQuery());
+      return await SendQuery (DispatcherActorsNames.ProfessionQueryActor, query);
     }
-
-    [Route("GetProposedCertificates")]
-    [HttpPost]
-    public async Task<IActionResult> GetProposedCertificates([FromBody]GetProposedCertificatesQuery query)
+    [Route ("GetLanguages")]
+    [HttpGet]
+    public async Task<IActionResult> GetLanguages ()
     {
-      return await SendQuery(DispatcherActorsNames.ProfessionQueryActor, query);
+      return await SendQuery (DispatcherActorsNames.ProfessionQueryActor, new GetLanguagesListQuery ());
+    }
+    [Route ("GetProposedCertificates")]
+    [HttpGet]
+    public async Task<IActionResult> GetProposedCertificates ([FromQuery] GetProposedCertificatesQuery query)
+    {
+      return await SendQuery (DispatcherActorsNames.ProfessionQueryActor, query);
     }
   }
 }
