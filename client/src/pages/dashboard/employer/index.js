@@ -12,7 +12,7 @@ import RecommendedApplications from './components/RecommendedApplications';
 
 import Resources from './resources';
 import Routes from '../../../constants/routes';
-import { getOffers, setOffer, getRecommendedApplications } from '../../../actions/employer';
+import { getOffers, setOffer, getRecommendedApplications, removeOffer } from '../../../actions/employer';
 import { getUserCredentials } from '../../../utils/auth';
 
 class Employer extends Component {
@@ -22,7 +22,13 @@ class Employer extends Component {
 
   renderOffers = () => {
     const { offers } = this.props;
-    return !isEmpty(offers) && offers.map(o => <Offer key={o.id} offer={o} onClick={this.props.setOffer} />);
+    return !isEmpty(offers) && offers.map(o =>
+      (<Offer
+        key={o.id}
+        offer={o}
+        onClick={this.props.setOffer}
+        onRemove={(id) => this.props.removeOffer(getUserCredentials(this.props.cookies), id)}
+      />));
   }
 
   getRecommendedApplications = (offerId) => {
@@ -67,6 +73,7 @@ Employer.propTypes = {
   offers: PropTypes.array,
   getOffers: PropTypes.func.isRequired,
   setOffer: PropTypes.func.isRequired,
+  removeOffer: PropTypes.func.isRequired,
   getRecommendedApplications: PropTypes.func.isRequired,
   cookies: PropTypes.instanceOf(Cookies).isRequired,
   selectedOffer: PropTypes.string,
@@ -81,6 +88,7 @@ const mapStateToProps = ({ employer }) => ({
 const mapDispatchToProps = dispatch => bindActionCreators({
   setOffer,
   getOffers,
+  removeOffer,
   getRecommendedApplications
 }, dispatch);
 

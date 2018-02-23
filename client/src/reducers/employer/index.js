@@ -1,5 +1,6 @@
 import initialState from './initialState';
-import { SET_LOADING_OFFERS, SET_OFFERS, SET_OFFER } from '../../constants/employer';
+import _ from 'lodash';
+import { SET_LOADING_OFFERS, SET_OFFERS, SET_OFFER, REMOVE_OFFER } from '../../constants/employer';
 
 const actions = {
   [SET_LOADING_OFFERS]: (state) => {
@@ -24,6 +25,13 @@ const actions = {
     };
     return { ...data };
   },
+  [REMOVE_OFFER]: (state, action) => {
+    const data = {
+      ...state,
+      offers: _.reject(state.offers, ja => ja.id === action.payload)
+    };
+    return { ...data };
+  }
 };
 
 export default (state = initialState, action) => {

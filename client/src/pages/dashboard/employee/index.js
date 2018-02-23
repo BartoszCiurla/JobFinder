@@ -11,7 +11,7 @@ import JobApplication from './components/JobApplication';
 
 import Routes from '../../../constants/routes';
 import Resources from './resources';
-import { getJobApplications, setJobApplication } from '../../../actions/employee';
+import { getJobApplications, setJobApplication, removeJobApplication } from '../../../actions/employee';
 import { getUserCredentials } from '../../../utils/auth';
 
 class Employee extends Component {
@@ -26,7 +26,7 @@ class Employee extends Component {
         key={o.id}
         jobApplication={o}
         onClick={this.props.setJobApplication}
-        onRemove={(id) => console.log(id)}
+        onRemove={(id) => this.props.removeJobApplication(getUserCredentials(this.props.cookies), id)}
       />)
     );
   }
@@ -63,6 +63,7 @@ Employee.propTypes = {
   jobApplications: PropTypes.array,
   getJobApplications: PropTypes.func.isRequired,
   setJobApplication: PropTypes.func.isRequired,
+  removeJobApplication: PropTypes.func.isRequired,
   cookies: PropTypes.instanceOf(Cookies).isRequired,
   selectedJobApplication: PropTypes.string,
 };
@@ -75,7 +76,8 @@ const mapStateToProps = ({ employee }) => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   setJobApplication,
-  getJobApplications
+  getJobApplications,
+  removeJobApplication
 }, dispatch);
 
 export default withCookies(connect(mapStateToProps, mapDispatchToProps)(Employee));

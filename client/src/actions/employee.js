@@ -12,7 +12,7 @@ export const getJobApplications = (credentials) => dispatch => {
     .catch(defaultErrorMessage);
 };
 
-export const setLoadingJobApplications= () => (
+export const setLoadingJobApplications = () => (
   { type: types.SET_LOADING_JOB_APPLICATIONS }
 );
 
@@ -22,4 +22,14 @@ export const setJobApplications = (applications) => (
 
 export const setJobApplication = (id) => (
   { type: types.SET_JOB_APPLICATION, payload: id }
+);
+
+export const removeJobApplication = (credentials, id) => dispatch => {
+  Api.delete('api/JobApplication/DeleteJobApplication', { jobApplicationId: id }, credentials.token)
+    .then(() => dispatch(_removeJobApplication(id)))
+    .catch(defaultErrorMessage);
+};
+
+const _removeJobApplication = (id) => (
+  { type: types.REMOVE_JOB_APPLICATION, payload: id }
 );

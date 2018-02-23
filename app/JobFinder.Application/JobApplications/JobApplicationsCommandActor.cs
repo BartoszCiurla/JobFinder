@@ -20,6 +20,7 @@ namespace JobFinder.Application.JobApplications
     public JobApplicationsCommandActor(IActorBootstraper actorBootstraper) : base(actorBootstraper)
     {
       ReceiveAsync<CreateJobApplicationCommand>(Handle);
+      ReceiveAsync<DeleteJobApplicationCommand>(Handle);
     }
     private async Task Handle(CreateJobApplicationCommand command)
     {
@@ -66,6 +67,17 @@ namespace JobFinder.Application.JobApplications
         await jobApplicationRepository.SaveChangesAsync();
 
         return application.Id;
+      });
+    }
+
+    private async Task Handle(DeleteJobApplicationCommand command)
+    {
+      await HandleCommand(command, async uow =>
+      {
+        var jobApplicationRepository = uow.GetRepository<JobApplication>();
+
+        await jobApplicationRepository.Remove(command.JobApplicationId);
+        await jobApplicationRepository.SaveChangesAsync();
       });
     }
   }

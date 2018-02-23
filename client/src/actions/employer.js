@@ -27,3 +27,14 @@ export const setOffers = (offers) => (
 export const setOffer = (id) => (
   { type: types.SET_OFFER, payload: id }
 );
+
+export const removeOffer = (credentials, id) => dispatch => {
+  Api.delete('api/Offer/DeleteOffer', { offerId: id }, credentials.token)
+    .then(() => dispatch(_removeOffer(id)))
+    .catch(defaultErrorMessage);
+};
+
+const _removeOffer = (id) => (
+  { type: types.REMOVE_OFFER, payload: id }
+);
+

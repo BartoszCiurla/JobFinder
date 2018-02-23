@@ -9,7 +9,8 @@ namespace JobFinder.Application.Api.Common
     public const string JobApplicationCommandActor = nameof (JobApplicationCommandActor);
     public const string JobApplicationQueryActor = nameof (JobApplicationQueryActor);
     public const string ProfessionQueryActor = nameof (ProfessionQueryActor);
-    public const string JobApplicationsRecommendationQueryActor = nameof (JobApplicationsRecommendationQueryActor);
+    //public const string JobApplicationsRecommendationQueryActor = nameof (JobApplicationsRecommendationQueryActor);
+    public const string Test = nameof(Test);
     public const string OffersRecommendationQueryActor = nameof (OffersRecommendationQueryActor);
   }
 }

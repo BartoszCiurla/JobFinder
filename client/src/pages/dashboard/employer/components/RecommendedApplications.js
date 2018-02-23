@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import Resources from '../resources';
+//import Resources from '../resources';
 
 class RecommendedApplications extends Component {
   componentWillMount() {

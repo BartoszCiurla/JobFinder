@@ -48,7 +48,7 @@ const getQueryString = (params) => {
 const getRequestInit = (queryOrBody, method, token) => {
   let requestInit = init(method);
 
-  if (method === 'GET') {
+  if (['GET', 'Delete'].includes(method)) {
     requestInit.query = getQueryString(queryOrBody);
   } else {
     requestInit.body = JSON.stringify(queryOrBody);
@@ -69,6 +69,9 @@ const Api = {
     fetch(getRequestInfo(url), getRequestInit(body, 'POST', token))
       .then(handleErrors)
       .then(response => response.json())
+  ),
+  delete: (url, query, token) => (
+    fetch(getRequestInfo(url) + getQueryString(query), getRequestInit(query, 'DELETE', token))
   )
 };
 
