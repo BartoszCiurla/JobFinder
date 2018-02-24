@@ -8,7 +8,7 @@ import { isEmpty } from 'lodash';
 import GlobalHeader from '../../../common/globalHeader';
 import DashboardBar from '../../../common/dashboardBar';
 import Offer from './components/Offer';
-import RecommendedApplications from './components/RecommendedApplications';
+import RecommendedJobApplications from './components/RecommendedJobApplications';
 
 import Resources from './resources';
 import Routes from '../../../constants/routes';
@@ -36,7 +36,7 @@ class Employer extends Component {
   }
 
   render() {
-    const { selectedOffer } = this.props;
+    const { selectedOffer, recommendedJobApplications } = this.props;
 
     return (
       <div>
@@ -49,17 +49,18 @@ class Employer extends Component {
           onClickLeftButton={() => this.props.setOffer('')}
           leftButtonTitle={Resources.back}
         />
-        <div className="dashboard-offers">
+        <div className="dashboard-content">
           {selectedOffer ? [
-            <h1 key="offers" className="offers-title">{Resources.recommendedApplications}</h1>,
-            <RecommendedApplications
+            <h1 key="offers" className="content-title">{Resources.recommendedApplications}</h1>,
+            <RecommendedJobApplications
               key="recommendedApplications"
+              recommendedJobApplications={recommendedJobApplications}
               getRecommendedApplications={this.getRecommendedApplications}
               offerId={selectedOffer}
             />
           ]
             : [
-              <h1 key="offers" className="offers-title">{Resources.chooseAJobOffer}</h1>,
+              <h1 key="offers" className="content-title">{Resources.chooseAJobOffer}</h1>,
               this.renderOffers()
             ]}
         </div>
@@ -77,12 +78,14 @@ Employer.propTypes = {
   getRecommendedApplications: PropTypes.func.isRequired,
   cookies: PropTypes.instanceOf(Cookies).isRequired,
   selectedOffer: PropTypes.string,
+  recommendedJobApplications: PropTypes.array.isRequired
 };
 
 const mapStateToProps = ({ employer }) => ({
   isLoadingOffers: employer.isLoadingOffers,
   offers: employer.offers,
-  selectedOffer: employer.selectedOffer
+  selectedOffer: employer.selectedOffer,
+  recommendedJobApplications: employer.recommendedJobApplications
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

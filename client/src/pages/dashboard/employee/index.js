@@ -8,10 +8,11 @@ import { isEmpty } from 'lodash';
 import GlobalHeader from '../../../common/globalHeader';
 import DashboardBar from '../../../common/dashboardBar';
 import JobApplication from './components/JobApplication';
+import RecommendedOffers from './components/RecommendedOffers';
 
 import Routes from '../../../constants/routes';
 import Resources from './resources';
-import { getJobApplications, setJobApplication, removeJobApplication } from '../../../actions/employee';
+import { getJobApplications, setJobApplication, removeJobApplication, getRecommendedOffers } from '../../../actions/employee';
 import { getUserCredentials } from '../../../utils/auth';
 
 class Employee extends Component {
@@ -30,8 +31,13 @@ class Employee extends Component {
       />)
     );
   }
+
+  getRecommendedOffers = (jobApplicationId) => {
+    this.props.getRecommendedOffers(jobApplicationId, getUserCredentials(this.props.cookies));
+  }
+
   render() {
-    const { selectedJobApplication } = this.props;
+    const { selectedJobApplication, recommendedOffers } = this.props;
 
     return (
       <div>
@@ -44,12 +50,18 @@ class Employee extends Component {
           onClickLeftButton={() => this.props.setJobApplication('')}
           leftButtonTitle={Resources.back}
         />
-        <div className="dashboard-offers">
+        <div className="dashboard-content">
           {selectedJobApplication ? [
-            <h1 key="offers" className="offers-title">{Resources.recommendedOffers}</h1>,
+            <h1 key="offers" className="content-title">{Resources.recommendedOffers}</h1>,
+            <RecommendedOffers
+              key="recommendedOffers"
+              recommendedOffers={recommendedOffers}
+              getRecommendedOffers={this.getRecommendedOffers}
+              jobApplicationId={selectedJobApplication}
+            />
           ]
             : [
-              <h1 key="offers" className="offers-title">{Resources.chooseAJobApplication}</h1>,
+              <h1 key="offers" className="content-title">{Resources.chooseAJobApplication}</h1>,
               this.renderJobApplications()
             ]}
         </div>
@@ -63,20 +75,24 @@ Employee.propTypes = {
   jobApplications: PropTypes.array,
   getJobApplications: PropTypes.func.isRequired,
   setJobApplication: PropTypes.func.isRequired,
+  getRecommendedOffers: PropTypes.func.isRequired,
   removeJobApplication: PropTypes.func.isRequired,
   cookies: PropTypes.instanceOf(Cookies).isRequired,
   selectedJobApplication: PropTypes.string,
+  recommendedOffers: PropTypes.array.isRequired
 };
 
 const mapStateToProps = ({ employee }) => ({
   isLoadingJobApplications: employee.isLoadingJobApplications,
   jobApplications: employee.jobApplications,
-  selectedJobApplication: employee.selectedJobApplication
+  selectedJobApplication: employee.selectedJobApplication,
+  recommendedOffers: employee.recommendedOffers
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   setJobApplication,
   getJobApplications,
+  getRecommendedOffers,
   removeJobApplication
 }, dispatch);
 

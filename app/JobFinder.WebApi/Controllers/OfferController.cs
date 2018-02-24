@@ -45,8 +45,7 @@ namespace JobFinder.WebApi.Controllers
     [HttpGet]
     public async Task<IActionResult> GetRecommendedApplicationList([FromQuery] GetRecommendedApplicationListQuery query)
     {
-      return null;
-      //return await SendQuery (DispatcherActorsNames.JobApplicationsRecommendationQueryActor, query);
+      return await SendQuery(DispatcherActorsNames.RecommendationQueryActor, query);
     }
   }
 }

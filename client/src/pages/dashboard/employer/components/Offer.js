@@ -17,7 +17,7 @@ class Offer extends Component {
     } = this.props;
 
     return (
-      <div className="offer">
+      <div className="item">
         <h1>{profession}</h1>
         <h5>{professionCategory}</h5>
         <span className="close">

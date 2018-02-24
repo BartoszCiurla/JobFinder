@@ -5,6 +5,6 @@ namespace JobFinder.Application.Api.Offer.Queries
 {
     public class GetRecommendedOffersListQuery:Query
     {
-        public Guid OfferId { get; set; }
+        public Guid JobApplicationId { get; set; }
     }
 }

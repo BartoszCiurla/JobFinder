@@ -12,6 +12,16 @@ export const getJobApplications = (credentials) => dispatch => {
     .catch(defaultErrorMessage);
 };
 
+export const getRecommendedOffers = (applicationId, credentials) => (dispatch) => {
+  return Api.get('api/JobApplication/GetRecommendedOfferList', { jobApplicationId: applicationId }, credentials.token)
+    .then(data => dispatch(setRecommendedOffers(data.recommendedOffers)))
+    .catch(defaultErrorMessage);
+};
+
+export const setRecommendedOffers = (offers) => (
+  { type: types.SET_RECOMMENDED_OFFERS, payload: offers }
+);
+
 export const setLoadingJobApplications = () => (
   { type: types.SET_LOADING_JOB_APPLICATIONS }
 );

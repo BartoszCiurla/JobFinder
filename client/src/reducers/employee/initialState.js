@@ -1,5 +1,6 @@
 export default {
   isLoadingJobApplications: false,
   jobApplications: [],
-  selectedJobApplication: ''
+  selectedJobApplication: '',
+  recommendedOffers: []
 };

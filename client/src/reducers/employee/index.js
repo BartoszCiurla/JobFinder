@@ -1,6 +1,6 @@
 import initialState from './initialState';
 import _ from 'lodash';
-import { SET_JOB_APPLICATION, SET_JOB_APPLICATIONS, SET_LOADING_JOB_APPLICATIONS, REMOVE_JOB_APPLICATION } from '../../constants/employee';
+import { SET_JOB_APPLICATION, SET_JOB_APPLICATIONS, SET_LOADING_JOB_APPLICATIONS, REMOVE_JOB_APPLICATION, SET_RECOMMENDED_OFFERS } from '../../constants/employee';
 
 const actions = {
   [SET_LOADING_JOB_APPLICATIONS]: (state) => {
@@ -29,6 +29,13 @@ const actions = {
     const data = {
       ...state,
       jobApplications: _.reject(state.jobApplications, ja => ja.id === action.payload)
+    };
+    return { ...data };
+  },
+  [SET_RECOMMENDED_OFFERS]: (state, action) => {
+    const data = {
+      ...state,
+      recommendedOffers: action.payload
     };
     return { ...data };
   }

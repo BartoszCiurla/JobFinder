@@ -12,9 +12,15 @@ export const getOffers = (credentials) => dispatch => {
     .catch(defaultErrorMessage);
 };
 
-export const getRecommendedApplications = (offerId, credentials) => () => {
-  return Api.get('api/Offer/GetRecommendedApplicationList', { offerId: offerId }, credentials.token);
+export const getRecommendedApplications = (offerId, credentials) => (dispatch) => {
+  return Api.get('api/Offer/GetRecommendedApplicationList', { offerId: offerId }, credentials.token)
+    .then(data => dispatch(setRecommendedJobApplications(data.recommendedJobApplications)))
+    .catch(defaultErrorMessage);
 };
+
+export const setRecommendedJobApplications = (jobApplications) => (
+  { type: types.SET_RECOMMENDED_JOB_APPLICATIONS, payload: jobApplications }
+);
 
 export const setLoadingOffers = () => (
   { type: types.SET_LOADING_OFFERS }

@@ -1,15 +1,21 @@
-.dashboard-offers {
+.dashboard-content {
   top:50px;
   display: flex;
   flex-wrap: wrap;
 
-  .offers-title {
+  .content-title {
     text-align: center;
     font-size: 24px;
     width: 100%;
-}
+  }
 
-  .offer {
+  .no-items {
+    text-align: center;
+    width: 100%;
+    padding: 230px;
+  }
+
+  .item {
     border: 1px solid #dbe0e4;
     width: 22.22222%;
     float: left;

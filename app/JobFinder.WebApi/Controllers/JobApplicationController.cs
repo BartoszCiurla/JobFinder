@@ -13,23 +13,19 @@ namespace JobFinder.WebApi.Controllers
   public class JobApplicationController : BaseController
   {
     public JobApplicationController(ControllerBootstraper controllerBootstraper) : base(controllerBootstraper) { }
+
     [Route("Create")]
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateJobApplicationCommand command)
     {
       return await SendCommand(DispatcherActorsNames.JobApplicationCommandActor, command);
     }
+
     [Route("GetEmployeeJobApplicationList")]
     [HttpGet]
     public async Task<IActionResult> GetEmployeeJobApplicationList([FromQuery] GetEmployeeJobApplicationListQuery query)
     {
       return await SendQuery(DispatcherActorsNames.JobApplicationQueryActor, query);
-    }
-    [Route("GetRecommendedOfferList")]
-    [HttpGet]
-    public async Task<IActionResult> GetRecommendedOfferList([FromQuery] GetRecommendedOffersListQuery query)
-    {
-      return await SendQuery(DispatcherActorsNames.OffersRecommendationQueryActor, query);
     }
 
     [Route("DeleteJobApplication")]
@@ -37,6 +33,13 @@ namespace JobFinder.WebApi.Controllers
     public async Task<IActionResult> DeleteJobApplication([FromQuery] DeleteJobApplicationCommand command)
     {
       return await SendCommand(DispatcherActorsNames.JobApplicationCommandActor, command);
+    }
+
+    [Route("GetRecommendedOfferList")]
+    [HttpGet]
+    public async Task<IActionResult> GetRecommendedOfferList([FromQuery] GetRecommendedOffersListQuery query)
+    {
+      return await SendQuery(DispatcherActorsNames.RecommendationQueryActor, query);
     }
   }
 }
