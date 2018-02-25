@@ -14,6 +14,8 @@ class RecommendedJobApplications extends Component {
       (<RecommendedJobApplication
         key={rja.id}
         id={rja.id}
+        name={rja.name}
+        surname={rja.surname}
         profession={rja.profession}
         professionCategory={rja.professionCategory}
         score={rja.score}

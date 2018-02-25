@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Core.Application.Api.Messages;
-
 namespace JobFinder.Application.Api.JobApplications.Queries
 {
   public class GetRecommendedApplicationListResult : QueryResult
@@ -14,16 +13,24 @@ namespace JobFinder.Application.Api.JobApplications.Queries
     public class RecommendedJobApplicationDto
     {
       public Guid Id { get; set; }
+      public string Name { get; set; }
+      public string Surname { get; set; }
       public string Profession { get; set; }
       public string ProfessionCategory { get; set; }
       public double Score { get; set; }
       public RecommendedJobApplicationDto(Guid id,
-               string profession,
-               string professionCategory)
+        string name,
+        string surname,
+        string profession,
+        string professionCategory,
+        double score)
       {
         Id = id;
+        Name = name;
+        Surname = surname;
         Profession = profession;
         ProfessionCategory = professionCategory;
+        Score = score;
       }
     }
   }

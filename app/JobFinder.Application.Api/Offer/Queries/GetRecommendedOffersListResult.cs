@@ -15,11 +15,12 @@ namespace JobFinder.Application.Api.Offer.Queries
 
     public class RecommendedOfferDto
     {
-      public RecommendedOfferDto(Guid id, string profession, string professionCategory)
+      public RecommendedOfferDto(Guid id, string profession, string professionCategory, double score)
       {
         this.Id = id;
         this.Profession = profession;
         this.ProfessionCategory = professionCategory;
+        this.Score = score;
 
       }
       public Guid Id { get; set; }
