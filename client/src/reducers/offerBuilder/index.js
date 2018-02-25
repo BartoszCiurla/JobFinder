@@ -1,8 +1,6 @@
 import initialState from './initialState';
 import _ from 'lodash';
 import {
-  SET_OFFER_CATEGORY,
-  SET_OFFER_PROFESSION,
   SET_OFFER_REQUIRED_SKILL,
   REMOVE_OFFER_REQUIRED_SKILL,
   SET_OFFER_WELCOME_SKILL,
@@ -14,19 +12,16 @@ import {
 } from '../../constants/offerBuilder';
 
 const actions = {
-  [SET_OFFER_CATEGORY]: (state, action) => {
+  [SET_OFFER_REGULAR_FIELD]: (state, { payload: { name, value } }) => {
     const data = {
       ...state,
-      category: action.payload,
-      profession: ''
+      [name]: value
     };
-    return { ...data };
-  },
-  [SET_OFFER_PROFESSION]: (state, action) => {
-    const data = {
-      ...state,
-      profession: action.payload
-    };
+
+    if(name === 'category'){
+      data.profession = '';
+    }
+
     return { ...data };
   },
   [SET_OFFER_REQUIRED_SKILL]: (state, action) => {
@@ -72,14 +67,6 @@ const actions = {
       ...state,
       languages: _.reject(state.languages, s => s.name === name && s.level === level)
     };
-    return { ...data };
-  },
-  [SET_OFFER_REGULAR_FIELD]: (state, { payload: { name, value } }) => {
-    const data = {
-      ...state,
-      [name]: value
-    };
-
     return { ...data };
   },
   [CLEAN_OFFER_DATA]: () => {

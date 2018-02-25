@@ -24,5 +24,6 @@ export default {
   schoolName: 'prosimy o wypełnienie nazwy szkoły, uczelni',
   aboutYou: 'prosimy o wypełnienie pola',
   category: 'prosimy o podanie kategori zawodu',
-  profession: 'prosimy o podanie zawodu'
+  profession: 'prosimy o podanie zawodu',
+  salary: 'prosimy o podanie wynagrodzenia'
 };

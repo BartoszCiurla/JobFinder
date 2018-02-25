@@ -8,6 +8,7 @@ import _ from 'lodash';
 
 import Profession from '../../common/profession';
 import StepWizard from '../../common/stepWizard';
+import Salary from '../../common/salary';
 import Skills from '../../common/skills';
 import Languages from '../../common/languages';
 import Additional from './components/Additional';
@@ -16,10 +17,9 @@ import Routes from '../../constants/routes';
 import Resources from './resources';
 import { validate as validateProfession } from '../../utils/validators/profession';
 import { validate as validateSkill } from '../../utils/validators/skill';
+import { validate as validateSalary } from '../../utils/validators/salary';
 import { getUserCredentials } from '../../utils/auth';
 import {
-  setOfferCategory,
-  setOfferProfession,
   setOfferRequiredSkill,
   removeOfferRequiredSkill,
   setOfferWelcomeSkill,
@@ -57,8 +57,7 @@ class OfferBuilder extends Component {
         <Profession
           category={category}
           profession={profession}
-          onChangeCategory={this.props.setOfferCategory}
-          onChangeProfession={this.props.setOfferProfession}
+          onChange={this.props.setOfferRegularField}
           errors={this.state.errors}
         />,
       title: `${Resources.profession}`,
@@ -143,9 +142,31 @@ class OfferBuilder extends Component {
     };
   }
 
+  salaryStep = () => {
+    const {
+      salary
+    } = this.props;
+
+    return {
+      renderStep:
+        <Salary
+          onChange={this.props.setOfferRegularField}
+          salary={salary}
+          errors={this.state.errors}
+        />,
+      title: `${Resources.salary}`,
+      validate: () => {
+        const validateResult = validateSalary(salary);
+        this.setState({ errors: validateResult.errors });
+        return validateResult.isValid();
+      }
+    };
+  }
+
   render() {
     const steps = [
       this.professionStep(),
+      this.salaryStep(),
       this.requiredSkillsStep(),
       this.welcomeSkillsStep(),
       this.languagesStep(),
@@ -164,8 +185,6 @@ class OfferBuilder extends Component {
 }
 
 OfferBuilder.propTypes = {
-  setOfferCategory: PropTypes.func.isRequired,
-  setOfferProfession: PropTypes.func.isRequired,
   setOfferRequiredSkill: PropTypes.func.isRequired,
   removeOfferRequiredSkill: PropTypes.func.isRequired,
   setOfferWelcomeSkill: PropTypes.func.isRequired,
@@ -175,6 +194,7 @@ OfferBuilder.propTypes = {
   setOfferRegularField: PropTypes.func.isRequired,
   category: PropTypes.string.isRequired,
   profession: PropTypes.string.isRequired,
+  salary: PropTypes.string.isRequired,
   certificatesWillBeAnAdvantage: PropTypes.bool.isRequired,
   requiredSkills: PropTypes.array,
   welcomeSkills: PropTypes.array,
@@ -184,18 +204,17 @@ OfferBuilder.propTypes = {
   createOffer: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({ offerBuilder: { category, profession, requiredSkills, welcomeSkills, languages, certificatesWillBeAnAdvantage } }) => ({
+const mapStateToProps = ({ offerBuilder: { category, profession, salary, requiredSkills, welcomeSkills, languages, certificatesWillBeAnAdvantage } }) => ({
   category,
   profession,
   certificatesWillBeAnAdvantage,
   requiredSkills,
   welcomeSkills,
+  salary,
   languages
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  setOfferCategory,
-  setOfferProfession,
   setOfferRequiredSkill,
   removeOfferRequiredSkill,
   setOfferWelcomeSkill,

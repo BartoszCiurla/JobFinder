@@ -36,18 +36,17 @@ class Profession extends Component {
 
   render() {
     const {
-      onChangeCategory,
-      onChangeProfession,
+      onChange,
       category,
       profession,
       isLoadingProfessions
-     } = this.props;
+    } = this.props;
 
     return !isLoadingProfessions && [
       <ValidatedInput key="category" errorMessage={this.getErrorMessage("category")}>
         <BasicAutocomplete
           value={category}
-          onChange={onChangeCategory}
+          onChange={(value) => onChange({ name: 'category', value })}
           items={this.getCategoryNames()}
           placeholder={Resources.categoryPlaceholder}
         />
@@ -55,7 +54,7 @@ class Profession extends Component {
       category && <ValidatedInput key="profession" errorMessage={this.getErrorMessage("profession")}>
         <BasicAutocomplete
           value={profession}
-          onChange={onChangeProfession}
+          onChange={(value) => onChange({ name: 'profession', value })}
           items={this.getProfessionsForCategory(category)}
           placeholder={Resources.professionPlaceholder}
         />
@@ -75,8 +74,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch);
 
 Profession.propTypes = {
-  onChangeCategory: PropTypes.func.isRequired,
-  onChangeProfession: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   getProfessions: PropTypes.func.isRequired,
   professionCategories: PropTypes.array,
   isLoadingProfessions: PropTypes.bool.isRequired,

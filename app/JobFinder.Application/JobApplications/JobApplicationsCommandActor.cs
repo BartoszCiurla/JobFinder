@@ -8,6 +8,7 @@ using JobFinder.Application.Api.Common;
 using JobFinder.Application.Api.JobApplications.Commands;
 using JobFinder.Application.Services;
 using JobFinder.Domain.Applications.Entities;
+using JobFinder.Domain.Common;
 using JobFinder.Domain.JobApplications.Entities;
 using JobFinder.Domain.Languages.Entities;
 using JobFinder.Domain.Professions.Entities;
@@ -46,6 +47,7 @@ namespace JobFinder.Application.JobApplications
           .Create(applicationId,
             user,
             profession,
+            command.Salary,
             SkillsService.Create<JobApplicationSkill>(
               applicationId,
               profession,

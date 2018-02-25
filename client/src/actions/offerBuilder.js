@@ -18,14 +18,6 @@ export const createOffer = (credentials) => (dispatch, getState) => {
     });
 };
 
-export const setOfferCategory = (offerCategory) => (
-  { type: types.SET_OFFER_CATEGORY, payload: offerCategory }
-);
-
-export const setOfferProfession = (profession) => (
-  { type: types.SET_OFFER_PROFESSION, payload: profession }
-);
-
 export const setOfferRequiredSkill = (skill) => (
   { type: types.SET_OFFER_REQUIRED_SKILL, payload: skill }
 );

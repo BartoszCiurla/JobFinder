@@ -80,6 +80,7 @@ namespace JobFinder.Presentation.Professions
       await HandleQuery(query, (uow) =>
       {
         var professionCategoryReadOnlyRepository = uow.GetRepository<ProfessionCategory>().Query().Where(x => x.Id == query.ProfessionCategoryId);
+
         return new GetProposedCertificatesResult(professionCategoryReadOnlyRepository
           .SelectMany(x => x.ProposedCertificates)
           .GroupBy(x => x.Title)

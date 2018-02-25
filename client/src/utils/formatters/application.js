@@ -4,7 +4,7 @@ import { formatLanguages } from './languages';
 import { formatCertificates } from './certificates';
 
 export const format = (getState) => {
-  const { category, profession, skills, languages, certificates } = getState().applicationBuilder;
+  const { category, salary, profession, skills, languages, certificates } = getState().applicationBuilder;
 
   const formatedProfession = formatProfession(category, profession, getState);
 
@@ -16,6 +16,7 @@ export const format = (getState) => {
 
   return {
     ...formatedProfession,
+    salary,
     skills: formatedSkills,
     languages: formatedLanguages,
     certificates: formatedCertificates

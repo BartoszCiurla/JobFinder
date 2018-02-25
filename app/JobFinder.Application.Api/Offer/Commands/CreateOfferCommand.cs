@@ -10,6 +10,7 @@ namespace JobFinder.Application.Api.Offer.Commands
     public Guid UserId { get; set; }
     public CategoryDto Category { get; set; }
     public ProfessionDto Profession { get; set; }
+    public decimal Salary { get; set; }
     public bool CertificatesWillBeAnAdvantage { get; set; }
     public IEnumerable<SkillDto> RequiredSkills { get; set; }
     public IEnumerable<SkillDto> WelcomeSkills { get; set; }

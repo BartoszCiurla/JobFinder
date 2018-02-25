@@ -5,5 +5,6 @@ export default {
   requiredSkills: 'Wymagane umiejętności',
   welcomeSkills: 'Mile widziane umiejętności',
   languages: "Języki",
+  salary: "Wynagrodzenie",
   additional: "Dodatkowe"
 };

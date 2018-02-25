@@ -18,12 +18,8 @@ export const createApplication = (credentials) => (dispatch, getState) => {
     });
 };
 
-export const setApplicationCategory = (offerCategory) => (
-  { type: types.SET_APPLICATION_CATEGORY, payload: offerCategory }
-);
-
-export const setApplicationProfession = (profession) => (
-  { type: types.SET_APPLICATION_PROFESSION, payload: profession }
+export const setApplicationRegularField = (value) => (
+  { type: types.SET_APPLICATION_REGULAR_FIELD, payload: value }
 );
 
 export const setApplicationSkill = (skill) => (

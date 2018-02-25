@@ -3,7 +3,7 @@ import { formatSkills } from './skills';
 import { formatLanguages } from './languages';
 
 export const format = (getState) => {
-  const { category, profession, requiredSkills, welcomeSkills, languages, certificatesWillBeAnAdvantage } = getState().offerBuilder;
+  const { category, profession, salary, requiredSkills, welcomeSkills, languages, certificatesWillBeAnAdvantage } = getState().offerBuilder;
 
   const formatedProfession = formatProfession(category, profession, getState);
 
@@ -19,6 +19,7 @@ export const format = (getState) => {
     requiredSkills: formatedRequiredSkills,
     welcomeSkills: formatedWelcomeSkills,
     languages: formatedLanguages,
-    certificatesWillBeAnAdvantage
+    certificatesWillBeAnAdvantage,
+    salary
   };
 };

@@ -8,15 +8,17 @@ import { withRouter } from 'react-router-dom';
 import { getUserCredentials } from '../../utils/auth';
 import Resources from './resources';
 import { validate as validateProfession } from '../../utils/validators/profession';
+import { validate as validateSalary } from '../../utils/validators/salary';
 import Profession from '../../common/profession';
 import Skills from '../../common/skills';
 import Languages from '../../common/languages';
 import Certificates from '../../common/certificates';
+import Salary from '../../common/salary';
 import StepWizard from '../../common/stepWizard';
+
 import Routes from '../../constants/routes';
 import {
-  setApplicationCategory,
-  setApplicationProfession,
+  setApplicationRegularField,
   setApplicationSkill,
   removeApplicationSkill,
   createApplication,
@@ -46,8 +48,7 @@ class ApplicationBuilder extends Component {
         <Profession
           category={category}
           profession={profession}
-          onChangeCategory={this.props.setApplicationCategory}
-          onChangeProfession={this.props.setApplicationProfession}
+          onChange={this.props.setApplicationRegularField}
           errors={this.state.errors}
         />,
       title: `${Resources.profession}`,
@@ -115,9 +116,31 @@ class ApplicationBuilder extends Component {
     };
   }
 
+  salaryStep = () => {
+    const {
+      salary
+    } = this.props;
+
+    return {
+      renderStep:
+        <Salary
+          onChange={this.props.setApplicationRegularField}
+          salary={salary}
+          errors={this.state.errors}
+        />,
+      title: `${Resources.salary}`,
+      validate: () => {
+        const validateResult = validateSalary(salary);
+        this.setState({ errors: validateResult.errors });
+        return validateResult.isValid();
+      }
+    };
+  }
+
   render() {
     const steps = [
       this.professionStep(),
+      this.salaryStep(),
       this.skillsStep(),
       this.languagesStep(),
       this.certificatesStep()
@@ -135,10 +158,10 @@ class ApplicationBuilder extends Component {
 }
 
 ApplicationBuilder.propTypes = {
-  setApplicationCategory: PropTypes.func.isRequired,
-  setApplicationProfession: PropTypes.func.isRequired,
+  setApplicationRegularField: PropTypes.func.isRequired,
   category: PropTypes.string.isRequired,
   profession: PropTypes.string.isRequired,
+  salary: PropTypes.string.isRequired,
   cookies: PropTypes.instanceOf(Cookies).isRequired,
   history: PropTypes.object.isRequired,
   createApplication: PropTypes.func.isRequired,
@@ -153,17 +176,17 @@ ApplicationBuilder.propTypes = {
   certificates: PropTypes.array
 };
 
-const mapStateToProps = ({ applicationBuilder: { category, profession, skills, languages, certificates } }) => ({
+const mapStateToProps = ({ applicationBuilder: { category, salary, profession, skills, languages, certificates } }) => ({
   category,
   profession,
   skills,
   languages,
-  certificates
+  certificates,
+  salary
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  setApplicationCategory,
-  setApplicationProfession,
+  setApplicationRegularField,
   setApplicationSkill,
   removeApplicationSkill,
   setApplicationLanguage,

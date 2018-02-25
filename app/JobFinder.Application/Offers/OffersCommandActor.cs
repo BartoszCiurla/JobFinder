@@ -13,6 +13,8 @@ using JobFinder.Domain.Users.Entities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using JobFinder.Domain.Common;
+
 namespace JobFinder.Application.Offers
 {
   [AutostartActor(DispatcherActorsNames.OfferCommandActor)]
@@ -57,6 +59,7 @@ namespace JobFinder.Application.Offers
            user,
            profession,
            command.CertificatesWillBeAnAdvantage,
+           command.Salary,
            LanguageService.Create<OfferLanguage>(
              offerId,
              LanguageService.GetOrCreate(languageRepository, command.Languages),

@@ -1,8 +1,7 @@
 import initialState from './initialState';
 import _ from 'lodash';
 import {
-  SET_APPLICATION_CATEGORY,
-  SET_APPLICATION_PROFESSION,
+  SET_APPLICATION_REGULAR_FIELD,
   SET_APPLICATION_SKILL,
   REMOVE_APPLICATION_SKILL,
   SET_APPLICATION_LANGUAGE,
@@ -13,19 +12,16 @@ import {
 } from '../../constants/applicationBuilder';
 
 const actions = {
-  [SET_APPLICATION_CATEGORY]: (state, action) => {
+  [SET_APPLICATION_REGULAR_FIELD]: (state, { payload: { name, value } }) => {
     const data = {
       ...state,
-      category: action.payload,
-      profession: ''
+      [name]: value,
     };
-    return { ...data };
-  },
-  [SET_APPLICATION_PROFESSION]: (state, action) => {
-    const data = {
-      ...state,
-      profession: action.payload
-    };
+
+    if(name === 'category'){
+      data.profession = '';
+    }
+
     return { ...data };
   },
   [SET_APPLICATION_SKILL]: (state, action) => {
