@@ -13,11 +13,11 @@ namespace JobFinder.Application.Api.Languages.Queries
         public class LanguageDto
         {
             public Guid Id { get; set; }
-            public string Name { get; set; }
-            public LanguageDto(Guid id, string name)
+            public string Description { get; set; }
+            public LanguageDto(Guid id, string description)
             {
                 Id = id;
-                Name = name;
+                Description = description;
             }
         }
     }

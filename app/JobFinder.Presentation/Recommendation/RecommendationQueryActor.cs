@@ -41,12 +41,8 @@ namespace JobFinder.Presentation.Recommendation
             ro.Id,
             ro.Profession.Name,
             ro.Profession.Category.Name,
-            _recommendationService.CalculateRecommendation(ro,jobApplication)))
-            .OrderByDescending(ro => ro.Score)
-            .ThenByDescending(ro => ro.AcceptanceOfSalary));
-            //to jest zle
-            //wywal wynagorodzenie z oferty pracy !
-
+            _recommendationService.CalculateRecommendation(ro, jobApplication)))
+            .OrderByDescending(ro => ro.Score));
       });
     }
     private async Task Handle(GetRecommendedApplicationListQuery query)
@@ -72,8 +68,7 @@ namespace JobFinder.Presentation.Recommendation
             ja.Profession.Category.Name,
             ja.Salary,
             _recommendationService.CalculateRecommendation(offer, ja)))
-            .OrderByDescending(ja => ja.Score)
-            .ThenByDescending(ja => ja.AcceptanceOfSalary));
+            .OrderByDescending(ja => ja.Score));
       });
     }
     private IQueryable<Offer> IncludeOfferRelations(IQueryable<Offer> offerQuery) => offerQuery

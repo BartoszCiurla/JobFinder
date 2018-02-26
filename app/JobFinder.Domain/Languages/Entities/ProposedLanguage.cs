@@ -4,15 +4,15 @@ namespace JobFinder.Domain.Languages.Entities
 {
     public class ProposedLanguage : AggregateRoot
     {
-        public string Name { get; set; }
+        public string Description { get; set; }
         protected ProposedLanguage() : base(Guid.Empty) { }
-        protected ProposedLanguage(Guid id, string name) : base(id)
+        protected ProposedLanguage(Guid id, string description) : base(id)
         {
-            Name = name;
+            Description = description;
         }
-        public static ProposedLanguage Create(Guid id, string name)
+        public static ProposedLanguage Create(Guid id, string description)
         {
-            return new ProposedLanguage(id, name);
+            return new ProposedLanguage(id, description);
         }
     }
 }

@@ -4,14 +4,14 @@ namespace JobFinder.Application.Api.Common.Dtos
     public class LanguageDto
     {
         public Guid Id { get; set; }
-        public string Name { get; set; }
+        public string Description { get; set; }
         public int Level { get; set; }
         public LanguageDto ()
         { }
-        public LanguageDto (Guid id, string name, int level)
+        public LanguageDto (Guid id, string description, int level)
         {
             Id = id;
-            Name = name;
+            Description = description;
             Level = level;
         }
     }

@@ -21,6 +21,13 @@ namespace JobFinder.WebApi.Controllers
       return await SendCommand(DispatcherActorsNames.JobApplicationCommandActor, command);
     }
 
+    [Route("GetEmployeeJobApplicationDetails")]
+    [HttpGet]
+    public async Task<IActionResult> GetEmployeeJobApplicationDetails([FromQuery] GetEmployeeJobApplicationDetailsQuery query)
+    {
+      return await SendQuery(DispatcherActorsNames.JobApplicationQueryActor, query);
+    }
+
     [Route("GetEmployeeJobApplicationList")]
     [HttpGet]
     public async Task<IActionResult> GetEmployeeJobApplicationList([FromQuery] GetEmployeeJobApplicationListQuery query)

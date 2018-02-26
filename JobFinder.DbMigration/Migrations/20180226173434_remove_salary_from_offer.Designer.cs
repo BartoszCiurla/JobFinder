@@ -12,9 +12,10 @@ using System;
 namespace JobFinder.DbMigration.Migrations
 {
     [DbContext(typeof(JobFinderContext))]
-    partial class JobFinderContextModelSnapshot : ModelSnapshot
+    [Migration("20180226173434_remove_salary_from_offer")]
+    partial class remove_salary_from_offer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -104,7 +105,7 @@ namespace JobFinder.DbMigration.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Name");
 
                     b.HasKey("Id");
 

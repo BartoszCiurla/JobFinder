@@ -7,14 +7,12 @@ namespace JobFinder.Application.Api.Offer.Queries
     {
         public string Profession { get; set; }
         public string ProfessionCategory { get; set; }
-        public decimal Salary { get; set; }
         public bool CertificatesWillBeAnAdvantage { get; set; }
         public IEnumerable<SkillDto> RequiredSkills { get; set; }
         public IEnumerable<SkillDto> WelcomeSkills { get; set; }
         public IEnumerable<LanguageDto> Languages { get; set; }
         public GetEmployerOfferDetailsResult (string profession,
             string professionCategory,
-            decimal salary,
             bool certificatesWillBeAnAdvantage,
             IEnumerable<SkillDto> requriedSkills,
             IEnumerable<SkillDto> welcomeSkills,
@@ -22,7 +20,6 @@ namespace JobFinder.Application.Api.Offer.Queries
         {
             Profession = profession;
             ProfessionCategory = professionCategory;
-            Salary = salary;
             CertificatesWillBeAnAdvantage = certificatesWillBeAnAdvantage;
             RequiredSkills = requriedSkills;
             WelcomeSkills = welcomeSkills;

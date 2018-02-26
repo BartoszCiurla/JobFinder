@@ -8,7 +8,6 @@ import _ from 'lodash';
 
 import Profession from '../../common/profession';
 import StepWizard from '../../common/stepWizard';
-import Salary from '../../common/salary';
 import Skills from '../../common/skills';
 import Languages from '../../common/languages';
 import Additional from './components/Additional';
@@ -17,7 +16,6 @@ import Routes from '../../constants/routes';
 import Resources from './resources';
 import { validate as validateProfession } from '../../utils/validators/profession';
 import { validate as validateSkill } from '../../utils/validators/skill';
-import { validate as validateSalary } from '../../utils/validators/salary';
 import { getUserCredentials } from '../../utils/auth';
 import {
   setOfferRequiredSkill,
@@ -142,31 +140,9 @@ class OfferBuilder extends Component {
     };
   }
 
-  salaryStep = () => {
-    const {
-      salary
-    } = this.props;
-
-    return {
-      renderStep:
-        <Salary
-          onChange={this.props.setOfferRegularField}
-          salary={salary}
-          errors={this.state.errors}
-        />,
-      title: `${Resources.salary}`,
-      validate: () => {
-        const validateResult = validateSalary(salary);
-        this.setState({ errors: validateResult.errors });
-        return validateResult.isValid();
-      }
-    };
-  }
-
   render() {
     const steps = [
       this.professionStep(),
-      this.salaryStep(),
       this.requiredSkillsStep(),
       this.welcomeSkillsStep(),
       this.languagesStep(),
@@ -194,7 +170,6 @@ OfferBuilder.propTypes = {
   setOfferRegularField: PropTypes.func.isRequired,
   category: PropTypes.string.isRequired,
   profession: PropTypes.string.isRequired,
-  salary: PropTypes.string.isRequired,
   certificatesWillBeAnAdvantage: PropTypes.bool.isRequired,
   requiredSkills: PropTypes.array,
   welcomeSkills: PropTypes.array,
@@ -204,13 +179,12 @@ OfferBuilder.propTypes = {
   createOffer: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({ offerBuilder: { category, profession, salary, requiredSkills, welcomeSkills, languages, certificatesWillBeAnAdvantage } }) => ({
+const mapStateToProps = ({ offerBuilder: { category, profession, requiredSkills, welcomeSkills, languages, certificatesWillBeAnAdvantage } }) => ({
   category,
   profession,
   certificatesWillBeAnAdvantage,
   requiredSkills,
   welcomeSkills,
-  salary,
   languages
 });
 

@@ -7,5 +7,11 @@ export default {
   offerDetails: 'Szczegóły oferty',
   back: 'Wstecz',
   profession: 'Zawód',
-  salary: 'Wynagrodzenie'
+  salary: 'Wynagrodzenie',
+  requiredSkills: 'Wymagane umiejętności',
+  welcomeSkills: 'Mile widziane umiejętności',
+  languages: "Języki",
+  certificatesAreAnAdvantage: "Certifikaty są zaletą",
+  certificatesAreNotAnAdvantage: "Certifikaty nie są zaletą",
+  noJobApplications: "Brak aplikacji"
 };

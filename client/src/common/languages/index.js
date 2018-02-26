@@ -15,7 +15,7 @@ class Languages extends Component {
   state = {
     errors: [],
     language: {
-      name: '',
+      description: '',
       level: 0
     }
   }
@@ -36,12 +36,12 @@ class Languages extends Component {
 
     if (validateResult.isValid()) {
       this.props.addLanguage(language);
-      this.setState({ language: { name: '', level: 0 } });
+      this.setState({ language: { description: '', level: 0 } });
     }
   }
 
   onChangeName = (value) => {
-    this.setState({ language: { ...this.state.language, name: value } });
+    this.setState({ language: { ...this.state.language, description: value } });
   }
 
   onChangeLevel = ({ target: { value } }) => {
@@ -67,14 +67,14 @@ class Languages extends Component {
     const { addedLanguages } = this.props;
     return (
       <div key="addedLanguages" className="added-items">
-        {addedLanguages.map(({ name, level }, index) =>
+        {addedLanguages.map(({ description, level }, index) =>
           (<div className="added-item" key={index}>
             {Resources.languageName} :
-            <span>{name}</span>
+            <span>{description}</span>
             <br />
             {Resources.levelTitle} :
             <span>{Resources[level]}</span>
-            <button onClick={() => this.props.removeLanguage({ name, level })} className="btn btn-primary full-width">{Resources.remove}</button>
+            <button onClick={() => this.props.removeLanguage({ description, level })} className="btn btn-primary full-width">{Resources.remove}</button>
           </div>))}
       </div>
     );
@@ -83,13 +83,13 @@ class Languages extends Component {
   render() {
     const { isLoadingLanguages, proposedLanguages } = this.props;
     const { language } = this.state;
-    const { name, level } = language;
+    const { description, level } = language;
 
     return !isLoadingLanguages && [
       <div key="language">
         <ValidatedInput errorMessage={this.getErrorMessage('languageName')}>
           <BasicAutocomplete
-            value={name}
+            value={description}
             onChange={this.onChangeName}
             placeholder={Resources.languageName}
             items={proposedLanguages}
@@ -98,7 +98,7 @@ class Languages extends Component {
         <ValidatedInput errorMessage={this.getErrorMessage('languageLevel')}>
           <div className="level-scale" key="scale">
             <p>{Resources.languageLevel}</p>
-            {this.renderLevelScale(6, level)}
+            {this.renderLevelScale(5, level)}
           </div>
         </ValidatedInput>
         <button onClick={this.addItem} className="btn btn-secondary full-width">{Resources.submit}</button>
@@ -119,7 +119,7 @@ Languages.propTypes = {
 
 const mapStateToProps = ({ languages: { isLoadingLanguages, proposedLanguages } }) => ({
   isLoadingLanguages,
-  proposedLanguages: map(proposedLanguages, ps => ps.name)
+  proposedLanguages: map(proposedLanguages, ps => ps.description)
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

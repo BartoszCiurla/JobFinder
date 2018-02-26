@@ -6,7 +6,7 @@ export const formatLanguages = (languages, getState) => {
   const emptyId = '00000000-0000-0000-0000-000000000000';
 
   return _.map(languages, l => {
-    const proposedLanguage = _.find(proposedLanguages, pl => _.trim(pl.name) === _.trim(l.name));
+    const proposedLanguage = _.find(proposedLanguages, pl => _.trim(pl.description) === _.trim(l.description));
 
     if (proposedLanguage) {
       return {
@@ -17,7 +17,7 @@ export const formatLanguages = (languages, getState) => {
 
     return {
       id: emptyId,
-      name: toPascalCase(l.name),
+      name: toPascalCase(l.description),
       level: l.level
     };
   });

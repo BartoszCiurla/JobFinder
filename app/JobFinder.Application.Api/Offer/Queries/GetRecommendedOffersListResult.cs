@@ -6,7 +6,7 @@ namespace JobFinder.Application.Api.Offer.Queries
   public class GetRecommendedOffersListResult : QueryResult
   {
     public IEnumerable<RecommendedOfferDto> RecommendedOffers { get; set; }
-    public GetRecommendedOffersListResult (IEnumerable<RecommendedOfferDto> recommendedOffers)
+    public GetRecommendedOffersListResult(IEnumerable<RecommendedOfferDto> recommendedOffers)
     {
       RecommendedOffers = recommendedOffers;
     }
@@ -16,17 +16,15 @@ namespace JobFinder.Application.Api.Offer.Queries
       public string Profession { get; set; }
       public string ProfessionCategory { get; set; }
       public double Score { get; set; }
-      public bool AcceptanceOfSalary { get; set; }
-      public RecommendedOfferDto (Guid id,
+      public RecommendedOfferDto(Guid id,
         string profession,
         string professionCategory,
-        (double score, bool acceptanceOfSalary) recommendation)
+        double score)
       {
         Id = id;
         Profession = profession;
         ProfessionCategory = professionCategory;
-        Score = recommendation.score;
-        AcceptanceOfSalary = recommendation.acceptanceOfSalary;
+        Score = score;
       }
     }
   }

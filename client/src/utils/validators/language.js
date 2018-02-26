@@ -4,7 +4,7 @@ import _ from 'lodash';
 
 export const validate = (language, addedLanguages) => {
   const result = resultFactory();
-  const tLanguageName = _.trim(language.name);
+  const tLanguageName = _.trim(language.description);
 
   _.isEmpty(tLanguageName) &&
     result.update('languageName', Resources.languageName);
@@ -14,7 +14,7 @@ export const validate = (language, addedLanguages) => {
 
   const uTLanguageName = _.toUpper(tLanguageName);
 
-  _.find(addedLanguages, al => _.toUpper(_.trim(al.name)) === uTLanguageName) &&
+  _.find(addedLanguages, al => _.toUpper(_.trim(al.description)) === uTLanguageName) &&
     result.update('languageName', Resources.repeatedLanguage);
 
   return result;

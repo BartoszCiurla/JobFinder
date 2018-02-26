@@ -62,10 +62,10 @@ const actions = {
 
     return { ...data };
   },
-  [REMOVE_OFFER_LANGUAGE]: (state, { payload: { name, level } }) => {
+  [REMOVE_OFFER_LANGUAGE]: (state, { payload: { description, level } }) => {
     const data = {
       ...state,
-      languages: _.reject(state.languages, s => s.name === name && s.level === level)
+      languages: _.reject(state.languages, s => s.description === description && s.level === level)
     };
     return { ...data };
   },

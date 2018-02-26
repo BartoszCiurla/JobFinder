@@ -59,7 +59,6 @@ namespace JobFinder.Application.Offers
            user,
            profession,
            command.CertificatesWillBeAnAdvantage,
-           command.Salary,
            LanguageService.Create<OfferLanguage>(
              offerId,
              LanguageService.GetOrCreate(languageRepository, command.Languages),

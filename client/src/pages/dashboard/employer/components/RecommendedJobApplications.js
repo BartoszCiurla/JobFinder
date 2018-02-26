@@ -5,6 +5,8 @@ import { some } from 'lodash';
 import RecommendedJobApplication from './RecommendedJobApplication';
 import OfferDetails from './OfferDetails';
 
+import Resources from '../resources';
+
 class RecommendedJobApplications extends Component {
   componentWillMount() {
     this.props.getRecommendedApplications(this.props.offerId);
@@ -39,8 +41,9 @@ class RecommendedJobApplications extends Component {
           {some(recommendedJobApplications) ?
             this.renderRecommendedJobApplications(recommendedJobApplications)
             : <h1 className="no-items">
-              Brak aplikacji
-        </h1>}
+              {Resources.noJobApplications}
+            </h1>
+          }
         </div>
       </div>
     );

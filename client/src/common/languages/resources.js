@@ -4,7 +4,6 @@ export default {
   3: "B1",
   4: "B2",
   5: "C1",
-  6: "C2",
   languageLevel: 'Poziom zaawansowania',
   languageName: 'Język',
   submit: 'Dodaj',

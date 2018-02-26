@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import { some } from 'lodash';
 
 import RecommendedOffer from './RecommendedOffer';
+import JobApplicationDetails from './JobApplicationDetails';
+
+import Resources from '../resources';
 
 class RecommendedOffers extends Component {
   componentWillMount() {
@@ -14,8 +17,6 @@ class RecommendedOffers extends Component {
       (<RecommendedOffer
         key={ro.id}
         id={ro.id}
-        profession={ro.profession}
-        professionCategory={ro.professionCategory}
         score={ro.score}
       />)
     );
@@ -23,13 +24,25 @@ class RecommendedOffers extends Component {
 
   render() {
     const {
-      recommendedOffers
+      recommendedOffers,
+      jobApplicationId
     } = this.props;
-    return some(recommendedOffers) ?
-      this.renderRecommendedOffers(recommendedOffers)
-      : <h1 className="no-items">
-          Brak ofert
-        </h1>;
+
+    return (
+      <div className="dashboard-container">
+        <JobApplicationDetails
+          jobApplicationId={jobApplicationId}
+        />
+        <div className="items">
+          {some(recommendedOffers) ?
+            this.renderRecommendedOffers(recommendedOffers)
+            : <h1 className="no-items">
+              {Resources.noOffers}
+            </h1>
+          }
+        </div>
+      </div>
+    );
   }
 }
 

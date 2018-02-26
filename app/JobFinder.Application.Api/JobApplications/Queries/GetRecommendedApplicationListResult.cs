@@ -19,14 +19,13 @@ namespace JobFinder.Application.Api.JobApplications.Queries
       public string ProfessionCategory { get; set; }
       public decimal RequiredSalary { get; set; }
       public double Score { get; set; }
-      public bool AcceptanceOfSalary { get; set; }
       public RecommendedJobApplicationDto(Guid id,
         string name,
         string surname,
         string profession,
         string professionCategory,
         decimal requiredSalary,
-        (double score, bool acceptanceOfSalary) recommendation)
+        double score)
       {
         Id = id;
         Name = name;
@@ -34,8 +33,7 @@ namespace JobFinder.Application.Api.JobApplications.Queries
         Profession = profession;
         ProfessionCategory = professionCategory;
         RequiredSalary = requiredSalary;
-        Score = recommendation.score;
-        AcceptanceOfSalary = recommendation.acceptanceOfSalary;
+        Score = score;
       }
     }
   }

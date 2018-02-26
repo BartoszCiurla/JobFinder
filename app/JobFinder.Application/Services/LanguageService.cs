@@ -15,10 +15,10 @@ namespace JobFinder.Application.Services
         {
             foreach (var language in languages)
             {
-                var proposedLanguage = repository.Query ().FirstOrDefault (x => x.Name == language.Name);
+                var proposedLanguage = repository.Query ().FirstOrDefault (x => x.Description == language.Description);
                 if (proposedLanguage == null)
                 {
-                    proposedLanguage = ProposedLanguage.Create (Guid.NewGuid (), language.Name);
+                    proposedLanguage = ProposedLanguage.Create (Guid.NewGuid (), language.Description);
                     repository.Add (proposedLanguage);
                 }
                 yield return proposedLanguage;
@@ -28,10 +28,10 @@ namespace JobFinder.Application.Services
         {
             foreach (var language in languages)
             {
-                var proposedLanguage = proposedLanguages.FirstOrDefault (x => x.Name == language.Name);
+                var proposedLanguage = proposedLanguages.FirstOrDefault (x => x.Description == language.Description);
                 if (proposedLanguage == null)
                 {
-                    throw new NotFoundApplicationException ($"Język nie istnieje {language.Name}");
+                    throw new NotFoundApplicationException ($"Język nie istnieje {language.Description}");
                 }
                 yield return (T) typeof (T).GetMethod ("Create").Invoke (null, new object [] { Guid.NewGuid (), foreignKeyId, proposedLanguage, language.Level });
             }
