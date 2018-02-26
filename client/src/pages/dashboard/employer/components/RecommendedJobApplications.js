@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { some } from 'lodash';
 
 import RecommendedJobApplication from './RecommendedJobApplication';
+import OfferDetails from './OfferDetails';
 
 class RecommendedJobApplications extends Component {
   componentWillMount() {
@@ -25,14 +26,24 @@ class RecommendedJobApplications extends Component {
 
   render() {
     const {
-      recommendedJobApplications
+      recommendedJobApplications,
+      offerId
     } = this.props;
 
-    return some(recommendedJobApplications) ?
-      this.renderRecommendedJobApplications(recommendedJobApplications)
-      : <h1 className="no-items">
-          Brak aplikacji
-        </h1>;
+    return (
+      <div className="dashboard-container">
+        <OfferDetails
+          offerId={offerId}
+        />
+        <div className="items">
+          {some(recommendedJobApplications) ?
+            this.renderRecommendedJobApplications(recommendedJobApplications)
+            : <h1 className="no-items">
+              Brak aplikacji
+        </h1>}
+        </div>
+      </div>
+    );
   }
 }
 

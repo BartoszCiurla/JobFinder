@@ -17,20 +17,25 @@ namespace JobFinder.Application.Api.JobApplications.Queries
       public string Surname { get; set; }
       public string Profession { get; set; }
       public string ProfessionCategory { get; set; }
+      public decimal RequiredSalary { get; set; }
       public double Score { get; set; }
+      public bool AcceptanceOfSalary { get; set; }
       public RecommendedJobApplicationDto(Guid id,
         string name,
         string surname,
         string profession,
         string professionCategory,
-        double score)
+        decimal requiredSalary,
+        (double score, bool acceptanceOfSalary) recommendation)
       {
         Id = id;
         Name = name;
         Surname = surname;
         Profession = profession;
         ProfessionCategory = professionCategory;
-        Score = score;
+        RequiredSalary = requiredSalary;
+        Score = recommendation.score;
+        AcceptanceOfSalary = recommendation.acceptanceOfSalary;
       }
     }
   }

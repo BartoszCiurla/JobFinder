@@ -4,5 +4,8 @@ export default {
   refreshTheView: 'Odśwież widok',
   chooseAJobOffer: 'Wybierz ofertę pracy',
   recommendedApplications: 'Rekomendowane aplikacje',
-  back: 'Wstecz'
+  offerDetails: 'Szczegóły oferty',
+  back: 'Wstecz',
+  profession: 'Zawód',
+  salary: 'Wynagrodzenie'
 };

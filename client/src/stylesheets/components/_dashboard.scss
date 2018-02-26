@@ -9,6 +9,16 @@
     width: 100%;
   }
 
+  .dashboard-container {
+    display: flex;
+
+    .offer-details {
+      border: 1px solid #dbe0e4;
+      text-align: center;
+      padding: 15px 10px 15px 10px;;
+    }
+  }
+
   .no-items {
     text-align: center;
     width: 100%;

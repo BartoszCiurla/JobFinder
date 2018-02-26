@@ -1,3 +1,4 @@
+using System;
 using JobFinder.Domain.Applications.Entities;
 using JobFinder.Domain.Offers.Entities;
 
@@ -5,6 +6,6 @@ namespace JobFinder.Presentation.Recommendation.Services
 {
     public interface IRecommendationService
     {
-        double CalculateScore(Offer offer, JobApplication jobApplication);
+        (double score, bool acceptanceOfSalary) CalculateRecommendation(Offer offer, JobApplication jobApplication);
     }
 }
