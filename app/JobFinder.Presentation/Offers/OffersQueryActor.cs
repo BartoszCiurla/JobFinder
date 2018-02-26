@@ -37,6 +37,7 @@ namespace JobFinder.Presentation.Offers
         return new GetEmployerOfferDetailsResult(offer.Profession.Name,
           offer.Profession.Category.Name,
           offer.CertificatesWillBeAnAdvantage,
+          offer.CompanyName,
           offer.RequiredSkills.Select(rs => new SkillDto(rs.Id, rs.Skill.ProfessionId, rs.Skill.Description, rs.Level)),
           offer.WelcomeSkills.Select(ws => new SkillDto(ws.Id, ws.Skill.ProfessionId, ws.Skill.Description, ws.Level)),
           offer.Languages.Select(l => new LanguageDto(l.Id, l.Language.Description, l.Level)));
@@ -51,7 +52,7 @@ namespace JobFinder.Presentation.Offers
           .Query()
           .Where(x => x.User.Id == query.UserId)
           .Select(x =>
-            new GetEmployerOffersListResult.OfferDto(x.Id, x.Profession.Name, x.Profession.Category.Name)));
+            new GetEmployerOffersListResult.OfferDto(x.Id, x.Profession.Name, x.Profession.Category.Name, x.CompanyName)));
       });
     }
   }

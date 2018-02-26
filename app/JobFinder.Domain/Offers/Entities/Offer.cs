@@ -11,6 +11,7 @@ namespace JobFinder.Domain.Offers.Entities
     public User User { get; private set; }
     public Profession Profession { get; private set; }
     public bool CertificatesWillBeAnAdvantage { get; private set; }
+    public string CompanyName { get; private set; }
     public virtual ICollection<OfferLanguage> Languages { get; private set; }
     public virtual ICollection<OfferRequiredSkill> RequiredSkills { get; private set; }
     public virtual ICollection<OfferWelcomeSkill> WelcomeSkills { get; private set; }
@@ -19,6 +20,7 @@ namespace JobFinder.Domain.Offers.Entities
       User user,
       Profession profession,
       bool certificatesWillBeAnAdvantage,
+      string companyName,
       ICollection<OfferLanguage> languages,
       ICollection<OfferRequiredSkill> requiredSkills,
       ICollection<OfferWelcomeSkill> welcomeSkills) : base(id)
@@ -26,6 +28,7 @@ namespace JobFinder.Domain.Offers.Entities
       User = user;
       Profession = profession;
       CertificatesWillBeAnAdvantage = certificatesWillBeAnAdvantage;
+      CompanyName = companyName;
       Languages = languages;
       RequiredSkills = requiredSkills;
       WelcomeSkills = welcomeSkills;
@@ -34,6 +37,7 @@ namespace JobFinder.Domain.Offers.Entities
       User user,
       Profession profession,
       bool certificatesWillBeAnAdvantage,
+      string companyName,
       ICollection<OfferLanguage> languages,
       ICollection<OfferRequiredSkill> requiredSkills,
       ICollection<OfferWelcomeSkill> welcomeSkills)
@@ -42,6 +46,7 @@ namespace JobFinder.Domain.Offers.Entities
         user,
         profession,
         certificatesWillBeAnAdvantage,
+        companyName,
         languages,
         requiredSkills,
         welcomeSkills);

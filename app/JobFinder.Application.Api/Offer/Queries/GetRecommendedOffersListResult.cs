@@ -15,15 +15,18 @@ namespace JobFinder.Application.Api.Offer.Queries
       public Guid Id { get; set; }
       public string Profession { get; set; }
       public string ProfessionCategory { get; set; }
+      public string CompanyName { get; set; }
       public double Score { get; set; }
       public RecommendedOfferDto(Guid id,
         string profession,
         string professionCategory,
+        string companyName,
         double score)
       {
         Id = id;
         Profession = profession;
         ProfessionCategory = professionCategory;
+        CompanyName = companyName;
         Score = score;
       }
     }

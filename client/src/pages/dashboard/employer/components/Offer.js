@@ -8,6 +8,7 @@ class Offer extends Component {
     const {
       offer:
       {
+        companyName,
         profession,
         professionCategory,
         id
@@ -18,7 +19,8 @@ class Offer extends Component {
 
     return (
       <div className="item">
-        <h1>{profession}</h1>
+        <h1>{companyName}</h1>
+        <h4>{profession}</h4>
         <h5>{professionCategory}</h5>
         <span className="close">
           <FaClose onClick={() => onRemove(id)} color={'#f2442e'} size={25} />

@@ -8,12 +8,14 @@ namespace JobFinder.Application.Api.Offer.Queries
         public string Profession { get; set; }
         public string ProfessionCategory { get; set; }
         public bool CertificatesWillBeAnAdvantage { get; set; }
+        public string CompanyName { get; set; }
         public IEnumerable<SkillDto> RequiredSkills { get; set; }
         public IEnumerable<SkillDto> WelcomeSkills { get; set; }
         public IEnumerable<LanguageDto> Languages { get; set; }
         public GetEmployerOfferDetailsResult (string profession,
             string professionCategory,
             bool certificatesWillBeAnAdvantage,
+            string companyName,
             IEnumerable<SkillDto> requriedSkills,
             IEnumerable<SkillDto> welcomeSkills,
             IEnumerable<LanguageDto> languages)
@@ -21,6 +23,7 @@ namespace JobFinder.Application.Api.Offer.Queries
             Profession = profession;
             ProfessionCategory = professionCategory;
             CertificatesWillBeAnAdvantage = certificatesWillBeAnAdvantage;
+            CompanyName = companyName;
             RequiredSkills = requriedSkills;
             WelcomeSkills = welcomeSkills;
             Languages = languages;

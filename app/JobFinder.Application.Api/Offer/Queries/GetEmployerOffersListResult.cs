@@ -14,14 +14,15 @@ namespace JobFinder.Application.Api.Offer.Queries
     }
     public class OfferDto
     {
-      public OfferDto(Guid id, string profession, string professionCategory)
+      public OfferDto(Guid id, string profession, string professionCategory, string companyName)
       {
-        this.Id = id;
-        this.Profession = profession;
-        this.ProfessionCategory = professionCategory;
-
+        Id = id;
+        Profession = profession;
+        ProfessionCategory = professionCategory;
+        CompanyName = companyName;
       }
       public Guid Id { get; set; }
+      public string CompanyName { get; set; }
       public string Profession { get; set; }
       public string ProfessionCategory { get; set; }
 

@@ -16,6 +16,7 @@ import Routes from '../../constants/routes';
 import Resources from './resources';
 import { validate as validateProfession } from '../../utils/validators/profession';
 import { validate as validateSkill } from '../../utils/validators/skill';
+import { validate as validateAdditional } from '../../utils/validators/additional';
 import { getUserCredentials } from '../../utils/auth';
 import {
   setOfferRequiredSkill,
@@ -128,15 +129,24 @@ class OfferBuilder extends Component {
   }
 
   additional = () => {
-    const { certificatesWillBeAnAdvantage } = this.props;
+    const {
+      certificatesWillBeAnAdvantage,
+      companyName
+    } = this.props;
     return {
       renderStep:
         <Additional
           certificatesWillBeAnAdvantage={certificatesWillBeAnAdvantage}
+          companyName={companyName}
           setRegularField={this.props.setOfferRegularField}
+          errors={this.state.errors}
         />,
       title: `${Resources.additional}`,
-      validate: () => true
+      validate: () => {
+        const validateResult = validateAdditional(companyName);
+        this.setState({ errors: validateResult.errors });
+        return validateResult.isValid();
+      }
     };
   }
 
@@ -170,6 +180,7 @@ OfferBuilder.propTypes = {
   setOfferRegularField: PropTypes.func.isRequired,
   category: PropTypes.string.isRequired,
   profession: PropTypes.string.isRequired,
+  companyName: PropTypes.string.isRequired,
   certificatesWillBeAnAdvantage: PropTypes.bool.isRequired,
   requiredSkills: PropTypes.array,
   welcomeSkills: PropTypes.array,
@@ -179,12 +190,13 @@ OfferBuilder.propTypes = {
   createOffer: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({ offerBuilder: { category, profession, requiredSkills, welcomeSkills, languages, certificatesWillBeAnAdvantage } }) => ({
+const mapStateToProps = ({ offerBuilder: { companyName, category, profession, requiredSkills, welcomeSkills, languages, certificatesWillBeAnAdvantage } }) => ({
   category,
   profession,
   certificatesWillBeAnAdvantage,
   requiredSkills,
   welcomeSkills,
+  companyName,
   languages
 });
 

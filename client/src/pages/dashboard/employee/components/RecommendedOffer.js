@@ -4,11 +4,14 @@ import PropTypes from 'prop-types';
 class RecommendedOffer extends Component {
   render() {
     const {
-      score
+      score,
+      companyName,
+      onClick
     } = this.props;
 
     return (
-      <div className="item">
+      <div className="item" onClick={onClick}>
+        <h1>{companyName}</h1>
         <h5>{score}</h5>
       </div>
     );
@@ -18,6 +21,8 @@ class RecommendedOffer extends Component {
 RecommendedOffer.propTypes = {
   id: PropTypes.string.isRequired,
   score: PropTypes.number,
+  companyName: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired
 };
 
 export default RecommendedOffer;

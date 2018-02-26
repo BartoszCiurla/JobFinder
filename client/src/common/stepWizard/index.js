@@ -17,6 +17,10 @@ class StepWizard extends Component {
       this.setState({ currentStep: this.state.currentStep + 1 });
   }
 
+  onSubmit = () => {
+    this.props.steps[this.state.currentStep].validate() && this.props.onSubmit();
+  }
+
   renderLeftButton = (onClick, title) => (
     <div key="leftButton" className="leftButton">
       <button
@@ -47,7 +51,7 @@ class StepWizard extends Component {
       currentStep === 0 ? this.renderLeftButton(this.props.onCancel, Resources.dashboard)
         : this.renderLeftButton(this.back, Resources.back),
       currentStep !== stepsLength ? this.renderRightButton(() => this.next(currentStep), Resources.next)
-        : this.renderRightButton(this.props.onSubmit, Resources.submit)
+        : this.renderRightButton(this.onSubmit, Resources.submit)
     ];
   }
 

@@ -41,6 +41,7 @@ namespace JobFinder.Presentation.Recommendation
             ro.Id,
             ro.Profession.Name,
             ro.Profession.Category.Name,
+            ro.CompanyName,
             _recommendationService.CalculateRecommendation(ro, jobApplication)))
             .OrderByDescending(ro => ro.Score));
       });

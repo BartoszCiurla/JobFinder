@@ -1,15 +1,32 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { some } from 'lodash';
+import { withCookies, Cookies } from 'react-cookie';
+import Modal from 'react-modal';
 
-import RecommendedJobApplication from './RecommendedJobApplication';
 import OfferDetails from './OfferDetails';
+import RecommendedJobApplication from './RecommendedJobApplication';
+import RecommendedJobApplicationDetails from './RecommendedJobApplicationDetails';
 
 import Resources from '../resources';
+import ModalStyles from '../../../../common/modalStyles';
+import { getUserCredentials } from '../../../../utils/auth';
 
 class RecommendedJobApplications extends Component {
+  state = {
+    detailsOpen: false,
+    details: {}
+  }
   componentWillMount() {
     this.props.getRecommendedApplications(this.props.offerId);
+  }
+
+  openDetails = () => {
+    this.setState({ detailsOpen: true });
+  }
+
+  closeDetails = () => {
+    this.setState({ detailsOpen: false });
   }
 
   renderRecommendedJobApplications = (recommendedJobApplications) => {
@@ -19,9 +36,8 @@ class RecommendedJobApplications extends Component {
         id={rja.id}
         name={rja.name}
         surname={rja.surname}
-        profession={rja.profession}
-        professionCategory={rja.professionCategory}
         score={rja.score}
+        onClick={this.openDetails}
       />)
     );
   }
@@ -34,6 +50,14 @@ class RecommendedJobApplications extends Component {
 
     return (
       <div className="dashboard-container">
+        <Modal
+          isOpen={this.state.detailsOpen}
+          onRequestClose={this.closeDetails}
+          style={ModalStyles}>
+          <RecommendedJobApplicationDetails
+            onClose={this.closeDetails}
+          />
+        </Modal>
         <OfferDetails
           offerId={offerId}
         />
@@ -53,7 +77,8 @@ class RecommendedJobApplications extends Component {
 RecommendedJobApplications.propTypes = {
   offerId: PropTypes.string.isRequired,
   getRecommendedApplications: PropTypes.func.isRequired,
-  recommendedJobApplications: PropTypes.array.isRequired
+  recommendedJobApplications: PropTypes.array.isRequired,
+  cookies: PropTypes.instanceOf(Cookies).isRequired,
 };
 
-export default RecommendedJobApplications;
+export default withCookies(RecommendedJobApplications);

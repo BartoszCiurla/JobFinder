@@ -25,12 +25,14 @@ class OfferDetails extends Component {
       requiredSkills,
       welcomeSkills,
       certificatesWillBeAnAdvantage,
+      companyName,
       languages
     } = this.props.offerDetails;
 
     return (
       <div className="offer-details">
         <h1>{Resources.offerDetails}</h1>
+        <h3>{companyName}</h3>
         <p>{Resources.profession}: {profession}</p>
         <PresentationSkillList header={Resources.requiredSkills} items={requiredSkills} />
         <PresentationSkillList header={Resources.welcomeSkills} items={welcomeSkills} />

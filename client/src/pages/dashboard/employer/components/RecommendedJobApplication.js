@@ -4,18 +4,15 @@ import PropTypes from 'prop-types';
 class RecommendedJobApplication extends Component {
   render() {
     const {
-      profession,
-      professionCategory,
       name,
       surname,
-      score
+      score,
+      onClick
     } = this.props;
 
     return (
-      <div className="item">
+      <div className="item" onClick={onClick}>
         <h1>{`${name} ${surname}`}</h1>
-        <h1>{profession}</h1>
-        <h5>{professionCategory}</h5>
         <h5>{score}</h5>
       </div>
     );
@@ -24,11 +21,10 @@ class RecommendedJobApplication extends Component {
 
 RecommendedJobApplication.propTypes = {
   id: PropTypes.string.isRequired,
-  profession: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   surname: PropTypes.string.isRequired,
-  professionCategory: PropTypes.string.isRequired,
   score: PropTypes.number,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default RecommendedJobApplication;
