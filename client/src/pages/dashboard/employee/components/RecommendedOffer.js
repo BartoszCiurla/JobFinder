@@ -4,13 +4,14 @@ import PropTypes from 'prop-types';
 class RecommendedOffer extends Component {
   render() {
     const {
+      id,
       score,
       companyName,
       onClick
     } = this.props;
 
     return (
-      <div className="item" onClick={onClick}>
+      <div className="item" onClick={() => onClick(id)}>
         <h1>{companyName}</h1>
         <h5>{score}</h5>
       </div>

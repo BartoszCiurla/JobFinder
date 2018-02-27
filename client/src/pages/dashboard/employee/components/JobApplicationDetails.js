@@ -29,7 +29,7 @@ class JobApplicationDetails extends Component {
     } = this.props.jobApplicationDetails;
 
     return (
-      <div className="offer-details">
+      <div className="dashboard-details">
         <h1>{Resources.jobApplicationDetails}</h1>
         <p>{Resources.category}: {professionCategory}</p>
         <p>{Resources.profession}: {profession}</p>

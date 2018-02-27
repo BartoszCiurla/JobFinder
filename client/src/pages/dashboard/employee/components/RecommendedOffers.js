@@ -10,25 +10,30 @@ import JobApplicationDetails from './JobApplicationDetails';
 
 import Resources from '../resources';
 import ModalStyles from '../../../../common/modalStyles';
-import { getUserCredentials } from '../../../../utils/auth';
 
 class RecommendedOffers extends Component {
   state = {
     detailsOpen: false,
-    details: {}
+    details: {},
+    selectedOfferId: ''
   }
 
   componentWillMount() {
     this.props.getRecommendedOffers(this.props.jobApplicationId);
   }
 
-  openDetails = () => {
-    //fetch details and asign to state
-    this.setState({ detailsOpen: true });
+  openDetails = (id) => {
+    this.setState({
+      detailsOpen: true,
+      selectedOfferId: id
+    });
   }
 
   closeDetails = () => {
-    this.setState({ detailsOpen: false });
+    this.setState({
+      detailsOpen: false ,
+      selectedOfferId: ''
+    });
   }
 
   renderRecommendedOffers = (recommendedOffers) => {
@@ -57,6 +62,7 @@ class RecommendedOffers extends Component {
           style={ModalStyles}>
           <RecommendedOfferDetails
             onClose={this.closeDetails}
+            id={this.state.selectedOfferId}
           />
         </Modal>
 

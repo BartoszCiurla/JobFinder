@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 class RecommendedJobApplication extends Component {
   render() {
     const {
+      id,
       name,
       surname,
       score,
@@ -11,7 +12,7 @@ class RecommendedJobApplication extends Component {
     } = this.props;
 
     return (
-      <div className="item" onClick={onClick}>
+      <div className="item" onClick={() => onClick(id)}>
         <h1>{`${name} ${surname}`}</h1>
         <h5>{score}</h5>
       </div>

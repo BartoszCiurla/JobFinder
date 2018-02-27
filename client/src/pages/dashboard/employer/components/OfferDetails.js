@@ -30,7 +30,7 @@ class OfferDetails extends Component {
     } = this.props.offerDetails;
 
     return (
-      <div className="offer-details">
+      <div className="dashboard-details">
         <h1>{Resources.offerDetails}</h1>
         <h3>{companyName}</h3>
         <p>{Resources.profession}: {profession}</p>

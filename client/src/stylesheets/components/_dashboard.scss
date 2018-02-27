@@ -11,12 +11,8 @@
 
   .dashboard-container {
     display: flex;
-
-    .offer-details {
-      border: 1px solid #dbe0e4;
-      text-align: center;
-      padding: 15px 10px 15px 10px;;
-    }
+    width: 100%;
+    padding: 13px 42px 42px;
   }
 
   .no-items {

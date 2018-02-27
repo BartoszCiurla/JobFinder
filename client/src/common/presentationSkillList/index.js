@@ -6,16 +6,16 @@ import StarRatings from 'react-star-ratings';
 
 const PresentationSkillList = props => {
   return (
-    some(props.items) && <div>
+    some(props.items) && <div className="skill-list">
       <p>{props.header}</p>
       {props.items.map((i, index) =>
         (<div key={index}>
-          <p>{i.description}</p>
           <StarRatings
-            starDimension={'25px'}
+            starDimension={'15px'}
             rating={i.level}
             numberOfStarts={5}
           />
+          <span>{i.description}</span>
         </div>)
       )}
     </div>

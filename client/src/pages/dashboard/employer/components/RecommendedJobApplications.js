@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { some } from 'lodash';
-import { withCookies, Cookies } from 'react-cookie';
 import Modal from 'react-modal';
 
 import OfferDetails from './OfferDetails';
@@ -10,23 +9,29 @@ import RecommendedJobApplicationDetails from './RecommendedJobApplicationDetails
 
 import Resources from '../resources';
 import ModalStyles from '../../../../common/modalStyles';
-import { getUserCredentials } from '../../../../utils/auth';
 
 class RecommendedJobApplications extends Component {
   state = {
     detailsOpen: false,
-    details: {}
+    selectedJobApplicationId: ''
   }
+
   componentWillMount() {
     this.props.getRecommendedApplications(this.props.offerId);
   }
 
-  openDetails = () => {
-    this.setState({ detailsOpen: true });
+  openDetails = (id) => {
+    this.setState({
+      detailsOpen: true,
+      selectedJobApplicationId: id
+    });
   }
 
   closeDetails = () => {
-    this.setState({ detailsOpen: false });
+    this.setState({
+      detailsOpen: false,
+      selectedJobApplicationId: ''
+    });
   }
 
   renderRecommendedJobApplications = (recommendedJobApplications) => {
@@ -56,6 +61,7 @@ class RecommendedJobApplications extends Component {
           style={ModalStyles}>
           <RecommendedJobApplicationDetails
             onClose={this.closeDetails}
+            id={this.state.selectedJobApplicationId}
           />
         </Modal>
         <OfferDetails
@@ -77,8 +83,7 @@ class RecommendedJobApplications extends Component {
 RecommendedJobApplications.propTypes = {
   offerId: PropTypes.string.isRequired,
   getRecommendedApplications: PropTypes.func.isRequired,
-  recommendedJobApplications: PropTypes.array.isRequired,
-  cookies: PropTypes.instanceOf(Cookies).isRequired,
+  recommendedJobApplications: PropTypes.array.isRequired
 };
 
-export default withCookies(RecommendedJobApplications);
+export default RecommendedJobApplications;
