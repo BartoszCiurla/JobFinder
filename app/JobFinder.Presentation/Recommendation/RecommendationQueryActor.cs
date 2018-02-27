@@ -77,7 +77,8 @@ namespace JobFinder.Presentation.Recommendation
             ja.Skills.Select (s => new SkillDto (s.Id, s.Skill.ProfessionId, s.Skill.Description, s.Level)),
             ja.Languages.Select (l => new LanguageDto (l.Id, l.Language.Description, l.Level)),
             ja.Certificates.Select (c => new CertificateDto (c.Id, c.Certificate.ProfessionCategoryId, c.Certificate.Title))))
-          .OrderByDescending (ja => ja.Score));
+          .OrderByDescending (ja => ja.Score)
+          .ThenBy(ja => ja.RequiredSalary));
       });
     }
     private IQueryable<Offer> IncludeOfferRelations (IQueryable<Offer> offerQuery) => offerQuery

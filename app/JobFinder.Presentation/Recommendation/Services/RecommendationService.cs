@@ -13,22 +13,26 @@ namespace JobFinder.Presentation.Recommendation.Services
         private double WelcomeSkillScore => 0.5;
         private double LanguageScore => 0.4;
         private double CertificationsScore => 0.15;
+
+        private double skillsWeight = 0.5;
+        private double salaryWeight = 0.1;
         public double CalculateRecommendation(Offer offer, JobApplication jobApplication)
         {
             double score = 0;
-            //bool acceptanceOfSalary = true;
             score += CalculateRequiredSkillsScore(offer.RequiredSkills, jobApplication.Skills, RequiredSkillScore);
             score += CalculateWelcomeSkillsScore(offer.WelcomeSkills, jobApplication.Skills, WelcomeSkillScore);
             score += CalculateLanguageScore(offer.Languages, jobApplication.Languages, LanguageScore);
             score += CalculateCertificationsScore(offer.CertificatesWillBeAnAdvantage, offer.Profession.Category.Id, jobApplication.Certificates, CertificationsScore);
-
             return score;
+            //return ((skillsWeight * score) + (salaryWeight * (double)jobApplication.Salary)) / (skillsWeight + salaryWeight);
         }
         private double CalculateScoreByLevel(double requiredLevel, double level, double baseScore)
         {
-            //todo !
+            if (requiredLevel == level) return baseScore;
 
-            return requiredLevel == level || requiredLevel < level? baseScore: (level / ScoreRange) * baseScore;
+            if (requiredLevel > level) return (level / ScoreRange) * baseScore;
+
+            return baseScore + ((level - requiredLevel) * (baseScore / ScoreRange));
         }
         private double CalculateRequiredSkillsScore(ICollection<OfferRequiredSkill> requiredSkills,
             ICollection<JobApplicationSkill> skills,
@@ -40,8 +44,7 @@ namespace JobFinder.Presentation.Recommendation.Services
                 var skill = skills.FirstOrDefault(s => s.Skill.Id == offerRequiredSkill.Skill.Id);
                 if (skill == null) return 0;
                 return CalculateScoreByLevel(offerRequiredSkill.Level, skill.Level, baseScore);
-            }).Sum();
-            //licz tu scrednia for all
+            }).Average();
         }
         private double CalculateWelcomeSkillsScore(ICollection<OfferWelcomeSkill> welcomeSkills,
             ICollection<JobApplicationSkill> skills,
@@ -53,7 +56,7 @@ namespace JobFinder.Presentation.Recommendation.Services
                 var skill = skills.FirstOrDefault(s => s.Skill.Id == offerWelcomeSkill.Skill.Id);
                 if (skill == null) return 0;
                 return CalculateScoreByLevel(offerWelcomeSkill.Level, skill.Level, baseScore);
-            }).Sum();
+            }).Average();
         }
         private double CalculateLanguageScore(ICollection<OfferLanguage> requiredLanguages,
             ICollection<JobApplicationLanguage> languages,
@@ -65,7 +68,7 @@ namespace JobFinder.Presentation.Recommendation.Services
                 var language = languages.FirstOrDefault(l => l.Language.Id == requiredLanguage.Language.Id);
                 if (language == null) return 0;
                 return CalculateScoreByLevel(requiredLanguage.Level, language.Level, baseScore);
-            }).Sum();
+            }).Average();
         }
         private double CalculateCertificationsScore(bool certificatesWillBeAnAdvantage,
             Guid professionCategoryId,
@@ -73,10 +76,6 @@ namespace JobFinder.Presentation.Recommendation.Services
             double baseScore)
         {
             return !certificatesWillBeAnAdvantage? 0 : certificates.Any(c => c.Certificate.ProfessionCategoryId == professionCategoryId) ? baseScore : 0;
-        }
-        private bool CheckSalaryAcceptance(decimal offerSalary, decimal jobApplicationSalary)
-        {
-            return offerSalary >= jobApplicationSalary;
         }
     }
 }
