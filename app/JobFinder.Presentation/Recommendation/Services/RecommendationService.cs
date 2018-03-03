@@ -14,8 +14,8 @@ namespace JobFinder.Presentation.Recommendation.Services
         private double LanguageScore => 0.4;
         private double CertificationsScore => 0.15;
 
-        private double skillsWeight = 0.5;
-        private double salaryWeight = 0.1;
+        private double skillsWeight = 10;
+        private double salaryWeight = 2;
         public double CalculateRecommendation(Offer offer, JobApplication jobApplication)
         {
             double score = 0;
@@ -23,8 +23,20 @@ namespace JobFinder.Presentation.Recommendation.Services
             score += CalculateWelcomeSkillsScore(offer.WelcomeSkills, jobApplication.Skills, WelcomeSkillScore);
             score += CalculateLanguageScore(offer.Languages, jobApplication.Languages, LanguageScore);
             score += CalculateCertificationsScore(offer.CertificatesWillBeAnAdvantage, offer.Profession.Category.Id, jobApplication.Certificates, CertificationsScore);
-            return score;
-            //return ((skillsWeight * score) + (salaryWeight * (double)jobApplication.Salary)) / (skillsWeight + salaryWeight);
+
+            double result = ((skillsWeight * score) + (salaryWeight * (-GetSalaryValueReducedByOrderOfMagnitude(score,(double)jobApplication.Salary)))) /
+                (skillsWeight + salaryWeight);
+
+            return result;
+        }
+
+        private double GetSalaryValueReducedByOrderOfMagnitude(double score, double salary)
+        {
+            int magnitudeOfScore = (int)(Math.Log10(Math.Max(Math.Abs(score), 0.5)) + 1);
+            int magnitudeOfSalary = (int)(Math.Log10(Math.Max(Math.Abs(salary), 0.5)) + 1);
+            string sSalary = salary.ToString();
+
+            return Convert.ToDouble(sSalary.Insert(sSalary.Length - (magnitudeOfSalary - magnitudeOfScore), ","));
         }
         private double CalculateScoreByLevel(double requiredLevel, double level, double baseScore)
         {
