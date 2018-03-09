@@ -11,9 +11,9 @@ class RecommendedOffer extends Component {
     } = this.props;
 
     return (
-      <div className="item" onClick={() => onClick(id)}>
-        <h1>{companyName}</h1>
-        <h5>{score}</h5>
+      <div className="recommended-items-item" onClick={() => onClick(id)}>
+        <div className="recommended-items-item-identity">{companyName}</div>
+        <div className="recommended-items-item-score">{score.toFixed(3)}</div>
       </div>
     );
   }

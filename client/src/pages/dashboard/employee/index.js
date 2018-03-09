@@ -50,21 +50,22 @@ class Employee extends Component {
           onClickLeftButton={() => this.props.setJobApplication('')}
           leftButtonTitle={Resources.back}
         />
-        <div className="dashboard-content">
-          {selectedJobApplication ? [
-            <h1 key="offers" className="content-title">{Resources.recommendedOffers}</h1>,
+        {selectedJobApplication ? [
+          <h1 key="offers" className="content-title">{Resources.recommendedOffers}</h1>,
+          <div key="recommendedOffers" className="dashboard-content">
             <RecommendedOffers
-              key="recommendedOffers"
               recommendedOffers={recommendedOffers}
               getRecommendedOffers={this.getRecommendedOffers}
               jobApplicationId={selectedJobApplication}
             />
-          ]
-            : [
-              <h1 key="offers" className="content-title">{Resources.chooseAJobApplication}</h1>,
-              this.renderJobApplications()
-            ]}
-        </div>
+          </div>
+        ]
+          : [
+            <h1 key="application" className="content-title">{Resources.chooseAJobApplication}</h1>,
+            <div className="dashboard-content-items" key="jobApplications">
+              {this.renderJobApplications()}
+            </div>
+          ]}
       </div>
     );
   }

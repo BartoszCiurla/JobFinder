@@ -4,32 +4,41 @@ import { connect } from 'react-redux';
 
 import PresentationSkillList from '../../../../common/presentationSkillList';
 
+import Resources from '../resources';
+
 class RecommendedOfferDetails extends Component {
   render() {
     const {
       companyName,
-      certificatesWillBeAnAdvantage,
       requiredSkills,
       welcomeSkills,
-      languages
+      languages,
+      certificatesWillBeAnAdvantage
     } = this.props.details;
 
     return (
-      <div>
-        <p>{companyName}</p>
-        <p>{certificatesWillBeAnAdvantage}</p>
-        <PresentationSkillList
-          header={"Wymagane umiejętności"}
-          items={requiredSkills}
-        />
-        <PresentationSkillList
-          header={"Mile widziane umiejętnośći"}
-          items={welcomeSkills}
-        />
-        <PresentationSkillList
-          header={"Języki"}
-          items={languages}
-        />
+      <div className="recommendation-details">
+        <p className="recommendation-details-company-name">{companyName}</p>
+        <div className="recommendation-details-skills">
+          <PresentationSkillList
+            header={"Wymagane"}
+            items={requiredSkills}
+            starRatedColor={"#f2442e"}
+          />
+          <PresentationSkillList
+            header={"Mile widziane"}
+            items={welcomeSkills}
+            starRatedColor={"#28bd00"}
+          />
+          <PresentationSkillList
+            header={"Języki"}
+            items={languages}
+            starRatedColor={"purple"}
+          />
+        </div>
+        <p className="recommendation-details-certificates">
+          {certificatesWillBeAnAdvantage ? Resources.certificatesAreAnAdvantage : Resources.certificatesAreNotAnAdvantage}
+        </p>
       </div>
     );
   }

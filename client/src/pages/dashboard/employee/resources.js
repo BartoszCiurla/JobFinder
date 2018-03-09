@@ -10,5 +10,7 @@ export default {
  certificates: "Certyfikaty",
  profession: 'Zawód',
  category: 'Kategoria',
- back: 'Wstecz'
+ back: 'Wstecz',
+ certificatesAreAnAdvantage: "Certifikaty są zaletą",
+ certificatesAreNotAnAdvantage: "Certifikaty nie są zaletą",
 };

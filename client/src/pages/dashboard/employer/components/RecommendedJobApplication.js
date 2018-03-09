@@ -12,9 +12,10 @@ class RecommendedJobApplication extends Component {
     } = this.props;
 
     return (
-      <div className="item" onClick={() => onClick(id)}>
-        <h1>{`${name} ${surname}`}</h1>
-        <h5>{score}</h5>
+      <div className="recommended-items-item" onClick={() => onClick(id)}>
+        <div className="recommended-items-item-identity">{name}</div>
+        <div className="recommended-items-item-identity">{surname}</div>
+        <div className="recommended-items-item-score">{score.toFixed(3)}</div>
       </div>
     );
   }

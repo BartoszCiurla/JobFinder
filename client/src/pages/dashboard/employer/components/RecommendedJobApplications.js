@@ -67,7 +67,7 @@ class RecommendedJobApplications extends Component {
         <OfferDetails
           offerId={offerId}
         />
-        <div className="items">
+        <div className="recommended-items">
           {some(recommendedJobApplications) ?
             this.renderRecommendedJobApplications(recommendedJobApplications)
             : <h1 className="no-items">

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { map } from 'lodash';
+import { map, some } from 'lodash';
 
 import PresentationSkillList from '../../../../common/presentationSkillList';
 
@@ -17,21 +17,27 @@ class RecommendedJobApplicationDetails extends Component {
     } = this.props.details;
     return (
       <div className="recommendation-details">
-        <p>{name}</p>
-        <p>{surname}</p>
-        <p>{requiredSalary}</p>
-        <div className="job-application-details-container">
+        <p className="recommendation-details-identity">{name}</p>
+        <p className="recommendation-details-identity">{surname}</p>
+        <p className="recommendation-details-salary">Wynagrodzenie: {requiredSalary} zł</p>
+        <div className="recommendation-details-skills">
           <PresentationSkillList
             header={"Umiejętnośći"}
             items={skills}
+            starRatedColor={"#28bd00"}
           />
           <PresentationSkillList
             header={"Języki"}
             items={languages}
+            starRatedColor={"purple"}
           />
-          <p>Certyfikaty</p>
-          {map(certificates, c => <p>{c.description}</p>)}
         </div>
+        {some(certificates) &&
+            <div className="recommendation-details-certificates-list">
+              <h1>Certyfikaty</h1>
+              {map(certificates, c => <p className="certificate">{c.title}</p>)}
+            </div>
+          }
       </div>
     );
   }

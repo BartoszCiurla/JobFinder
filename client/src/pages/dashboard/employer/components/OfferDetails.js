@@ -31,13 +31,14 @@ class OfferDetails extends Component {
 
     return (
       <div className="dashboard-details">
-        <h1>{Resources.offerDetails}</h1>
-        <h3>{companyName}</h3>
-        <p>{Resources.profession}: {profession}</p>
-        <PresentationSkillList header={Resources.requiredSkills} items={requiredSkills} />
-        <PresentationSkillList header={Resources.welcomeSkills} items={welcomeSkills} />
-        <PresentationSkillList header={Resources.languages} items={languages} />
-        {certificatesWillBeAnAdvantage ? Resources.certificatesAreAnAdvantage : Resources.certificatesAreNotAnAdvantage}
+        <p className="company-name">{companyName}</p>
+        <p className="profession">{profession}</p>
+        <PresentationSkillList header={Resources.requiredSkills} items={requiredSkills} starRatedColor={"#f2442e"} />
+        <PresentationSkillList header={Resources.welcomeSkills} items={welcomeSkills} starRatedColor={"#28bd00"} />
+        <PresentationSkillList header={Resources.languages} items={languages} starRatedColor={"purple"} />
+        <p className="certificates">
+          {certificatesWillBeAnAdvantage ? Resources.certificatesAreAnAdvantage : Resources.certificatesAreNotAnAdvantage}
+        </p>
       </div>
     );
   }

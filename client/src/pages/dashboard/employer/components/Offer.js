@@ -18,7 +18,7 @@ class Offer extends Component {
     } = this.props;
 
     return (
-      <div className="item">
+      <div className="dashboard-content-items-item">
         <h1>{companyName}</h1>
         <h4>{profession}</h4>
         <h5>{professionCategory}</h5>

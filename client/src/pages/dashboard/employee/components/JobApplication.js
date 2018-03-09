@@ -17,7 +17,7 @@ class JobApplication extends Component {
     } = this.props;
 
     return (
-      <div className="item">
+      <div className="dashboard-content-items-item">
         <h1>{profession}</h1>
         <h5>{professionCategory}</h5>
         <span className="close">

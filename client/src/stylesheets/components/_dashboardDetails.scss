@@ -1,8 +1,88 @@
 .dashboard-details {
-  width: 240px;
+  min-width: 300px;
+  max-width: 300px;
   border: 1px solid #dbe0e4;
   text-align: center;
   padding: 15px 10px 15px 10px;
+
+  .company-name {
+    font-weight: 800;
+    font-size: 35px;
+  }
+
+  .profession {
+    color:#57626b;
+    font-size: 20px;
+  }
+
+  .certificates {
+    margin-top: 20px;
+    text-align: left;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .certificates-list {
+    margin-top: 20px;
+    text-align: left;
+
+    h1{
+      color: black;
+    }
+
+    .certificate {
+      margin-bottom: 20px;
+    }
+  }
+
+  .dashboard-details-application-details {
+    text-align: left;
+    .ddad-category {
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .ddad-profession {
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+  }
+
+  table {
+    width: 100%;
+
+    th, td {
+      padding-top: 20px;
+    }
+
+    thead {
+      text-align: left;
+      text-transform: uppercase;
+      font-weight: 600;
+
+      th {
+        word-wrap: break-word;
+        color:black;
+        justify-content: center;
+      }
+    }
+
+    tbody {
+      text-align: left;
+
+      td {
+        word-wrap: break-word;
+      }
+
+      td:first-child {
+        width: 52%;
+      }
+
+      td:nth-child(2) {
+        width: 48%;
+      }
+    }
+  }
 
   .skill-list {
     text-align: left;

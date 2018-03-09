@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withCookies, Cookies } from 'react-cookie';
 import Resources from '../resources';
+import _ from 'lodash';
 
 import PresentationSkillList from '../../../../common/presentationSkillList';
 
@@ -25,17 +26,25 @@ class JobApplicationDetails extends Component {
       professionCategory,
       skills,
       languages,
-      certificates
+      certifcates
     } = this.props.jobApplicationDetails;
+    console.log(certifcates);
 
     return (
       <div className="dashboard-details">
         <h1>{Resources.jobApplicationDetails}</h1>
-        <p>{Resources.category}: {professionCategory}</p>
-        <p>{Resources.profession}: {profession}</p>
-        <PresentationSkillList header={Resources.skills} items={skills} />
-        <PresentationSkillList header={Resources.languages} items={languages} />
-        <PresentationSkillList header={Resources.certificates} items={certificates} />
+        <div className="dashboard-details-application-details">
+          <p><span className="ddad-category">{Resources.category}:</span> {professionCategory}</p>
+          <p><span className="ddad-profession">{Resources.profession}:</span> {profession}</p>
+        </div>
+        <PresentationSkillList header={Resources.skills} items={skills} starRatedColor={"#28bd00"} />
+        <PresentationSkillList header={Resources.languages} items={languages} starRatedColor={"purple"} />
+        {_.some(certifcates) &&
+          <div className="certificates-list">
+            <h1>{Resources.certificates}</h1>
+            {_.map(certifcates, (c, index) => <p className="certificate" key={index}>{c.title}</p>)}
+          </div>
+        }
       </div>
     );
   }

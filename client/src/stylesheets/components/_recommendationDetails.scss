@@ -1,6 +1,81 @@
 .recommendation-details {
+  min-width: 300px;
+  max-width: 300px;
 
-  .job-application-details-container {
-    display: flex;
+  &-company-name {
+    text-align: center;
+    font-weight: 800;
+    font-size: 35px;
+  }
+
+  &-identity {
+    text-align: center;
+    font-weight: 800;
+    font-size: 30px;
+  }
+
+  &-salary {
+    margin-top: 15px;
+    text-align: left;
+    font-weight: 800;
+    font-size: 20px;
+  }
+
+  &-certificates {
+    margin-top: 20px;
+    text-align: left;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  &-certificates-list {
+    margin-top: 20px;
+    text-align: left;
+
+    h1{
+      color: black;
+    }
+
+    .certificate {
+      margin-bottom: 20px;
+    }
+  }
+
+  &-skills {
+    table {
+      width: 100%;
+
+      th, td {
+        padding-top: 20px;
+      }
+
+      thead {
+        text-align: left;
+        text-transform: uppercase;
+        font-weight: 600;
+
+        th {
+          word-wrap: break-word;
+          color:black;
+          justify-content: center;
+        }
+      }
+
+      tbody {
+        text-align: left;
+
+        td {
+          word-wrap: break-word;
+        }
+
+        td:first-child {
+          width: 50%;
+        }
+
+        td:nth-child(2) {
+          width: 50%;
+        }
+      }
+    }
   }
 }
