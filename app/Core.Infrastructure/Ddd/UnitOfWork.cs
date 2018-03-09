@@ -6,19 +6,13 @@ namespace Core.Infrastructure.Ddd
   public class UnitOfWork : IUnitOfWork
   {
     private readonly DbContext _context;
-    public UnitOfWork (DbContext context)
+    public UnitOfWork(DbContext context)
     {
       _context = context;
     }
-    public IRepository<TAggregate> GetRepository<TAggregate> ()
-    where TAggregate : AggregateRoot
-    {
-      var efRepository = new EfRepository<TAggregate> (_context);
-      return new Repository<TAggregate> (efRepository);
-    }
-    public void Dispose ()
-    {
-      _context?.Dispose ();
-    }
+    public IRepository<TAggregate> GetRepository<TAggregate>() where TAggregate : AggregateRoot
+      => new Repository<TAggregate>(new EfRepository<TAggregate>(_context));
+
+    public void Dispose() => _context?.Dispose();
   }
 }

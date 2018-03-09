@@ -17,8 +17,6 @@ namespace JobFinder.Domain.Offers.Entities
       Level = level;
     }
     public static OfferLanguage Create(Guid id, Guid offerId, ProposedLanguage language, int level)
-    {
-      return new OfferLanguage(id, offerId, language, level);
-    }
+      => new OfferLanguage(id, offerId, language, level);
   }
 }

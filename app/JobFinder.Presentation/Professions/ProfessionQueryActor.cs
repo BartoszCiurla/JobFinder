@@ -30,14 +30,14 @@ namespace JobFinder.Presentation.Professions
         var professionReadOnlyRepository = uow.GetRepository<Profession>();
 
         return new GetProfessionsResult(professionReadOnlyRepository
-            .Query()
-            .GroupBy(p => p.Category.Name,
-                p => p, (categoryId, profession) =>
-                    new GetProfessionsResult.ProfessionCategoryDto(
-                        profession.FirstOrDefault().Category.Id,
-                        categoryId,
-                        profession.Select(x =>
-                            new GetProfessionsResult.ProfessionDto(x.Id, x.Name)))));
+          .Query()
+          .GroupBy(p => p.Category.Name,
+            p => p, (categoryId, profession) =>
+            new GetProfessionsResult.ProfessionCategoryDto(
+              profession.FirstOrDefault().Category.Id,
+              categoryId,
+              profession.Select(x =>
+                new GetProfessionsResult.ProfessionDto(x.Id, x.Name)))));
       });
     }
 
@@ -70,8 +70,8 @@ namespace JobFinder.Presentation.Professions
       await HandleQuery(query, (uow) =>
       {
         return new GetLanguagesListResult(uow.GetRepository<ProposedLanguage>()
-                  .Query()
-                  .Select(x => new GetLanguagesListResult.LanguageDto(x.Id, x.Description)));
+          .Query()
+          .Select(x => new GetLanguagesListResult.LanguageDto(x.Id, x.Description)));
       });
     }
 
@@ -79,13 +79,18 @@ namespace JobFinder.Presentation.Professions
     {
       await HandleQuery(query, (uow) =>
       {
-        var professionCategoryReadOnlyRepository = uow.GetRepository<ProfessionCategory>().Query().Where(x => x.Id == query.ProfessionCategoryId);
+        var professionCategoryReadOnlyRepository = uow.GetRepository<ProfessionCategory>()
+          .Query()
+          .Where(x => x.Id == query.ProfessionCategoryId);
 
         return new GetProposedCertificatesResult(professionCategoryReadOnlyRepository
           .SelectMany(x => x.ProposedCertificates)
           .GroupBy(x => x.Title)
           .Select(x => x.First())
-          .Select(p => new GetProposedCertificatesResult.ProposedCertificateDto(p.Id, p.ProfessionCategoryId, p.Title)));
+          .Select(p =>
+            new GetProposedCertificatesResult.ProposedCertificateDto(p.Id,
+              p.ProfessionCategoryId,
+              p.Title)));
       });
     }
 

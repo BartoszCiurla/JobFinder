@@ -5,12 +5,9 @@ namespace JobFinder.Domain.Professions.Entities
 {
   public class ProposedSkill : Entity
   {
-    public Guid ProfessionId { get; set; }
-    public string Description { get; set; }
-    protected ProposedSkill() : base(Guid.Empty)
-    {
-
-    }
+    public Guid ProfessionId { get; private set; }
+    public string Description { get; private set; }
+    protected ProposedSkill() : base(Guid.Empty){}
     protected ProposedSkill(Guid id, Guid professionId, string description) : base(id)
     {
       Description = description;
@@ -18,8 +15,6 @@ namespace JobFinder.Domain.Professions.Entities
     }
 
     public static ProposedSkill Create(Guid id, Guid professionId, string description)
-    {
-      return new ProposedSkill(id, professionId, description);
-    }
+      => new ProposedSkill(id, professionId, description);
   }
 }

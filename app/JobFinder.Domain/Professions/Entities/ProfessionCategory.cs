@@ -6,31 +6,23 @@ namespace JobFinder.Domain.Professions.Entities
 {
   public class ProfessionCategory : AggregateRoot
   {
-    public string Name { get; set; }
-    public virtual ICollection<ProposedCertificate> ProposedCertificates { get; set; }
-    protected ProfessionCategory() : base(Guid.Empty)
-    {
-
-    }
+    public string Name { get; private set; }
+    public virtual ICollection<ProposedCertificate> ProposedCertificates { get; private set; }
+    protected ProfessionCategory() : base(Guid.Empty) { }
 
     protected ProfessionCategory(Guid id,
-                                string name,
-                                ICollection<ProposedCertificate> proposedCertificates) : base(id)
+      string name,
+      ICollection<ProposedCertificate> proposedCertificates) : base(id)
     {
       Name = name;
       ProposedCertificates = proposedCertificates;
     }
 
     public static ProfessionCategory Create(Guid id,
-                                string name,
-                                ICollection<ProposedCertificate> proposedCertificates)
-    {
-      return new ProfessionCategory(id, name, proposedCertificates);
-    }
-
+      string name,
+      ICollection<ProposedCertificate> proposedCertificates)
+        => new ProfessionCategory(id, name, proposedCertificates);
     public void AddProposedCertificate(ProposedCertificate certificate)
-    {
-      ProposedCertificates.Add(certificate);
-    }
+      => ProposedCertificates.Add(certificate);
   }
 }

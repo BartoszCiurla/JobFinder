@@ -8,26 +8,34 @@ using JobFinder.Domain.Users;
 using JobFinder.Domain.Users.Entities;
 namespace JobFinder.Application.Users
 {
-  [AutostartActor (DispatcherActorsNames.UserCommandActor)]
+  [AutostartActor(DispatcherActorsNames.UserCommandActor)]
   public class UserCommandActor : BaseActor
   {
     private readonly IPasswordCryptoService _passwordCryptoService;
-    public UserCommandActor (IActorBootstraper actorBootstraper,
-      IPasswordCryptoService passwordCryptoService) : base (actorBootstraper)
+    public UserCommandActor(IActorBootstraper actorBootstraper,
+      IPasswordCryptoService passwordCryptoService) : base(actorBootstraper)
     {
       _passwordCryptoService = passwordCryptoService;
-      ReceiveAsync<RegisterUserCommand> (Handle);
+      ReceiveAsync<RegisterUserCommand>(Handle);
     }
-    private async Task Handle (RegisterUserCommand command)
+    private async Task Handle(RegisterUserCommand command)
     {
-      await HandleCommand (command, async uow =>
+      await HandleCommand(command, async uow =>
       {
-        var userRepository = uow.GetRepository<User> ();
-        var salt = _passwordCryptoService.GenerateSalt ();
-        var passwordHash = _passwordCryptoService.HashPassword (command.Password, salt);
-        var user = User.Create (Guid.NewGuid (), command.Name, command.Surname, command.Email, passwordHash, salt, (UserType)Enum.Parse(typeof(UserType), command.UserType));
-        userRepository.Add (user);
-        await userRepository.SaveChangesAsync ();
+        var userRepository = uow.GetRepository<User>();
+        var salt = _passwordCryptoService.GenerateSalt();
+        var passwordHash = _passwordCryptoService.HashPassword(command.Password, salt);
+        var user = User.Create(Guid.NewGuid(),
+          command.Name,
+          command.Surname,
+          command.Email,
+          passwordHash,
+          salt,
+          (UserType) Enum.Parse(typeof(UserType),
+          command.UserType));
+
+        userRepository.Add(user);
+        await userRepository.SaveChangesAsync();
       });
     }
   }

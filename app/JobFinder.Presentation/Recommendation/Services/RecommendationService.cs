@@ -22,9 +22,12 @@ namespace JobFinder.Presentation.Recommendation.Services
             score += CalculateRequiredSkillsScore(offer.RequiredSkills, jobApplication.Skills, RequiredSkillScore);
             score += CalculateWelcomeSkillsScore(offer.WelcomeSkills, jobApplication.Skills, WelcomeSkillScore);
             score += CalculateLanguageScore(offer.Languages, jobApplication.Languages, LanguageScore);
-            score += CalculateCertificationsScore(offer.CertificatesWillBeAnAdvantage, offer.Profession.Category.Id, jobApplication.Certificates, CertificationsScore);
+            score += CalculateCertificationsScore(offer.CertificatesWillBeAnAdvantage, offer.Profession.Category.Id,
+                jobApplication.Certificates, CertificationsScore);
 
-            double result = ((skillsWeight * score) + (salaryWeight * (-GetSalaryValueReducedByOrderOfMagnitude(score,(double)jobApplication.Salary)))) /
+            double salary = - GetSalaryValueReducedByOrderOfMagnitude(score,(double)jobApplication.Salary);
+
+            double result = ((skillsWeight * score) + (salaryWeight * salary)) /
                 (skillsWeight + salaryWeight);
 
             return result;
@@ -50,7 +53,7 @@ namespace JobFinder.Presentation.Recommendation.Services
             ICollection<JobApplicationSkill> skills,
             double baseScore)
         {
-            if (!requiredSkills.Any() && !skills.Any()) return 0;
+            if (!requiredSkills.Any() || !skills.Any()) return 0;
             return requiredSkills.Select(offerRequiredSkill =>
             {
                 var skill = skills.FirstOrDefault(s => s.Skill.Id == offerRequiredSkill.Skill.Id);
@@ -62,7 +65,7 @@ namespace JobFinder.Presentation.Recommendation.Services
             ICollection<JobApplicationSkill> skills,
             double baseScore)
         {
-            if (!welcomeSkills.Any() && !skills.Any()) return 0;
+            if (!welcomeSkills.Any() || !skills.Any()) return 0;
             return welcomeSkills.Select(offerWelcomeSkill =>
             {
                 var skill = skills.FirstOrDefault(s => s.Skill.Id == offerWelcomeSkill.Skill.Id);
@@ -74,7 +77,7 @@ namespace JobFinder.Presentation.Recommendation.Services
             ICollection<JobApplicationLanguage> languages,
             double baseScore)
         {
-            if (!requiredLanguages.Any() && !languages.Any()) return 0;
+            if (!requiredLanguages.Any() || !languages.Any()) return 0;
             return requiredLanguages.Select(requiredLanguage =>
             {
                 var language = languages.FirstOrDefault(l => l.Language.Id == requiredLanguage.Language.Id);

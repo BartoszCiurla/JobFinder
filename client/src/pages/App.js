@@ -18,7 +18,6 @@ import Routes from '../constants/routes';
 import { getUserTypes } from '../utils/auth';
 
 class App extends Component {
-
   render() {
     const {
       isEmployee,
@@ -26,21 +25,28 @@ class App extends Component {
     } = getUserTypes(this.props.cookies);
 
     return (
-        <Switch>
-          <Route exact path={Routes.homePage} component={HomePage} />
-          <Route path={Routes.signup} component={Signup} />
-          <Route path={Routes.login} component={Login} />
-          <PrivateRoute path={Routes.employee} redirect={Routes.login} component={Employee} auth={isEmployee} />
-          <PrivateRoute path={Routes.applicationBuilder} redirect={Routes.login} component={ApplicationBuilder} auth={isEmployee} />
-          <PrivateRoute path={Routes.employer} redirect={Routes.login} component={Employer} auth={isEmployer} />
-          <PrivateRoute path={Routes.offerBuilder} redirect={Routes.login} component={OfferBuilder} auth={isEmployer} />
-        </Switch>
+      <Switch>
+        <Route exact path={Routes.homePage} component={HomePage} />
+        <Route path={Routes.signup} component={Signup} />
+        <Route path={Routes.login} component={Login} />
+        <PrivateRoute path={Routes.employee} redirect={Routes.login}
+          component={Employee} auth={isEmployee}
+        />
+        <PrivateRoute path={Routes.applicationBuilder} redirect={Routes.login}
+          component={ApplicationBuilder} auth={isEmployee}
+        />
+        <PrivateRoute path={Routes.employer} redirect={Routes.login}
+          component={Employer} auth={isEmployer}
+        />
+        <PrivateRoute path={Routes.offerBuilder} redirect={Routes.login}
+          component={OfferBuilder} auth={isEmployer}
+        />
+      </Switch>
     );
   }
 }
 
 App.propTypes = {
-  children: PropTypes.element,
   cookies: PropTypes.instanceOf(Cookies).isRequired
 };
 

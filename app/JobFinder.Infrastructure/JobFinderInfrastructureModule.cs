@@ -37,7 +37,6 @@ namespace JobFinder.Infrastructure
           var configuration = ctx.Resolve<IConfiguration>();
           var connectionString = configuration.GetConnectionString(PlatformConfiguration.GetRuntimeInformation());
           var options = new DbContextOptionsBuilder<JobFinderContext>()
-            // .UseInMemoryDatabase(databaseName: "JustTest") //for fast tests without db
             .UseSqlServer(connectionString, b => b.MigrationsAssembly("JobFinder.DbMigration"))
             .Options;
           return new JobFinderContext(options);

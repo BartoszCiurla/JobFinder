@@ -12,41 +12,45 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 namespace JobFinder.WebApi.Controllers
 {
-  [Authorize (Roles = "Employer")]
-  [Route ("api/[controller]")]
+  [Authorize(Roles = "Employer")]
+  [Route("api/[controller]")]
   public class OfferController : BaseController
   {
-    public OfferController (ControllerBootstraper controllerBootstraper) : base (controllerBootstraper)
-    { }
-    [Route ("Create")]
+    public OfferController(ControllerBootstraper controllerBootstraper) : base(controllerBootstraper) { }
+
+    [Route("Create")]
     [HttpPost]
-    public async Task<IActionResult> Create ([FromBody] CreateOfferCommand command)
+    public async Task<IActionResult> Create([FromBody] CreateOfferCommand command)
     {
-      return await SendCommand (DispatcherActorsNames.OfferCommandActor, command);
+      return await SendCommand(DispatcherActorsNames.OfferCommandActor, command);
     }
-    [Route ("GetEmployerOfferDetails")]
+
+    [Route("GetEmployerOfferDetails")]
     [HttpGet]
-    public async Task<IActionResult> GetEmployerOfferDetails ([FromQuery] GetEmployerOfferDetailsQuery query)
+    public async Task<IActionResult> GetEmployerOfferDetails([FromQuery] GetEmployerOfferDetailsQuery query)
     {
-      return await SendQuery (DispatcherActorsNames.OfferQueryActor, query);
+      return await SendQuery(DispatcherActorsNames.OfferQueryActor, query);
     }
-    [Route ("GetEmployerOffersList")]
+
+    [Route("GetEmployerOffersList")]
     [HttpGet]
-    public async Task<IActionResult> GetEmployerOffersList ([FromQuery] GetEmployerOffersListQuery query)
+    public async Task<IActionResult> GetEmployerOffersList([FromQuery] GetEmployerOffersListQuery query)
     {
-      return await SendQuery (DispatcherActorsNames.OfferQueryActor, query);
+      return await SendQuery(DispatcherActorsNames.OfferQueryActor, query);
     }
-    [Route ("DeleteOffer")]
+
+    [Route("DeleteOffer")]
     [HttpDelete]
-    public async Task<IActionResult> DeleteOffer ([FromQuery] DeleteOfferCommand command)
+    public async Task<IActionResult> DeleteOffer([FromQuery] DeleteOfferCommand command)
     {
-      return await SendCommand (DispatcherActorsNames.OfferCommandActor, command);
+      return await SendCommand(DispatcherActorsNames.OfferCommandActor, command);
     }
-    [Route ("GetRecommendedApplicationList")]
+
+    [Route("GetRecommendedApplicationList")]
     [HttpGet]
-    public async Task<IActionResult> GetRecommendedApplicationList ([FromQuery] GetRecommendedApplicationListQuery query)
+    public async Task<IActionResult> GetRecommendedApplicationList([FromQuery] GetRecommendedApplicationListQuery query)
     {
-      return await SendQuery (DispatcherActorsNames.RecommendationQueryActor, query);
+      return await SendQuery(DispatcherActorsNames.RecommendationQueryActor, query);
     }
   }
 }

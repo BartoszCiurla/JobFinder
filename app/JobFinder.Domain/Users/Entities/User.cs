@@ -30,17 +30,12 @@ namespace JobFinder.Domain.Users.Entities
       UserType = userType;
     }
     public void UpdateLastLoginDate() => LastLoginDate = DateTime.Now;
-    #region Factory methods
     public static User Create(Guid id,
       string name,
       string surname,
       string email,
       string password,
       string salt,
-      UserType userType)
-    {
-      return new User(id, name, surname, email, password, salt, userType);
-    }
-    #endregion
+      UserType userType) => new User(id, name, surname, email, password, salt, userType);
   }
 }

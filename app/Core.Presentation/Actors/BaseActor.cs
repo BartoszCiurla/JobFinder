@@ -14,51 +14,51 @@ namespace Core.Presentation.Actors
   {
     private readonly IActorBootstraper _actorBootstraper;
     protected ILogger Logger => _actorBootstraper.Logger;
-    public BaseActor (IActorBootstraper actorBootstraper)
+    public BaseActor(IActorBootstraper actorBootstraper)
     {
       _actorBootstraper = actorBootstraper;
     }
-    private async Task HandleMessage<TMessage> (TMessage query, Func<IReadOnlyUnitOfWork, Task> action) where TMessage : Query
+    private async Task HandleMessage<TMessage>(TMessage query, Func<IReadOnlyUnitOfWork, Task> action) where TMessage : Query
     {
       try
       {
-        using (var uow = _actorBootstraper.UowFactory ())
+        using(var uow = _actorBootstraper.UowFactory())
         {
-          await action (uow);
+          await action(uow);
         }
-        Logger.ForContext<BaseActor> ().Debug ("Query {Query} successfuly handled.", query);
+        Logger.ForContext<BaseActor>().Debug("Query {Query} successfuly handled.", query);
       }
       catch (Exception exception)
       {
-        Logger.ForContext<BaseActor> ().Fatal (exception, "Error occured during handling query {Query}", query);
-        Sender.Tell (new ErrorResponse ("GENERAL ERROR"));
+        Logger.ForContext<BaseActor>().Fatal(exception, "Error occured during handling query {Query}", query);
+        Sender.Tell(new ErrorResponse("GENERAL ERROR"));
       }
     }
-    protected async Task HandleQuery<TMessage, TResult> (TMessage message, Func<IReadOnlyUnitOfWork, TResult> action)
+    protected async Task HandleQuery<TMessage, TResult>(TMessage message, Func<IReadOnlyUnitOfWork, TResult> action)
     where TMessage : Query
     where TResult : QueryResult
     {
-      await HandleMessage (message, uow =>
+      await HandleMessage(message, uow =>
       {
-        var result = action (uow);
+        var result = action(uow);
         if (result != null)
-          Sender.Tell (result);
+          Sender.Tell(result);
         else
-          Sender.Tell (new NotFoundResult ());
+          Sender.Tell(new NotFoundResult());
         return Task.CompletedTask;
       });
     }
-    protected async Task HandleQuery<TMessage, TResult> (TMessage message, Func<IReadOnlyUnitOfWork, Task<TResult>> action)
+    protected async Task HandleQuery<TMessage, TResult>(TMessage message, Func<IReadOnlyUnitOfWork, Task<TResult>> action)
     where TMessage : Query
     where TResult : QueryResult
     {
-      await HandleMessage (message, async uow =>
+      await HandleMessage(message, async uow =>
       {
-        var result = await action (uow);
+        var result = await action(uow);
         if (result != null)
-          Sender.Tell (result);
+          Sender.Tell(result);
         else
-          Sender.Tell (new NotFoundResult ());
+          Sender.Tell(new NotFoundResult());
       });
     }
   }

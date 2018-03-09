@@ -18,8 +18,10 @@ namespace JobFinder.Application.JobApplications
   [AutostartActor(DispatcherActorsNames.JobApplicationCommandActor)]
   public class JobApplicationsCommandActor : BaseActor
   {
-    public JobApplicationsCommandActor(IActorBootstraper actorBootstraper) : base(actorBootstraper)
+    private readonly ISkillsService _skillsService;
+    public JobApplicationsCommandActor(IActorBootstraper actorBootstraper, ISkillsService skillsService) : base(actorBootstraper)
     {
+      _skillsService = skillsService;
       ReceiveAsync<CreateJobApplicationCommand>(Handle);
       ReceiveAsync<DeleteJobApplicationCommand>(Handle);
     }
@@ -48,7 +50,7 @@ namespace JobFinder.Application.JobApplications
             user,
             profession,
             command.Salary,
-            SkillsService.Create<JobApplicationSkill>(
+            _skillsService.Create<JobApplicationSkill>(
               applicationId,
               profession,
               command.Skills).ToList(),

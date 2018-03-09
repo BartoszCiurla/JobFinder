@@ -1,14 +1,13 @@
 using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using FluentValidation.Results;
-using FluentValidation;
 using Akka.Actor;
 using Autofac;
-
-using JobFinder.WebApi.Core.ActionResults;
-using Core.Application.Api.Messages.Responses;
 using Core.Application.Api.Messages;
+using Core.Application.Api.Messages.Responses;
+using FluentValidation;
+using FluentValidation.Results;
+using JobFinder.WebApi.Core.ActionResults;
+using Microsoft.AspNetCore.Mvc;
 using NotFoundResult = Core.Application.Api.Messages.Responses.NotFoundResult;
 
 namespace JobFinder.WebApi.Core
@@ -22,7 +21,8 @@ namespace JobFinder.WebApi.Core
       ControllerBootstraper = controllerBootstraper;
     }
 
-    protected async Task<IActionResult> SendCommand<TCommand>(string dispatcherActorName, TCommand command) where TCommand : Command
+    protected async Task<IActionResult> SendCommand<TCommand>(string dispatcherActorName, TCommand command)
+    where TCommand : Command
     {
       var validationResult = Validate(command);
       if (!validationResult.IsValid)
@@ -34,16 +34,17 @@ namespace JobFinder.WebApi.Core
       if (response == null)
         return NotFound();
       if (response is ErrorResponse)
-        return BadRequest(((ErrorResponse)response).ToErrorResult());
+        return BadRequest(((ErrorResponse) response).ToErrorResult());
       if (response is CommandSuccessResponseWithId)
-        return Ok(((CommandSuccessResponseWithId)response).ToCommandResultWithId());
+        return Ok(((CommandSuccessResponseWithId) response).ToCommandResultWithId());
       if (response is CommandSuccessResponse)
         return Ok(new CommandActionResult());
 
       return BadRequest();
     }
 
-    protected async Task<IActionResult> SendQuery<TQuery>(string dispatcherActorName, TQuery query) where TQuery : Query
+    protected async Task<IActionResult> SendQuery<TQuery>(string dispatcherActorName, TQuery query)
+    where TQuery : Query
     {
       var validationResult = Validate(query);
       if (!validationResult.IsValid)
@@ -55,7 +56,7 @@ namespace JobFinder.WebApi.Core
       if (response is NotFoundResult)
         return NotFound();
       if (response is ErrorResponse)
-        return BadRequest(((ErrorResponse)response).ToErrorResult());
+        return BadRequest(((ErrorResponse) response).ToErrorResult());
       if (response is QueryResult)
         return Ok(response);
 

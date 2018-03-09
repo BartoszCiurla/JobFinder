@@ -7,6 +7,10 @@ using JobFinder.Domain.JobApplications.Entities;
 using JobFinder.Domain.Professions.Entities;
 namespace JobFinder.Application.Services
 {
+    public interface ICertificatesService
+    {
+
+    }
     public class CertificatesService
     {
         public static IEnumerable<JobApplicationCertificate> Create(Guid jobApplicationId, ProfessionCategory professionCategory, IEnumerable<CertificateDto> certificates)
