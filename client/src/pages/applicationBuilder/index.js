@@ -32,6 +32,7 @@ class ApplicationBuilder extends Component {
   state = {
     errors: []
   }
+
   tryCreateApplication = () => {
     this.props.createApplication(getUserCredentials(this.props.cookies))
       .then(this.props.history.push(Routes.employee));

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { isEmpty, find, map } from 'lodash';
+import { find, map } from 'lodash';
 
 import BasicAutocomplete from '../basicAutocomplete';
 import ValidatedInput from '../../common/ValidatedInput';
@@ -19,7 +19,7 @@ class Certificates extends Component {
 
   componentWillMount() {
     const { category } = this.props;
-    isEmpty(this.props.proposedCertificates) && this.props.getCertificates(category);
+    this.props.getCertificates(category);
   }
 
   getErrorMessage = (name) => (
